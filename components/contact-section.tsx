@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useState } from "react"
-import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube } from "lucide-react"
+import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -13,33 +13,35 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Teléfono",
-    value: "+1 (555) 123-4567",
-    link: "tel:+15551234567",
+    value: "+ (52) 662-326-8356",
+    link: "tel:+526623268356",
   },
   {
     icon: MessageCircle,
     title: "WhatsApp",
-    value: "+1 (555) 123-4567",
-    link: "https://wa.me/15551234567",
+    value: "+52 662 397 3754",
+    link: "https://wa.me/526623973754",
   },
   {
     icon: Mail,
     title: "Correo",
-    value: "contacto@radioluzdivina.com",
-    link: "mailto:contacto@radioluzdivina.com",
+    value: "radiovidamx@gmail.com",
+    link: "mailto:radiovidamx@gmail.com",
   },
   {
     icon: MapPin,
     title: "Dirección",
-    value: "Calle Principal #123, Ciudad",
+    value: "Av. El mineral #43, Hermosillo, Sonora",
     link: "#",
   },
 ]
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
+  { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
+  { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
+  { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },
 ]
 
 export function ContactSection() {
@@ -55,15 +57,32 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    
-    setIsSubmitting(false)
-    setSubmitted(true)
-    setFormData({ name: "", email: "", phone: "", message: "" })
-    
-    setTimeout(() => setSubmitted(false), 5000)
+
+    try {
+      // Reemplaza 'TU_CODIGO_FORMSPREE' con tu ID real de Formspree (ej: f/xdkaqopj)
+      // Puedes obtenerlo gratis en https://formspree.io
+      const response = await fetch("https://formspree.io/f/xvzbglke", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ name: "", email: "", phone: "", message: "" })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        alert("Hubo un error al enviar el mensaje. Por favor intenta de nuevo.")
+      }
+    } catch (error) {
+      console.error(error)
+      alert("Hubo un error al enviar el mensaje.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -133,7 +152,7 @@ export function ContactSection() {
                 className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
                 asChild
               >
-                <a href="https://wa.me/15551234567?text=Solicito%20oraci%C3%B3n%20por...">
+                <a href="https://wa.me/526623973754?text=Solicito%20oraci%C3%B3n%20por...">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Enviar Petición de Oración
                 </a>
@@ -167,6 +186,7 @@ export function ContactSection() {
                       <Label htmlFor="name">Nombre completo</Label>
                       <Input
                         id="name"
+                        name="name"
                         placeholder="Tu nombre"
                         value={formData.name}
                         onChange={(e) =>
@@ -179,6 +199,7 @@ export function ContactSection() {
                       <Label htmlFor="email">Correo electrónico</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="tu@correo.com"
                         value={formData.email}
@@ -194,6 +215,7 @@ export function ContactSection() {
                     <Label htmlFor="phone">Teléfono (opcional)</Label>
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
                       placeholder="+1 (555) 000-0000"
                       value={formData.phone}
@@ -207,6 +229,7 @@ export function ContactSection() {
                     <Label htmlFor="message">Mensaje</Label>
                     <Textarea
                       id="message"
+                      name="message"
                       placeholder="Escribe tu mensaje aquí..."
                       rows={5}
                       value={formData.message}

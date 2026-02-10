@@ -62,11 +62,10 @@ export function EventsSection() {
           {events.map((event) => (
             <div
               key={event.id}
-              className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${
-                event.featured
+              className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured
                   ? "border-primary/30 shadow-lg"
                   : "border-border hover:border-primary/20"
-              }`}
+                }`}
             >
               {event.featured && (
                 <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
@@ -114,15 +113,28 @@ export function EventsSection() {
 
         {/* Calendar Subscribe */}
         <div className="mt-12 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-muted rounded-2xl">
-            <div className="text-center sm:text-left">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-muted rounded-2xl w-full max-w-2xl mx-auto">
+            <div className="text-center sm:text-left flex-1">
               <p className="font-semibold text-foreground">¿No quieres perderte ningún evento?</p>
-              <p className="text-sm text-muted-foreground">Suscríbete a nuestro calendario</p>
+              <p className="text-sm text-muted-foreground">Suscríbete para recibir notificaciones</p>
             </div>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Calendar className="w-4 h-4 mr-2" />
-              Suscribirse
-            </Button>
+            <form
+              action="https://formspree.io/f/xvzbglke"
+              method="POST"
+              className="flex w-full sm:w-auto gap-2"
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="Tu correo electrónico"
+                required
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-w-[200px]"
+              />
+              <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground whitespace-nowrap">
+                <Calendar className="w-4 h-4 mr-2" />
+                Suscribirse
+              </Button>
+            </form>
           </div>
         </div>
       </div>

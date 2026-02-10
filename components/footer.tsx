@@ -1,4 +1,5 @@
-import { Radio, Heart, Facebook, Instagram, Youtube, Mail } from "lucide-react"
+import { Radio, Heart, Facebook, Instagram, Youtube, Mail, Twitter } from "lucide-react"
+import Image from "next/image"
 
 const quickLinks = [
   { href: "#inicio", label: "Inicio" },
@@ -10,10 +11,11 @@ const quickLinks = [
 ]
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
-  { icon: Mail, href: "mailto:contacto@radioluzdivina.com", label: "Email" },
+  { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
+  { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
+  { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
+  { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },
 ]
 
 export function Footer() {
@@ -24,12 +26,18 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#inicio" className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                <Radio className="w-6 h-6 text-primary-foreground" />
+              <div className="relative w-12 h-12 flex items-center justify-center">
+                <Image
+                  src="/logo-radiovida-white.png"
+                  alt="Radio Vida"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <span className="font-serif text-xl font-bold block">
-                  Radio Luz Divina
+                  Radio Vida
                 </span>
                 <span className="text-sm text-secondary-foreground/70">
                   Música que transforma
@@ -37,8 +45,8 @@ export function Footer() {
               </div>
             </a>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
-              Llevando el mensaje de esperanza y fe a través de la música y la 
-              palabra de Dios desde 2009. Transmitiendo 24/7 para bendecir tu vida.
+              Llevando el mensaje de esperanza y fe a través de la música y la
+              palabra de Dios desde 2011. Transmitiendo 24/7 para bendecir tu vida.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -75,10 +83,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Contacto</h3>
             <ul className="space-y-2 text-secondary-foreground/80">
-              <li>+1 (555) 123-4567</li>
-              <li>contacto@radioluzdivina.com</li>
-              <li>Calle Principal #123</li>
-              <li>Ciudad, País</li>
+              <li>+ (52) 662-326-8356</li>
+              <li>radiovidamx@gmail.com</li>
+              <li>Av. El mineral #43</li>
+              <li>Hermosillo, Sonora, México</li>
             </ul>
           </div>
         </div>
@@ -87,7 +95,7 @@ export function Footer() {
         <div className="border-t border-secondary-foreground/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-secondary-foreground/60">
-              © {new Date().getFullYear()} Radio Luz Divina. Todos los derechos reservados.
+              © {new Date().getFullYear()} Radio Vida. Todos los derechos reservados.
             </p>
             <p className="text-sm text-secondary-foreground/60 flex items-center gap-1">
               Hecho con <Heart className="w-4 h-4 text-primary inline" /> para la gloria de Dios

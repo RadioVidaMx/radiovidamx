@@ -8,7 +8,7 @@ const _playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif
 const _inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Radio Luz Divina - Música y Palabra que Transforma',
+  title: 'Radio Vida - Música y Palabra que Transforma',
   description: 'Estación de radio cristiana 24/7 con música de adoración, prédicas inspiradoras y programas que edifican tu fe.',
   keywords: 'radio cristiana, música cristiana, adoración, palabra de Dios, fe',
   icons: {
@@ -28,8 +28,12 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
-    generator: 'v0.app'
+  generator: 'v0.app'
 }
+
+import { PlayerProvider } from "@/contexts/player-context"
+
+// ... imports
 
 export default function RootLayout({
   children,
@@ -39,7 +43,9 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${_playfair.variable} ${_inter.variable} font-sans antialiased`}>
-        {children}
+        <PlayerProvider>
+          {children}
+        </PlayerProvider>
         <Analytics />
       </body>
     </html>

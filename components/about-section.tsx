@@ -34,23 +34,23 @@ export function AboutSection() {
               Sobre Nosotros
             </span>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-              Llevando el mensaje de esperanza desde 2009
+              Llevando el mensaje de esperanza desde 2011
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
-              Radio Luz Divina nació con el propósito de llevar la palabra de Dios 
-              a cada hogar. Durante más de 15 años, hemos sido compañía en momentos 
+              Radio Vida Hermosillo nació con el propósito de llevar la palabra de Dios
+              a cada hogar. Durante más de 15 años, hemos sido compañía en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>
             <p className="mt-4 text-lg text-muted-foreground text-pretty">
-              Nuestra misión es glorificar a Dios y edificar a la comunidad cristiana 
+              Nuestra misión es glorificar a Dios y edificar a la comunidad cristiana
               a través de contenido de calidad que inspire, enseñe y transforme vidas.
             </p>
 
             {/* Mission Statement */}
             <blockquote className="mt-8 pl-6 border-l-4 border-primary">
               <p className="text-xl font-serif italic text-foreground">
-                &ldquo;Porque de tal manera amó Dios al mundo, que ha dado a su Hijo 
-                unigénito, para que todo aquel que en él cree, no se pierda, 
+                &ldquo;Porque de tal manera amó Dios al mundo, que ha dado a su Hijo
+                unigénito, para que todo aquel que en él cree, no se pierda,
                 mas tenga vida eterna.&rdquo;
               </p>
               <footer className="mt-2 text-sm text-muted-foreground">

@@ -1,16 +1,11 @@
 "use client"
 
-import { Play, Headphones, Heart } from "lucide-react"
+import { Play, Pause, Headphones, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { usePlayer } from "@/contexts/player-context"
 
 export function HeroSection() {
-  const scrollToPlayer = () => {
-    const player = document.querySelector('audio')
-    if (player) {
-      const button = document.querySelector('[data-play-button]') as HTMLButtonElement
-      button?.click()
-    }
-  }
+  const { togglePlay, isPlaying } = usePlayer()
 
   return (
     <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
@@ -29,25 +24,34 @@ export function HeroSection() {
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               Transmitiendo en vivo 24/7
             </div>
-            
+
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance">
               Música y Palabra que{" "}
               <span className="text-primary">Transforma</span>
             </h1>
-            
+
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 text-pretty">
-              Conecta con Dios a través de nuestra programación de adoración, 
+              Conecta con Dios a través de nuestra programación de adoración,
               prédicas inspiradoras y música que eleva tu espíritu.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
-                onClick={scrollToPlayer}
+                onClick={togglePlay}
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
               >
-                <Play className="w-5 h-5 mr-2" />
-                Escuchar Ahora
+                {isPlaying ? (
+                  <>
+                    <Pause className="w-5 h-5 mr-2" />
+                    Pausar Radio
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-5 h-5 mr-2" />
+                    Escuchar Ahora
+                  </>
+                )}
               </Button>
               <Button
                 variant="outline"
@@ -89,7 +93,7 @@ export function HeroSection() {
               <div className="absolute inset-16 flex items-center justify-center">
                 <div className="w-full h-full rounded-full border-2 border-primary/40 animate-ping" style={{ animationDuration: '2s', animationDelay: '1s' }} />
               </div>
-              
+
               {/* Center Content */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-48 h-48 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-2xl">
