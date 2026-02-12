@@ -1,4 +1,6 @@
-import { Users, BookOpen, Music, Heart } from "lucide-react"
+import { Users, BookOpen, Music, Heart, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const features = [
   {
@@ -34,17 +36,27 @@ export function AboutSection() {
               Sobre Nosotros
             </span>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-              Llevando el mensaje de esperanza desde 2011
+              Llevando el mensaje de esperanza desde Agosto 2016
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
               Radio Vida Hermosillo nació con el propósito de llevar la palabra de Dios
-              a cada hogar. Durante más de 15 años, hemos sido compañía en momentos
+              a cada hogar. Durante más de 9 años, hemos sido compañía en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>
             <p className="mt-4 text-lg text-muted-foreground text-pretty">
-              Nuestra misión es glorificar a Dios y edificar a la comunidad cristiana
+              Nuestra misión es glorificar a Dios y edificar a la comunidad
               a través de contenido de calidad que inspire, enseñe y transforme vidas.
+              Llevamos la semilla de la palabra de Dios a los confines de la tierra.
             </p>
+
+            <div className="mt-8">
+              <Link href="/conocenos/antecedentes">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-lg group">
+                  Leer más
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
 
             {/* Mission Statement */}
             <blockquote className="mt-8 pl-6 border-l-4 border-primary">

@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { Clock, Mic, Music, BookOpen, Heart, Users } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Clock, Mic, Music, BookOpen, Heart, Users, Loader2, Tv } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { supabase, type Program } from "@/lib/supabase"
 
 const days = [
   { id: "lunes", label: "Lun" },
@@ -14,72 +15,16 @@ const days = [
   { id: "domingo", label: "Dom" },
 ]
 
-const schedule: Record<string, Array<{
-  time: string
-  title: string
-  host: string
-  icon: typeof Clock
-  type: "worship" | "teaching" | "talk" | "prayer" | "music"
-}>> = {
-  lunes: [
-    { time: "06:00", title: "Amanecer con Dios", host: "Pastor Miguel", icon: BookOpen, type: "worship" },
-    { time: "09:00", title: "Música de Adoración", host: "DJ Samuel", icon: Music, type: "music" },
-    { time: "12:00", title: "Palabra al Mediodía", host: "Pastora Elena", icon: Mic, type: "teaching" },
-    { time: "15:00", title: "Tarde de Alabanza", host: "Coro Emmanuel", icon: Music, type: "music" },
-    { time: "18:00", title: "Estudio Bíblico", host: "Pastor David", icon: BookOpen, type: "teaching" },
-    { time: "21:00", title: "Oración de la Noche", host: "Ministerio de Intercesión", icon: Heart, type: "prayer" },
-  ],
-  martes: [
-    { time: "06:00", title: "Devocional Matutino", host: "Hna. María", icon: Heart, type: "worship" },
-    { time: "09:00", title: "Clásicos Cristianos", host: "DJ Daniel", icon: Music, type: "music" },
-    { time: "12:00", title: "Fe en Acción", host: "Pastor Roberto", icon: Users, type: "talk" },
-    { time: "15:00", title: "Música Contemporánea", host: "DJ Samuel", icon: Music, type: "music" },
-    { time: "18:00", title: "Jóvenes en Cristo", host: "Líder Andrés", icon: Users, type: "talk" },
-    { time: "21:00", title: "Reflexiones Nocturnas", host: "Pastora Ana", icon: BookOpen, type: "teaching" },
-  ],
-  miercoles: [
-    { time: "06:00", title: "Amanecer con Dios", host: "Pastor Miguel", icon: BookOpen, type: "worship" },
-    { time: "09:00", title: "Himnos de Fe", host: "Coro Celestial", icon: Music, type: "music" },
-    { time: "12:00", title: "Mujer Virtuosa", host: "Pastora Elena", icon: Heart, type: "talk" },
-    { time: "15:00", title: "Alabanza sin Límites", host: "DJ Samuel", icon: Music, type: "music" },
-    { time: "18:00", title: "Culto en Vivo", host: "Iglesia Central", icon: Users, type: "worship" },
-    { time: "21:00", title: "Oración Familiar", host: "Ministerio de Intercesión", icon: Heart, type: "prayer" },
-  ],
-  jueves: [
-    { time: "06:00", title: "Palabra de Vida", host: "Pastor David", icon: BookOpen, type: "teaching" },
-    { time: "09:00", title: "Música que Sana", host: "DJ Daniel", icon: Music, type: "music" },
-    { time: "12:00", title: "Testimonios de Fe", host: "Hna. Carmen", icon: Heart, type: "talk" },
-    { time: "15:00", title: "Adoración Instrumental", host: "Orquesta Sión", icon: Music, type: "music" },
-    { time: "18:00", title: "Discipulado", host: "Pastor Roberto", icon: BookOpen, type: "teaching" },
-    { time: "21:00", title: "Vigilias de Poder", host: "Ministerio de Intercesión", icon: Heart, type: "prayer" },
-  ],
-  viernes: [
-    { time: "06:00", title: "Comenzando con Fe", host: "Hna. María", icon: Heart, type: "worship" },
-    { time: "09:00", title: "Mix de Alabanza", host: "DJ Samuel", icon: Music, type: "music" },
-    { time: "12:00", title: "Palabra al Mediodía", host: "Pastora Elena", icon: Mic, type: "teaching" },
-    { time: "15:00", title: "Viernes de Fiesta", host: "Coro Emmanuel", icon: Music, type: "music" },
-    { time: "18:00", title: "Preparándonos para el Domingo", host: "Pastor Miguel", icon: BookOpen, type: "teaching" },
-    { time: "21:00", title: "Noche de Adoración", host: "Ministerio de Alabanza", icon: Music, type: "worship" },
-  ],
-  sabado: [
-    { time: "07:00", title: "Buenos Días Familia", host: "Familia Rodríguez", icon: Users, type: "talk" },
-    { time: "10:00", title: "Escuela Bíblica", host: "Pastor David", icon: BookOpen, type: "teaching" },
-    { time: "13:00", title: "Música para el Alma", host: "DJ Daniel", icon: Music, type: "music" },
-    { time: "16:00", title: "Tarde Juvenil", host: "Líder Andrés", icon: Users, type: "talk" },
-    { time: "19:00", title: "Sábado de Alabanza", host: "Coro Celestial", icon: Music, type: "worship" },
-    { time: "22:00", title: "Meditación Nocturna", host: "Pastora Ana", icon: Heart, type: "prayer" },
-  ],
-  domingo: [
-    { time: "06:00", title: "Amanecer Dominical", host: "Hna. María", icon: Heart, type: "worship" },
-    { time: "09:00", title: "Servicio en Vivo", host: "Iglesia Central", icon: Users, type: "worship" },
-    { time: "12:00", title: "Mensaje del Pastor", host: "Pastor Miguel", icon: Mic, type: "teaching" },
-    { time: "15:00", title: "Música de Bendición", host: "DJ Samuel", icon: Music, type: "music" },
-    { time: "18:00", title: "Culto Vespertino", host: "Iglesia Central", icon: Users, type: "worship" },
-    { time: "21:00", title: "Cerrando la Semana con Dios", host: "Pastor David", icon: BookOpen, type: "prayer" },
-  ],
+const iconMap: Record<string, any> = {
+  Clock,
+  Mic,
+  Music,
+  BookOpen,
+  Heart,
+  Users,
 }
 
-const typeColors = {
+const typeColors: Record<string, string> = {
   worship: "bg-primary/10 text-primary border-primary/20",
   teaching: "bg-secondary/10 text-secondary border-secondary/20",
   talk: "bg-amber-500/10 text-amber-600 border-amber-500/20",
@@ -89,6 +34,31 @@ const typeColors = {
 
 export function ScheduleSection() {
   const [selectedDay, setSelectedDay] = useState("lunes")
+  const [programs, setPrograms] = useState<Program[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchPrograms() {
+      try {
+        const { data, error } = await supabase
+          .from("programs")
+          .select("*")
+          .order("time", { ascending: true })
+
+        if (error) throw error
+        setPrograms(data || [])
+      } catch (error) {
+        console.error("Error fetching programs:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPrograms()
+  }, [])
+
+  const programsByDay = programs.filter((p: Program) => p.day === selectedDay)
+
 
   return (
     <section id="programacion" className="py-20 md:py-32 bg-background">
@@ -127,37 +97,53 @@ export function ScheduleSection() {
         </div>
 
         {/* Schedule Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {schedule[selectedDay].map((program, index) => (
-            <div
-              key={index}
-              className="bg-card p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all group"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className={cn(
-                  "px-3 py-1 rounded-full text-xs font-medium border",
-                  typeColors[program.type]
-                )}>
-                  <program.icon className="w-3 h-3 inline mr-1" />
-                  {program.type === "worship" && "Adoración"}
-                  {program.type === "teaching" && "Enseñanza"}
-                  {program.type === "talk" && "Programa"}
-                  {program.type === "prayer" && "Oración"}
-                  {program.type === "music" && "Música"}
-                </div>
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm font-medium">{program.time}</span>
-                </div>
-              </div>
-              <h3 className="font-semibold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
-                {program.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {program.host}
-              </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 min-h-[300px]">
+          {loading ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+              <p className="text-muted-foreground animate-pulse">Cargando programación...</p>
             </div>
-          ))}
+          ) : programsByDay.length > 0 ? (
+            programsByDay.map((program: Program, index: number) => {
+              const Icon = iconMap[program.icon] || Clock
+              return (
+                <div
+                  key={program.id || index}
+                  className="bg-card p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all group"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={cn(
+                      "px-3 py-1 rounded-full text-xs font-medium border",
+                      typeColors[program.type]
+                    )}>
+                      <Icon className="w-3 h-3 inline mr-1" />
+                      {program.type === "worship" && "Adoración"}
+                      {program.type === "teaching" && "Enseñanza"}
+                      {program.type === "talk" && "Programa"}
+                      {program.type === "prayer" && "Oración"}
+                      {program.type === "music" && "Música"}
+                    </div>
+                    <div className="flex items-center gap-1 text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span className="text-sm font-medium">{program.time}</span>
+                    </div>
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
+                    {program.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {program.host}
+                  </p>
+                </div>
+              )
+            })
+          ) : (
+            <div className="col-span-full text-center py-20 bg-muted/20 border-2 border-dashed border-border rounded-2xl">
+              <Tv className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+              <h3 className="text-xl font-medium text-foreground">No hay programas para este día</h3>
+              <p className="text-muted-foreground">Pronto actualizaremos nuestra programación.</p>
+            </div>
+          )}
         </div>
 
         {/* Legend */}

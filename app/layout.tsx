@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 }
 
 import { PlayerProvider } from "@/contexts/player-context"
+import { RadioPlayer } from "@/components/radio-player"
 
 // ... imports
 
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className={`${_playfair.variable} ${_inter.variable} font-sans antialiased`}>
         <PlayerProvider>
           {children}
+          <RadioPlayer />
         </PlayerProvider>
         <Analytics />
       </body>

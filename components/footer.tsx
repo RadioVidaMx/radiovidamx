@@ -1,13 +1,16 @@
 import { Radio, Heart, Facebook, Instagram, Youtube, Mail, Twitter } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 const quickLinks = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#nosotros", label: "Nosotros" },
-  { href: "#programacion", label: "Programación" },
-  { href: "#galeria", label: "Galería" },
-  { href: "#eventos", label: "Eventos" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#inicio", label: "Inicio" },
+  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#programacion", label: "Programación" },
+  { href: "/#galeria", label: "Galería" },
+  { href: "/#eventos", label: "Eventos" },
+  { href: "/#donaciones", label: "Donaciones" },
+  { href: "/#videos", label: "Videos" },
+  { href: "/#contacto", label: "Contacto" },
 ]
 
 const socialLinks = [
@@ -25,7 +28,7 @@ export function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <a href="#inicio" className="flex items-center gap-3 mb-4">
+            <Link href="/" className="flex items-center gap-3 mb-4">
               <div className="relative w-12 h-12 flex items-center justify-center">
                 <Image
                   src="/logo-radiovida-white.png"
@@ -43,7 +46,7 @@ export function Footer() {
                   Música que transforma
                 </span>
               </div>
-            </a>
+            </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
               Llevando el mensaje de esperanza y fe a través de la música y la
               palabra de Dios desde 2011. Transmitiendo 24/7 para bendecir tu vida.
@@ -68,12 +71,12 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-secondary-foreground/80 hover:text-primary transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

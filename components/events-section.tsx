@@ -1,46 +1,34 @@
-import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client"
 
-const events = [
-  {
-    id: 1,
-    title: "Concierto de Adoración",
-    date: "15 de Marzo, 2026",
-    time: "7:00 PM",
-    location: "Auditorio Central",
-    description: "Una noche especial de alabanza y adoración con artistas invitados.",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Conferencia de Fe",
-    date: "22 de Marzo, 2026",
-    time: "9:00 AM - 5:00 PM",
-    location: "Centro de Convenciones",
-    description: "Fortalece tu fe con enseñanzas poderosas de reconocidos pastores.",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Retiro de Jóvenes",
-    date: "5-7 de Abril, 2026",
-    time: "Todo el día",
-    location: "Campamento Monte Sión",
-    description: "Un fin de semana de conexión, diversión y crecimiento espiritual.",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Aniversario 16 años",
-    date: "20 de Mayo, 2026",
-    time: "6:00 PM",
-    location: "Iglesia Central",
-    description: "Celebremos juntos 16 años llevando el mensaje de esperanza.",
-    featured: true,
-  },
-]
+import { useState, useEffect } from "react"
+import { Calendar, MapPin, Clock, ArrowRight, Loader2, Star } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { supabase, type Event } from "@/lib/supabase"
 
 export function EventsSection() {
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const { data, error } = await supabase
+          .from("events")
+          .select("*")
+          .order("created_at", { ascending: false })
+
+        if (error) throw error
+        setEvents(data || [])
+      } catch (error) {
+        console.error("Error fetching events:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchEvents()
+  }, [])
+
   return (
     <section id="eventos" className="py-20 md:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,57 +46,71 @@ export function EventsSection() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {events.map((event) => (
-            <div
-              key={event.id}
-              className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured
+        <div className="grid md:grid-cols-2 gap-6 min-h-[300px]">
+          {loading ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+              <p className="text-muted-foreground animate-pulse">Cargando eventos...</p>
+            </div>
+          ) : events.length > 0 ? (
+            events.map((event) => (
+              <div
+                key={event.id}
+                className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured
                   ? "border-primary/30 shadow-lg"
                   : "border-border hover:border-primary/20"
-                }`}
-            >
-              {event.featured && (
-                <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
-                  Destacado
-                </div>
-              )}
-
-              <div className="p-6 md:p-8">
-                {/* Date Badge */}
-                <div className="flex items-center gap-2 text-primary mb-4">
-                  <Calendar className="w-5 h-5" />
-                  <span className="font-semibold">{event.date}</span>
-                </div>
-
-                <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {event.title}
-                </h3>
-
-                <p className="text-muted-foreground mb-4">
-                  {event.description}
-                </p>
-
-                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4 text-secondary" />
-                    {event.time}
+                  }`}
+              >
+                {event.featured && (
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-current" />
+                    Destacado
                   </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4 text-secondary" />
-                    {event.location}
-                  </div>
-                </div>
+                )}
 
-                <Button
-                  variant="outline"
-                  className="group/btn border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
-                >
-                  Más Información
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                </Button>
+                <div className="p-6 md:p-8">
+                  {/* Date Badge */}
+                  <div className="flex items-center gap-2 text-primary mb-4">
+                    <Calendar className="w-5 h-5" />
+                    <span className="font-semibold">{event.date}</span>
+                  </div>
+
+                  <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    {event.title}
+                  </h3>
+
+                  <p className="text-muted-foreground mb-4">
+                    {event.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4 text-secondary" />
+                      {event.time}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4 text-secondary" />
+                      {event.location}
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    className="group/btn border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+                  >
+                    Más Información
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-20 bg-muted/20 border-2 border-dashed border-border rounded-2xl">
+              <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+              <h3 className="text-xl font-medium text-foreground">No hay eventos próximos</h3>
+              <p className="text-muted-foreground">Vuelve pronto para ver nuestras próximas actividades.</p>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Calendar Subscribe */}
