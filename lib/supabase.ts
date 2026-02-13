@@ -1,11 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-console.log("Supabase URL initialized:", !!process.env.NEXT_PUBLIC_SUPABASE_URL)
-console.log("Supabase Key initialized:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+console.log("Supabase URL initialized:", !!supabaseUrl)
+console.log("Supabase Key initialized:", !!supabaseAnonKey)
+
+if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn("Supabase credentials missing. Some features may not work.")
+}
 
 export const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseAnonKey || 'placeholder-key'
 )
 
 // Types for our database tables
