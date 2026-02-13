@@ -109,6 +109,8 @@ export function ContactSection() {
                 <a
                   key={item.title}
                   href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-start gap-4 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
                 >
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
@@ -130,6 +132,8 @@ export function ContactSection() {
                   <a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-secondary-foreground hover:bg-secondary/80 transition-colors"
                     aria-label={social.label}
                   >
@@ -152,7 +156,11 @@ export function ContactSection() {
                 className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
                 asChild
               >
-                <a href="https://wa.me/526623973754?text=Solicito%20oraci%C3%B3n%20por...">
+                <a
+                  href="https://wa.me/526623973754?text=Solicito%20oraci%C3%B3n%20por..."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Enviar Petición de Oración
                 </a>

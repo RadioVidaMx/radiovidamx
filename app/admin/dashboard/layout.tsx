@@ -51,7 +51,6 @@ export default function AdminLayout({
     const handleLogout = async () => {
         await supabase.auth.signOut()
         router.push("/admin/login")
-        router.refresh()
     }
 
     if (!user) {
@@ -75,7 +74,7 @@ export default function AdminLayout({
             {/* Sidebar */}
             <aside
                 className={cn(
-                    "fixed top-0 left-0 z-50 h-full w-64 bg-secondary text-secondary-foreground transform transition-transform duration-300 ease-in-out lg:translate-x-0",
+                    "fixed top-0 left-0 z-[60] h-full w-64 bg-secondary text-secondary-foreground transform transition-transform duration-300 ease-in-out lg:translate-x-0 pb-24",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 )}
             >

@@ -115,6 +115,8 @@ export function DonationsSection() {
                         <div className="space-y-3">
                             <a
                                 href="tel:+526623268356"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
                             >
                                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -128,6 +130,8 @@ export function DonationsSection() {
 
                             <a
                                 href="https://wa.me/526623973754"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
                             >
                                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">

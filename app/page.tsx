@@ -8,7 +8,6 @@ import { DonationsSection } from "@/components/donations-section"
 import { ContactSection } from "@/components/contact-section"
 import { VideosSection } from "@/components/videos-section"
 import { Footer } from "@/components/footer"
-import { RadioPlayer } from "@/components/radio-player"
 
 export default function HomePage() {
   return (

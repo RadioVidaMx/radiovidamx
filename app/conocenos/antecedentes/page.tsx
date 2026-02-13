@@ -1,6 +1,5 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { RadioPlayer } from "@/components/radio-player"
 
 export default function AntecedentesPage() {
     return (
