@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Radio, Lock, Mail, AlertCircle } from "lucide-react"
+import Link from "next/link"
 import Image from "next/image"
 
 export default function LoginPage() {
@@ -44,8 +45,8 @@ export default function LoginPage() {
             }
 
             if (data.user) {
-                // Use window.location as a more reliable redirect during debugging
-                window.location.href = "/admin/dashboard"
+                // Use router.push for smooth navigation that preserves audio player state
+                router.push("/admin/dashboard")
             }
         } catch (err: any) {
             console.error("Catch Error:", err)
@@ -174,12 +175,12 @@ export default function LoginPage() {
 
                 {/* Back to Site */}
                 <div className="mt-6 text-center">
-                    <a
+                    <Link
                         href="/"
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                         ← Volver al sitio web
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
