@@ -74,7 +74,7 @@ export default function AdminLayout({
             {/* Sidebar */}
             <aside
                 className={cn(
-                    "fixed top-0 left-0 z-[60] h-full w-64 bg-secondary text-secondary-foreground transform transition-transform duration-300 ease-in-out lg:translate-x-0 pb-24",
+                    "fixed top-0 left-0 z-[60] h-full w-64 bg-secondary text-secondary-foreground transform transition-transform duration-300 ease-in-out lg:translate-x-0 pb-24 lg:pb-0",
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 )}
             >
@@ -162,7 +162,7 @@ export default function AdminLayout({
                 </header>
 
                 {/* Page content */}
-                <main className="p-4 lg:p-8">
+                <main className="p-4 lg:p-8 pb-32 lg:pb-8">
                     {children}
                 </main>
             </div>

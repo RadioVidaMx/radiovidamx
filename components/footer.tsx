@@ -43,13 +43,13 @@ export function Footer() {
                   Radio Vida
                 </span>
                 <span className="text-sm text-secondary-foreground/70">
-                  Música que transforma
+                  Música y Palabra que transforma
                 </span>
               </div>
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
               Llevando el mensaje de esperanza y fe a través de la música y la
-              palabra de Dios desde 2011. Transmitiendo 24/7 para bendecir tu vida.
+              palabra de Dios desde 2016. Transmitiendo 24/7 para bendecir tu vida.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
