@@ -31,7 +31,8 @@ export default function NewEventPage() {
         description: "",
         featured: false,
         image_url: "",
-        link: ""
+        link: "",
+        display_order: 0
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -168,6 +169,21 @@ export default function NewEventPage() {
                             value={formData.link}
                             onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                         />
+                    </div>
+
+                    {/* Display Order */}
+                    <div className="space-y-2">
+                        <Label htmlFor="display_order" className="flex items-center gap-2">
+                            Orden de Despliegue
+                        </Label>
+                        <Input
+                            id="display_order"
+                            type="number"
+                            placeholder="Ej: 1"
+                            value={formData.display_order}
+                            onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
+                        />
+                        <p className="text-xs text-muted-foreground">Indica la posición en la lista (números más bajos aparecen primero).</p>
                     </div>
 
                     {/* Featured */}
