@@ -94,9 +94,21 @@ export function EventsSection() {
                   }`}
               >
                 {event.featured && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full flex items-center gap-1">
+                  <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full flex items-center gap-1 shadow-md">
                     <Star className="w-3 h-3 fill-current" />
                     Destacado
+                  </div>
+                )}
+
+                {/* Event Image */}
+                {event.image_url && (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <img
+                      src={event.image_url}
+                      alt={event.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
                   </div>
                 )}
 
