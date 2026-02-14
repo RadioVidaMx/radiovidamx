@@ -30,7 +30,8 @@ export default function NewEventPage() {
         location: "",
         description: "",
         featured: false,
-        image_url: ""
+        image_url: "",
+        link: ""
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -153,6 +154,19 @@ export default function NewEventPage() {
                             placeholder="https://ejemplo.com/imagen.jpg"
                             value={formData.image_url}
                             onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                        />
+                    </div>
+
+                    {/* Link (Optional) */}
+                    <div className="space-y-2">
+                        <Label htmlFor="link" className="flex items-center gap-2">
+                            Más Información (URL opcional)
+                        </Label>
+                        <Input
+                            id="link"
+                            placeholder="https://facebook.com/eventos/..."
+                            value={formData.link}
+                            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                         />
                     </div>
 

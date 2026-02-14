@@ -25,6 +25,7 @@ export type Event = {
     description: string
     featured: boolean
     image_url?: string
+    link?: string
     created_at: string
     updated_at: string
 }

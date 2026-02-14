@@ -35,7 +35,8 @@ export default function EditEventPage() {
         location: "",
         description: "",
         featured: false,
-        image_url: ""
+        image_url: "",
+        link: ""
     })
 
     useEffect(() => {
@@ -59,7 +60,8 @@ export default function EditEventPage() {
                     location: data.location,
                     description: data.description,
                     featured: data.featured,
-                    image_url: data.image_url || ""
+                    image_url: data.image_url || "",
+                    link: data.link || ""
                 })
             }
         } catch (error: any) {
@@ -199,6 +201,19 @@ export default function EditEventPage() {
                             placeholder="https://ejemplo.com/imagen.jpg"
                             value={formData.image_url}
                             onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                        />
+                    </div>
+
+                    {/* Link (Optional) */}
+                    <div className="space-y-2">
+                        <Label htmlFor="link" className="flex items-center gap-2">
+                            Más Información (URL opcional)
+                        </Label>
+                        <Input
+                            id="link"
+                            placeholder="https://facebook.com/eventos/..."
+                            value={formData.link}
+                            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                         />
                     </div>
 

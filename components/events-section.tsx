@@ -129,9 +129,19 @@ export function EventsSection() {
                   <Button
                     variant="outline"
                     className="group/btn border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+                    asChild={!!event.link}
                   >
-                    Más Información
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                    {event.link ? (
+                      <a href={event.link} target="_blank" rel="noopener noreferrer">
+                        Más Información
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </a>
+                    ) : (
+                      <>
+                        Más Información
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
