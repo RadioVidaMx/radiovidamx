@@ -60,6 +60,42 @@ export type GalleryImage = {
     created_at: string
 }
 
+export type Profile = {
+    id: string
+    full_name: string
+    avatar_url?: string
+    role: 'reader' | 'admin'
+    updated_at: string
+}
+
+export type Article = {
+    id: string
+    title: string
+    slug: string
+    content: string
+    author_id: string
+    author_name: string
+    image_url?: string
+    likes_count: number
+    created_at: string
+    updated_at: string
+}
+
+export type Comment = {
+    id: string
+    article_id: string
+    user_id: string
+    content: string
+    created_at: string
+    profiles?: Profile // For joining
+}
+
+export type ArticleLike = {
+    id: string
+    article_id: string
+    user_id: string
+}
+
 // Note: The instruction mentioned updating a supabase query in 'EventsSection'.
 // As this file only contains type definitions and client initialization,
 // and does not have an 'EventsSection' or any query fetching events,

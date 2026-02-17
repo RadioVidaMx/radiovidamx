@@ -6,51 +6,89 @@ import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Radio, Lock, Mail, AlertCircle } from "lucide-react"
+import { Radio, Lock, Mail, AlertCircle, User, Loader2 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
 export default function LoginPage() {
     const router = useRouter()
+    const [mode, setMode] = useState<'login' | 'register'>('login')
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [fullName, setFullName] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         setError("")
+        setSuccess("")
 
         try {
-            console.log("Attempting login for:", email)
-            const { data, error: signInError } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            })
+            if (mode === 'login') {
+                const { data, error: signInError } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                })
 
-            if (signInError) {
-                console.error("Supabase Login Error Detail:", signInError)
-                setError(`Error: ${signInError.message} (Status: ${signInError.status || 'unknown'})`)
-                setLoading(false)
-                return
-            }
+                if (signInError) throw signInError
 
-            console.log("Login success for:", data.user?.email)
+                // Sync session to cookies
+                const { session } = data
+                if (session) {
+                    document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${session.expires_in}; SameSite=Lax`
+                }
 
-            // Sync session to cookies for middleware/server-side checks
-            const { session } = data
-            if (session) {
-                document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${session.expires_in}; SameSite=Lax`
-            }
+                // Ensure profile exists (Sync if missing)
+                if (data.user) {
+                    await supabase.from("profiles").upsert({
+                        id: data.user.id,
+                        updated_at: new Date().toISOString()
+                    }, { onConflict: 'id' })
+                }
 
-            if (data.user) {
-                // Use router.push for smooth navigation that preserves audio player state
-                router.push("/admin/dashboard")
+                // Redirect based on previous page or default
+                const urlParams = new URLSearchParams(window.location.search)
+                const next = urlParams.get('next')
+                router.push(next || "/admin/dashboard")
+            } else {
+                // Register
+                const { data, error: signUpError } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            full_name: fullName
+                        }
+                    }
+                })
+
+                if (signUpError) throw signUpError
+
+                if (data.user) {
+                    // Create profile
+                    const { error: profileError } = await supabase.from("profiles").insert([
+                        {
+                            id: data.user.id,
+                            full_name: fullName,
+                            role: 'reader'
+                        }
+                    ])
+                    if (profileError) console.error("Profile creation error:", profileError)
+
+                    setSuccess("¡Registro exitoso! Por favor revisa tu correo para confirmar tu cuenta.")
+                    // If email confirmation is disabled, we might have a session already
+                    if (data.session) {
+                        router.push("/articulos")
+                    }
+                }
             }
         } catch (err: any) {
-            console.error("Catch Error:", err)
-            setError(`Error inesperado: ${err.message || "Por favor intenta de nuevo."}`)
+            console.error("Auth Error:", err)
+            setError(err.message || "Ocurrió un error inesperado.")
+        } finally {
             setLoading(false)
         }
     }
@@ -72,24 +110,15 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
-                        Panel de Administración
+                        {mode === 'login' ? "Iniciar Sesión" : "Crear Cuenta"}
                     </h1>
                     <p className="text-muted-foreground">
                         Radio Vida Hermosillo
                     </p>
                 </div>
 
-                {/* Login Card */}
+                {/* Auth Card */}
                 <div className="bg-card rounded-2xl border border-border shadow-lg p-8">
-                    <div className="mb-6">
-                        <h2 className="text-xl font-semibold text-foreground mb-1">
-                            Iniciar Sesión
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                            Ingresa tus credenciales para acceder
-                        </p>
-                    </div>
-
                     {/* Error Message */}
                     {error && (
                         <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-xl flex items-start gap-3">
@@ -98,8 +127,35 @@ export default function LoginPage() {
                         </div>
                     )}
 
-                    {/* Login Form */}
-                    <form onSubmit={handleLogin} className="space-y-5">
+                    {/* Success Message */}
+                    {success && (
+                        <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-start gap-3">
+                            <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-primary">{success}</p>
+                        </div>
+                    )}
+
+                    {/* Form */}
+                    <form onSubmit={handleAuth} className="space-y-4">
+                        {mode === 'register' && (
+                            <div className="space-y-2">
+                                <Label htmlFor="fullName" className="text-sm font-medium">
+                                    Nombre Completo
+                                </Label>
+                                <div className="relative">
+                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                                    <Input
+                                        id="fullName"
+                                        placeholder="Tu nombre"
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
+                                        required
+                                        className="pl-10"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-sm font-medium">
                                 Correo Electrónico
@@ -114,8 +170,6 @@ export default function LoginPage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                     className="pl-10"
-                                    disabled={loading}
-                                    autoComplete="email"
                                 />
                             </div>
                         </div>
@@ -134,51 +188,46 @@ export default function LoginPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     className="pl-10"
-                                    disabled={loading}
-                                    autoComplete="current-password"
                                 />
                             </div>
                         </div>
 
                         <Button
                             type="submit"
-                            disabled={loading}
-                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                            disabled={loading || success !== ""}
+                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-11"
                         >
                             {loading ? (
                                 <>
-                                    <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin mr-2" />
-                                    Iniciando sesión...
+                                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                                    Procesando...
                                 </>
                             ) : (
-                                "Iniciar Sesión"
+                                mode === 'login' ? "Iniciar Sesión" : "Registrarse"
                             )}
                         </Button>
                     </form>
 
-                    {/* Diagnostic Info (Only shown on error) */}
-                    {error && (
-                        <div className="mt-6 p-3 bg-muted rounded-lg text-[10px] font-mono break-all opacity-70">
-                            <p className="font-bold mb-1 uppercase tracking-wider">Detalles Técnicos:</p>
-                            <p>URL: {process.env.NEXT_PUBLIC_SUPABASE_URL}</p>
-                            <p>Key Length: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length} chars</p>
-                        </div>
-                    )}
-
-                    {/* Footer */}
-                    <div className="mt-6 pt-6 border-t border-border">
-                        <p className="text-xs text-center text-muted-foreground">
-                            ¿Problemas para acceder? Contacta al administrador del sistema.
-                        </p>
+                    {/* Toggle Mode */}
+                    <div className="mt-6 text-center">
+                        <button
+                            onClick={() => {
+                                setMode(mode === 'login' ? 'register' : 'login')
+                                setError("")
+                                setSuccess("")
+                            }}
+                            className="text-sm text-primary hover:underline font-medium"
+                        >
+                            {mode === 'login'
+                                ? "¿No tienes cuenta? Regístrate aquí"
+                                : "¿Ya tienes cuenta? Inicia sesión"}
+                        </button>
                     </div>
                 </div>
 
-                {/* Back to Site */}
-                <div className="mt-6 text-center">
-                    <Link
-                        href="/"
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                    >
+                {/* Back Link */}
+                <div className="mt-8 text-center">
+                    <Link href="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                         ← Volver al sitio web
                     </Link>
                 </div>

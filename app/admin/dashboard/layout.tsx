@@ -11,7 +11,8 @@ import {
     Image as ImageIcon,
     LogOut,
     Menu,
-    X
+    X,
+    FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -20,6 +21,7 @@ import { cn } from "@/lib/utils"
 
 const navigation = [
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+    { name: "Artículos", href: "/admin/dashboard/articulos", icon: FileText },
     { name: "Eventos", href: "/admin/dashboard/eventos", icon: Calendar },
     { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv },
     { name: "Videos", href: "/admin/dashboard/videos", icon: Video },

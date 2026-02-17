@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/#eventos", label: "Eventos" },
   { href: "/#donaciones", label: "Donaciones" },
   { href: "/#videos", label: "Videos" },
+  { href: "/articulos", label: "Artículos" },
   { href: "/#contacto", label: "Contacto" },
 ]
 

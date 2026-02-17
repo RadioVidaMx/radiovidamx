@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon } from "lucide-react"
+import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon, FileText } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -12,17 +12,19 @@ export default function DashboardPage() {
         programs: 0,
         videos: 0,
         gallery: 0,
+        articles: 0,
     })
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const [eventsCount, programsCount, videosCount, galleryCount] = await Promise.all([
+                const [eventsCount, programsCount, videosCount, galleryCount, articlesCount] = await Promise.all([
                     supabase.from("events").select("*", { count: "exact", head: true }),
                     supabase.from("programs").select("*", { count: "exact", head: true }),
                     supabase.from("videos").select("*", { count: "exact", head: true }),
                     supabase.from("gallery").select("*", { count: "exact", head: true }),
+                    supabase.from("articles").select("*", { count: "exact", head: true }),
                 ])
 
                 setStats({
@@ -30,6 +32,7 @@ export default function DashboardPage() {
                     programs: programsCount.count || 0,
                     videos: videosCount.count || 0,
                     gallery: galleryCount.count || 0,
+                    articles: articlesCount.count || 0,
                 })
             } catch (error) {
                 console.error("Error fetching stats:", error)
@@ -42,6 +45,14 @@ export default function DashboardPage() {
     }, [])
 
     const statCards = [
+        {
+            title: "Artículos",
+            value: stats.articles,
+            icon: FileText,
+            href: "/admin/dashboard/articulos",
+            color: "text-blue-600",
+            bg: "bg-blue-600/10",
+        },
         {
             title: "Eventos",
             value: stats.events,
@@ -120,8 +131,14 @@ export default function DashboardPage() {
                     Acciones Rápidas
                 </h2>
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <Link href="/admin/dashboard/eventos/nuevo">
+                    <Link href="/admin/dashboard/articulos/nuevo">
                         <Button className="w-full justify-start bg-primary hover:bg-primary/90">
+                            <FileText className="w-4 h-4 mr-2" />
+                            Nuevo Artículo
+                        </Button>
+                    </Link>
+                    <Link href="/admin/dashboard/eventos/nuevo">
+                        <Button variant="outline" className="w-full justify-start">
                             <Calendar className="w-4 h-4 mr-2" />
                             Nuevo Evento
                         </Button>
