@@ -12,7 +12,8 @@ import {
     ThumbsUp,
     MessageSquare,
     Loader2,
-    Calendar
+    Calendar,
+    User
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -123,7 +124,10 @@ export default function ArticlesAdminPage() {
                                 )}
 
                                 <div className="space-y-1 min-w-0">
-                                    <h3 className="font-bold text-lg text-foreground line-clamp-1">{article.title}</h3>
+                                    <h3
+                                        className="font-bold text-lg text-foreground line-clamp-1"
+                                        dangerouslySetInnerHTML={{ __html: article.title }}
+                                    />
                                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-1.5 text-foreground/70">
                                             <User className="w-3.5 h-3.5" />

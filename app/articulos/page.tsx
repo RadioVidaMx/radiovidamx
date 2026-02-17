@@ -110,7 +110,7 @@ export default function ArticlesPage() {
                                             <div className="relative aspect-[16/9] overflow-hidden">
                                                 <Image
                                                     src={article.image_url}
-                                                    alt={article.title}
+                                                    alt={article.title.replace(/<[^>]*>/g, '')}
                                                     fill
                                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                                     loading="lazy"
@@ -128,9 +128,10 @@ export default function ArticlesPage() {
                                                 {new Date(article.created_at).toLocaleDateString()}
                                             </div>
 
-                                            <h3 className="font-serif text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                                                {article.title}
-                                            </h3>
+                                            <h3
+                                                className="font-serif text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors"
+                                                dangerouslySetInnerHTML={{ __html: article.title }}
+                                            />
 
                                             <div className="flex items-center gap-2 text-sm text-foreground/70 mb-4">
                                                 <User className="w-4 h-4 text-primary" />

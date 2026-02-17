@@ -18,6 +18,8 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
+
 export default function NewArticlePage() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
@@ -28,8 +30,10 @@ export default function NewArticlePage() {
         image_url: "",
     })
 
-    const generateSlug = (title: string) => {
-        return title
+    const generateSlug = (titleHtml: string) => {
+        // Strip HTML tags for slug
+        const plainTitle = titleHtml.replace(/<[^>]*>/g, '')
+        return plainTitle
             .toLowerCase()
             .trim()
             .replace(/[^\w\s-]/g, '')
@@ -39,6 +43,17 @@ export default function NewArticlePage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!formData.title.trim() || formData.title === "<p></p>") {
+            alert("Por favor ingresa un título.")
+            return
+        }
+
+        if (!formData.content.trim() || formData.content === "<p></p>") {
+            alert("Por favor ingresa el contenido del artículo.")
+            return
+        }
+
         setLoading(true)
 
         try {
@@ -96,15 +111,12 @@ export default function NewArticlePage() {
                     <div className="space-y-2">
                         <Label htmlFor="title" className="flex items-center gap-2">
                             <FileText className="w-4 h-4 text-primary" />
-                            Título del Artículo
+                            Título del Artículo (opcional: negrita, cursiva)
                         </Label>
-                        <Input
-                            id="title"
-                            placeholder="Ej: La importancia de la fe en tiempos de prueba"
+                        <RichTextEditor
                             value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            required
-                            className="text-lg font-medium"
+                            onChange={(val) => setFormData({ ...formData, title: val })}
+                            placeholder="Título con estilo..."
                         />
                     </div>
 
@@ -144,19 +156,15 @@ export default function NewArticlePage() {
                             <FileText className="w-4 h-4 text-primary" />
                             Contenido del Artículo
                         </Label>
-                        <Textarea
-                            id="content"
-                            placeholder="Escribe aquí tu reflexión..."
+                        <RichTextEditor
                             value={formData.content}
-                            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                            required
-                            className="min-h-[400px] leading-relaxed resize-y"
+                            onChange={(val) => setFormData({ ...formData, content: val })}
                         />
-                        <p className="text-xs text-muted-foreground italic">Puedes usar saltos de línea para separar párrafos.</p>
+                        <p className="text-xs text-muted-foreground italic text-right">El editor soporta negrita, cursiva, subrayado y listas.</p>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-end gap-4 pb-20">
                     <Link href="/admin/dashboard/articulos">
                         <Button variant="outline" type="button" disabled={loading}>
                             Cancelar

@@ -214,9 +214,10 @@ export default function ArticleDetailPage() {
                 {/* Article Header */}
                 <article className="space-y-8">
                     <div className="space-y-4">
-                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                            {article.title}
-                        </h1>
+                        <h1
+                            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+                            dangerouslySetInnerHTML={{ __html: article.title }}
+                        />
 
                         <div className="flex flex-wrap items-center gap-6 text-muted-foreground border-b border-border pb-6">
                             <div className="flex items-center gap-2">
@@ -234,12 +235,12 @@ export default function ArticleDetailPage() {
                         </div>
                     </div>
 
-                    {/* Featured Image */}
+                    {/* Image */}
                     {article.image_url && (
-                        <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-lg">
+                        <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl">
                             <Image
                                 src={article.image_url}
-                                alt={article.title}
+                                alt={article.title.replace(/<[^>]*>/g, '')}
                                 fill
                                 className="object-cover"
                                 priority
@@ -248,9 +249,10 @@ export default function ArticleDetailPage() {
                     )}
 
                     {/* Article Content */}
-                    <div className="prose prose-lg max-w-none text-foreground/90 leading-relaxed whitespace-pre-wrap">
-                        {article.content}
-                    </div>
+                    <div
+                        className="prose prose-lg max-w-none text-foreground/90 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: article.content }}
+                    />
 
                     {/* Engagement Buttons */}
                     <div className="flex items-center justify-between border-y border-border py-6 my-12">
