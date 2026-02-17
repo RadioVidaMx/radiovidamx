@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon, FileText } from "lucide-react"
+import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon, FileText, Plus } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
