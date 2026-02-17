@@ -133,8 +133,14 @@ export default function DashboardPage() {
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <Link href="/admin/dashboard/articulos/nuevo">
                         <Button className="w-full justify-start bg-primary hover:bg-primary/90">
-                            <FileText className="w-4 h-4 mr-2" />
+                            <Plus className="w-4 h-4 mr-2" />
                             Nuevo Artículo
+                        </Button>
+                    </Link>
+                    <Link href="/admin/dashboard/articulos">
+                        <Button variant="outline" className="w-full justify-start">
+                            <FileText className="w-4 h-4 mr-2" />
+                            Gestionar Artículos
                         </Button>
                     </Link>
                     <Link href="/admin/dashboard/eventos/nuevo">

@@ -94,103 +94,88 @@ export default function ArticlesAdminPage() {
             </div>
 
             {/* Articles List */}
-            <div className="bg-card border border-border rounded-2xl overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="border-b border-border bg-muted/30">
-                                <th className="p-4 text-sm font-semibold">Artículo</th>
-                                <th className="p-4 text-sm font-semibold text-center">Likes / Comentarios</th>
-                                <th className="p-4 text-sm font-semibold">Fecha</th>
-                                <th className="p-4 text-sm font-semibold text-right">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-border">
-                            {loading ? (
-                                <tr>
-                                    <td colSpan={4} className="p-12 text-center text-muted-foreground">
-                                        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2" />
-                                        Cargando artículos...
-                                    </td>
-                                </tr>
-                            ) : filteredArticles.length === 0 ? (
-                                <tr>
-                                    <td colSpan={4} className="p-12 text-center text-muted-foreground">
-                                        No se encontraron artículos.
-                                    </td>
-                                </tr>
-                            ) : (
-                                filteredArticles.map((article) => (
-                                    <tr key={article.id} className="hover:bg-muted/10 transition-colors">
-                                        <td className="p-4">
-                                            <div className="flex items-center gap-3">
-                                                {article.image_url ? (
-                                                    <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
-                                                        <Image
-                                                            src={article.image_url}
-                                                            alt={article.title}
-                                                            fill
-                                                            className="object-cover"
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                                        <FileText className="w-6 h-6 text-primary" />
-                                                    </div>
-                                                )}
-                                                <div>
-                                                    <p className="font-semibold text-foreground line-clamp-1">{article.title}</p>
-                                                    <p className="text-xs text-muted-foreground">Por: {article.author_name}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="p-4">
-                                            <div className="flex items-center justify-center gap-4 text-sm">
-                                                <div className="flex items-center gap-1 text-primary">
-                                                    <ThumbsUp className="w-4 h-4" />
-                                                    {article.likes_count}
-                                                </div>
-                                                <div className="flex items-center gap-1 text-secondary">
-                                                    <MessageSquare className="w-4 h-4" />
-                                                    {/* We could fetch comment count here or just show 0 for now */}
-                                                    0
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="p-4">
-                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                <Calendar className="w-4 h-4" />
-                                                {new Date(article.created_at).toLocaleDateString()}
-                                            </div>
-                                        </td>
-                                        <td className="p-4 text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                <Button variant="ghost" size="icon" asChild>
-                                                    <Link href={`/articulos/${article.slug}`} target="_blank">
-                                                        <Eye className="w-4 h-4" />
-                                                    </Link>
-                                                </Button>
-                                                <Button variant="ghost" size="icon" asChild>
-                                                    <Link href={`/admin/dashboard/articulos/${article.id}`}>
-                                                        <Edit className="w-4 h-4" />
-                                                    </Link>
-                                                </Button>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                                                    onClick={() => handleDelete(article.id)}
-                                                >
-                                                    <Trash2 className="w-4 h-4" />
-                                                </Button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="grid gap-4">
+                {loading ? (
+                    <div className="py-20 flex justify-center">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                    </div>
+                ) : filteredArticles.length > 0 ? (
+                    filteredArticles.map((article) => (
+                        <div
+                            key={article.id}
+                            className="bg-card border border-border rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-6 hover:shadow-md transition-shadow"
+                        >
+                            {/* Article Info */}
+                            <div className="flex-1 flex gap-4 min-w-0">
+                                {article.image_url ? (
+                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted border border-border/50">
+                                        <Image
+                                            src={article.image_url}
+                                            alt={article.title}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
+                                        <FileText className="w-8 h-8 text-primary" />
+                                    </div>
+                                )}
+
+                                <div className="space-y-1 min-w-0">
+                                    <h3 className="font-bold text-lg text-foreground line-clamp-1">{article.title}</h3>
+                                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                                        <div className="flex items-center gap-1.5 text-foreground/70">
+                                            <User className="w-3.5 h-3.5" />
+                                            {article.author_name}
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <Calendar className="w-3.5 h-3.5" />
+                                            {new Date(article.created_at).toLocaleDateString()}
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <ThumbsUp className="w-3.5 h-3.5 text-primary" />
+                                            {article.likes_count}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                                <Button variant="outline" size="sm" asChild>
+                                    <Link href={`/articulos/${article.slug}`} target="_blank">
+                                        <Eye className="w-4 h-4 mr-2" />
+                                        Ver
+                                    </Link>
+                                </Button>
+
+                                <Button variant="outline" size="sm" asChild>
+                                    <Link href={`/admin/dashboard/articulos/${article.id}`}>
+                                        <Edit className="w-4 h-4 mr-2" />
+                                        Editar
+                                    </Link>
+                                </Button>
+
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    onClick={() => handleDelete(article.id)}
+                                >
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    Eliminar
+                                </Button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="text-center py-20 bg-muted/20 border-2 border-dashed border-border rounded-2xl">
+                        <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+                        <h3 className="text-lg font-medium text-foreground">No se encontraron artículos</h3>
+                        <p className="text-muted-foreground">Prueba otra búsqueda o crea un nuevo artículo.</p>
+                    </div>
+                )}
             </div>
         </div>
     )
