@@ -155,7 +155,7 @@ export default function DashboardPage() {
                             Editar Programación
                         </Button>
                     </Link>
-                    <Link href="/admin/dashboard/videos/nuevo">
+                    <Link href="/admin/dashboard/videos">
                         <Button variant="outline" className="w-full justify-start">
                             <Video className="w-4 h-4 mr-2" />
                             Agregar Video
