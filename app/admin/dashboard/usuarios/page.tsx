@@ -110,7 +110,8 @@ export default function AdminUsersPage() {
                     auth: {
                         persistSession: false,
                         autoRefreshToken: false,
-                        detectSessionInUrl: false
+                        detectSessionInUrl: false,
+                        storageKey: 'supabase.auth.temp_admin_provisioning'
                     }
                 }
             )
@@ -135,8 +136,7 @@ export default function AdminUsersPage() {
                         id: data.user.id,
                         full_name: formData.fullName,
                         role: formData.role,
-                        phone: formData.phone,
-                        email: formData.email // Opcional, pero útil
+                        phone: formData.phone
                     })
 
                 if (profileError) throw profileError
@@ -260,6 +260,9 @@ export default function AdminUsersPage() {
                             <UserPlus className="w-5 h-5 text-primary" />
                             Agregar Nuevo Usuario
                         </DialogTitle>
+                        <p className="text-sm text-muted-foreground mt-1">
+                            Completa los datos para crear una nueva cuenta.
+                        </p>
                     </DialogHeader>
 
                     <form onSubmit={handleCreateUser} className="grid gap-5 py-4">
