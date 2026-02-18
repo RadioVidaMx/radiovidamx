@@ -161,6 +161,7 @@ export default function ArticleDetailPage() {
             if (error) throw error
 
             setComments([...comments, data])
+            setArticle(prev => prev ? { ...prev, comments_count: (prev.comments_count || 0) + 1 } : null)
             setNewComment("")
         } catch (error) {
             console.error("Error posting comment:", error)
