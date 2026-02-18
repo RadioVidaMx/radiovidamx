@@ -146,8 +146,7 @@ export default function ArticlesPage() {
                                                     </span>
                                                     <span className="flex items-center gap-1">
                                                         <MessageSquare className="w-4 h-4" />
-                                                        {/* Static for now */}
-                                                        0
+                                                        {article.comments_count || 0}
                                                     </span>
                                                 </div>
                                                 <span className="text-primary font-medium text-sm flex items-center gap-1 group-hover:underline">

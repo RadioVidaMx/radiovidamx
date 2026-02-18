@@ -111,13 +111,8 @@ export default function ArticleDetailPage() {
 
             if (likeError) throw likeError
 
-            const { error: updateError } = await supabase
-                .from("articles")
-                .update({ likes_count: (article?.likes_count || 0) + 1 })
-                .eq("id", article?.id)
-
-            if (updateError) throw updateError
-
+            // No necesitamos actualizar manual el contador en DB, el Trigger SQL se encarga.
+            // Pero actualizamos el estado local para feedback inmediato.
             setHasLiked(true)
             setArticle(prev => prev ? { ...prev, likes_count: prev.likes_count + 1 } : null)
         } catch (error) {
@@ -230,7 +225,7 @@ export default function ArticleDetailPage() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <MessageSquare className="w-5 h-5" />
-                                <span>{comments.length} comentarios</span>
+                                <span>{article.comments_count || 0} comentarios</span>
                             </div>
                         </div>
                     </div>
