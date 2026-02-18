@@ -136,7 +136,8 @@ export default function AdminUsersPage() {
                         id: data.user.id,
                         full_name: formData.fullName,
                         role: formData.role,
-                        phone: formData.phone
+                        phone: formData.phone,
+                        email: formData.email
                     })
 
                 if (profileError) throw profileError
@@ -280,48 +281,56 @@ export default function AdminUsersPage() {
                         )}
 
                         <div className="grid gap-2">
-                            <Label htmlFor="name">Nombre Completo</Label>
+                            <Label htmlFor="fullName">Nombre Completo</Label>
                             <Input
-                                id="name"
+                                id="fullName"
+                                name="fullName"
                                 required
                                 value={formData.fullName}
                                 onChange={e => setFormData({ ...formData, fullName: e.target.value })}
                                 placeholder="Ej: Juan Pérez"
+                                autoComplete="name"
                             />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Correo Electrónico</Label>
+                            <Label htmlFor="userEmail">Correo Electrónico</Label>
                             <Input
-                                id="email"
+                                id="userEmail"
+                                name="email"
                                 type="email"
                                 required
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 placeholder="juan@ejemplo.com"
+                                autoComplete="email"
                             />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Contraseña Temporal</Label>
+                            <Label htmlFor="tempPassword">Contraseña Temporal</Label>
                             <Input
-                                id="password"
+                                id="tempPassword"
+                                name="password"
                                 type="password"
                                 required
                                 minLength={6}
                                 value={formData.password}
                                 onChange={e => setFormData({ ...formData, password: e.target.value })}
                                 placeholder="******"
+                                autoComplete="new-password"
                             />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="phone">Celular</Label>
+                            <Label htmlFor="userPhone">Celular</Label>
                             <Input
-                                id="phone"
+                                id="userPhone"
+                                name="phone"
                                 value={formData.phone}
                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="6621234567"
+                                autoComplete="tel"
                             />
                         </div>
 
