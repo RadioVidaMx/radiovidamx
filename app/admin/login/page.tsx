@@ -81,6 +81,7 @@ export default function LoginPage() {
                         {
                             id: data.user.id,
                             full_name: fullName,
+                            email: email,
                             role: 'reader'
                         }
                     ])
