@@ -42,19 +42,23 @@ export default function LoginPage() {
                 }
 
                 // Fetch user role for redirection
-                const { data: profile } = await supabase
+                const { data: profile, error: profileError } = await supabase
                     .from("profiles")
                     .select("role")
                     .eq("id", user?.id)
                     .single()
 
+                if (profileError) console.error("Login profile fetch error:", profileError)
+
                 // Redirect based on role
                 const urlParams = new URLSearchParams(window.location.search)
                 const next = urlParams.get('next')
 
-                if (profile?.role === 'reader') {
+                if (profile?.role === 'reader' || !profile) {
+                    // Si es reader o no tiene perfil todavía, al sitio público
                     router.push("/articulos")
                 } else {
+                    // Admin, writer, asist, galery van al dashboard
                     router.push(next || "/admin/dashboard")
                 }
             } else {
