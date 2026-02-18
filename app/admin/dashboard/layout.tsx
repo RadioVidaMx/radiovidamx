@@ -48,25 +48,37 @@ export default function AdminLayout({
             const { data: { user: authUser } } = await supabase.auth.getUser()
 
             if (!authUser) {
+                console.log("DashboardLayout: No user found, redirecting to login")
                 router.push("/admin/login")
                 return
             }
 
             // Fetch profile for role
-            const { data: userProfile } = await supabase
+            const { data: userProfile, error: profileError } = await supabase
                 .from("profiles")
                 .select("*")
                 .eq("id", authUser.id)
                 .single()
 
-            if (!userProfile || userProfile.role === 'reader') {
-                router.push("/") // Readers shouldn't be here
+            if (profileError) {
+                console.error("DashboardLayout: Profile fetch error:", profileError)
+            }
+
+            console.log("DashboardLayout: User role is:", userProfile?.role)
+
+            const allowedRoles = ["admin", "writer", "asist", "galery"]
+            const userRole = userProfile?.role
+
+            if (!userProfile || !allowedRoles.includes(userRole)) {
+                console.warn(`DashboardLayout: Access denied for role '${userRole}'. Redirecting to public site.`)
+                router.push("/")
                 return
             }
 
             // Check if user is accessing an unauthorized module via URL
             const currentItem = navigation.find(item => pathname === item.href || (item.href !== "/admin/dashboard" && pathname?.startsWith(item.href + "/")))
-            if (currentItem && !currentItem.roles.includes(userProfile.role)) {
+            if (currentItem && !currentItem.roles.includes(userRole)) {
+                console.warn(`DashboardLayout: Role ${userRole} not authorized for ${pathname}, redirecting to dashboard root`)
                 router.push("/admin/dashboard")
                 return
             }
