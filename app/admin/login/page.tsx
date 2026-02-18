@@ -36,23 +36,27 @@ export default function LoginPage() {
                 if (signInError) throw signInError
 
                 // Sync session to cookies
-                const { session } = data
+                const { session, user } = data
                 if (session) {
                     document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${session.expires_in}; SameSite=Lax`
                 }
 
-                // Ensure profile exists (Sync if missing)
-                if (data.user) {
-                    await supabase.from("profiles").upsert({
-                        id: data.user.id,
-                        updated_at: new Date().toISOString()
-                    }, { onConflict: 'id' })
-                }
+                // Fetch user role for redirection
+                const { data: profile } = await supabase
+                    .from("profiles")
+                    .select("role")
+                    .eq("id", user?.id)
+                    .single()
 
-                // Redirect based on previous page or default
+                // Redirect based on role
                 const urlParams = new URLSearchParams(window.location.search)
                 const next = urlParams.get('next')
-                router.push(next || "/admin/dashboard")
+
+                if (profile?.role === 'reader') {
+                    router.push("/articulos")
+                } else {
+                    router.push(next || "/admin/dashboard")
+                }
             } else {
                 // Register
                 const { data, error: signUpError } = await supabase.auth.signUp({
@@ -68,7 +72,7 @@ export default function LoginPage() {
                 if (signUpError) throw signUpError
 
                 if (data.user) {
-                    // Create profile
+                    // Create profile with 'reader' role by default
                     const { error: profileError } = await supabase.from("profiles").insert([
                         {
                             id: data.user.id,
@@ -78,10 +82,17 @@ export default function LoginPage() {
                     ])
                     if (profileError) console.error("Profile creation error:", profileError)
 
-                    setSuccess("¡Registro exitoso! Por favor revisa tu correo para confirmar tu cuenta.")
                     // If email confirmation is disabled, we might have a session already
                     if (data.session) {
-                        router.push("/articulos")
+                        setSuccess("¡Cuenta creada exitosamente! Redirigiendo...")
+                        // Sync session to cookies
+                        document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${data.session.expires_in}; SameSite=Lax`
+
+                        setTimeout(() => {
+                            router.push("/articulos")
+                        }, 1500)
+                    } else {
+                        setSuccess("¡Registro exitoso! Ya puedes iniciar sesión (asegúrate de haber confirmado tu correo si es necesario).")
                     }
                 }
             }

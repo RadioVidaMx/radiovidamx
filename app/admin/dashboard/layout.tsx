@@ -12,7 +12,8 @@ import {
     LogOut,
     Menu,
     X,
-    FileText
+    FileText,
+    Users
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -20,12 +21,13 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { name: "Artículos", href: "/admin/dashboard/articulos", icon: FileText },
-    { name: "Eventos", href: "/admin/dashboard/eventos", icon: Calendar },
-    { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv },
-    { name: "Videos", href: "/admin/dashboard/videos", icon: Video },
-    { name: "Galería", href: "/admin/dashboard/galeria", icon: ImageIcon },
+    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, roles: ["admin", "writer", "asist", "galery"] },
+    { name: "Artículos", href: "/admin/dashboard/articulos", icon: FileText, roles: ["admin", "writer"] },
+    { name: "Eventos", href: "/admin/dashboard/eventos", icon: Calendar, roles: ["admin", "asist"] },
+    { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv, roles: ["admin", "asist"] },
+    { name: "Videos", href: "/admin/dashboard/videos", icon: Video, roles: ["admin", "galery"] },
+    { name: "Galería", href: "/admin/dashboard/galeria", icon: ImageIcon, roles: ["admin", "galery"] },
+    { name: "Usuarios", href: "/admin/dashboard/usuarios", icon: Users, roles: ["admin"] },
 ]
 
 export default function AdminLayout({
@@ -37,31 +39,61 @@ export default function AdminLayout({
     const pathname = usePathname()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [user, setUser] = useState<any>(null)
+    const [profile, setProfile] = useState<any>(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser()
-            if (!user) {
+        const checkUser = async () => {
+            setLoading(true)
+            const { data: { user: authUser } } = await supabase.auth.getUser()
+
+            if (!authUser) {
                 router.push("/admin/login")
-            } else {
-                setUser(user)
+                return
             }
+
+            // Fetch profile for role
+            const { data: userProfile } = await supabase
+                .from("profiles")
+                .select("*")
+                .eq("id", authUser.id)
+                .single()
+
+            if (!userProfile || userProfile.role === 'reader') {
+                router.push("/") // Readers shouldn't be here
+                return
+            }
+
+            // Check if user is accessing an unauthorized module via URL
+            const currentItem = navigation.find(item => pathname === item.href || (item.href !== "/admin/dashboard" && pathname?.startsWith(item.href + "/")))
+            if (currentItem && !currentItem.roles.includes(userProfile.role)) {
+                router.push("/admin/dashboard")
+                return
+            }
+
+            setUser(authUser)
+            setProfile(userProfile)
+            setLoading(false)
         }
-        getUser()
-    }, [router])
+        checkUser()
+    }, [router, pathname])
 
     const handleLogout = async () => {
         await supabase.auth.signOut()
         router.push("/admin/login")
     }
 
-    if (!user) {
+    if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
             </div>
         )
     }
+
+    const filteredNavigation = navigation.filter(item =>
+        item.roles.includes(profile.role)
+    )
 
     return (
         <div className="min-h-screen bg-background">
@@ -99,7 +131,7 @@ export default function AdminLayout({
 
                     {/* Navigation */}
                     <nav className="flex-1 p-4 space-y-1">
-                        {navigation.map((item) => {
+                        {filteredNavigation.map((item) => {
                             const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
                             return (
                                 <Link
@@ -124,7 +156,8 @@ export default function AdminLayout({
                     <div className="p-4 border-t border-secondary-foreground/10">
                         <div className="mb-3 px-4 py-2">
                             <p className="text-xs text-secondary-foreground/60">Conectado como:</p>
-                            <p className="text-sm font-medium truncate">{user.email}</p>
+                            <p className="text-sm font-medium truncate">{profile.full_name || user.email}</p>
+                            <p className="text-[10px] uppercase tracking-wider font-bold text-primary mt-0.5">{profile.role}</p>
                         </div>
                         <Button
                             onClick={handleLogout}
@@ -151,7 +184,7 @@ export default function AdminLayout({
                         </button>
                         <div className="flex-1">
                             <h2 className="text-lg font-semibold text-foreground">
-                                {navigation.find(item => pathname === item.href || pathname?.startsWith(item.href + "/"))?.name || "Dashboard"}
+                                {filteredNavigation.find(item => pathname === item.href || pathname?.startsWith(item.href + "/"))?.name || "Dashboard"}
                             </h2>
                         </div>
                         <Link

@@ -1,11 +1,17 @@
-"use client"
-
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X, User, LogOut, LayoutDashboard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { usePlayer } from "@/contexts/player-context"
+import { supabase } from "@/lib/supabase"
+import { useRouter } from "next/navigation"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navLinks = [
   { href: "/#inicio", label: "Inicio" },
@@ -22,6 +28,46 @@ const navLinks = [
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const { togglePlay, isPlaying } = usePlayer()
+  const [user, setUser] = useState<any>(null)
+  const [profile, setProfile] = useState<any>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+      if (authUser) {
+        setUser(authUser)
+        const { data: userProfile } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", authUser.id)
+          .single()
+        setProfile(userProfile)
+      }
+    }
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setUser(session.user)
+        supabase.from("profiles")
+          .select("*")
+          .eq("id", session.user.id)
+          .single()
+          .then(({ data }) => setProfile(data))
+      } else {
+        setUser(null)
+        setProfile(null)
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push("/")
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
@@ -54,11 +100,39 @@ export function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
-            <Link href="/admin/login">
-              <Button variant="outline" className="border-primary/50 text-foreground hover:bg-primary/10 hover:text-primary">
-                Iniciar Sesión
-              </Button>
-            </Link>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2 px-3 hover:bg-muted group">
+                    <User className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium">Hola, {profile?.full_name?.split(' ')[0] || 'Usuario'}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 mt-2">
+                  <div className="px-2 py-1.5 text-xs text-muted-foreground border-b mb-1">
+                    {user.email}
+                  </div>
+                  {profile?.role !== 'reader' && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/dashboard" className="flex items-center cursor-pointer">
+                        <LayoutDashboard className="w-4 h-4 mr-2" />
+                        Panel de Control
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link href="/admin/login">
+                <Button variant="outline" className="border-primary/50 text-foreground hover:bg-primary/10 hover:text-primary">
+                  Iniciar Sesión
+                </Button>
+              </Link>
+            )}
             <Button
               onClick={togglePlay}
               className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
@@ -92,11 +166,32 @@ export function Header() {
                 </Link>
               ))}
               <div className="pt-4 px-4 flex flex-col gap-2">
-                <Link href="/admin/login" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full">
-                    Iniciar Sesión
-                  </Button>
-                </Link>
+                {user ? (
+                  <>
+                    <div className="px-4 py-2 bg-muted rounded-lg mb-2">
+                      <p className="text-xs text-muted-foreground">Sesión iniciada como:</p>
+                      <p className="text-sm font-bold truncate">{profile?.full_name || user.email}</p>
+                    </div>
+                    {profile?.role !== 'reader' && (
+                      <Link href="/admin/dashboard" onClick={() => setIsOpen(false)}>
+                        <Button variant="outline" className="w-full justify-start">
+                          <LayoutDashboard className="w-4 h-4 mr-2" />
+                          Panel de Control
+                        </Button>
+                      </Link>
+                    )}
+                    <Button variant="ghost" className="w-full justify-start text-destructive" onClick={handleLogout}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Cerrar Sesión
+                    </Button>
+                  </>
+                ) : (
+                  <Link href="/admin/login" onClick={() => setIsOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Iniciar Sesión
+                    </Button>
+                  </Link>
+                )}
                 <Button
                   onClick={() => {
                     togglePlay()

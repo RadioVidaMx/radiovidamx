@@ -32,10 +32,27 @@ export default function ArticlesAdminPage() {
     const fetchArticles = async () => {
         try {
             setLoading(true)
-            const { data, error } = await supabase
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) return
+
+            // Get role
+            const { data: profile } = await supabase
+                .from("profiles")
+                .select("role")
+                .eq("id", user.id)
+                .single()
+
+            let query = supabase
                 .from("articles")
                 .select("*")
                 .order("created_at", { ascending: false })
+
+            // Filter if writer
+            if (profile?.role === 'writer') {
+                query = query.eq("author_id", user.id)
+            }
+
+            const { data, error } = await query
 
             if (error) throw error
             setArticles(data || [])
