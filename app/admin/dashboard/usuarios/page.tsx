@@ -128,15 +128,16 @@ export default function AdminUsersPage() {
             if (signUpError) throw signUpError
 
             if (data.user) {
-                // Actualizar perfil con rol y teléfono
+                // Crear/Actualizar perfil con rol y teléfono
                 const { error: profileError } = await supabase
                     .from("profiles")
-                    .update({
+                    .upsert({
+                        id: data.user.id,
                         full_name: formData.fullName,
                         role: formData.role,
-                        phone: formData.phone
+                        phone: formData.phone,
+                        email: formData.email // Opcional, pero útil
                     })
-                    .eq("id", data.user.id)
 
                 if (profileError) throw profileError
 
