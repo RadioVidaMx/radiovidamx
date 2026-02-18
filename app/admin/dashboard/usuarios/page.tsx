@@ -101,7 +101,21 @@ export default function AdminUsersPage() {
             // o que el admin use el Dashboard de Supabase.
             // Intentaremos registrarlo y si falla por conflicto de sesión, avisaremos.
 
-            const { data, error: signUpError } = await supabase.auth.signUp({
+            // Crear cliente temporal para evitar cerrar sesión del admin
+            const { createClient } = await import('@supabase/supabase-js')
+            const tempSupabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+                {
+                    auth: {
+                        persistSession: false,
+                        autoRefreshToken: false,
+                        detectSessionInUrl: false
+                    }
+                }
+            )
+
+            const { data, error: signUpError } = await tempSupabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
                 options: {
