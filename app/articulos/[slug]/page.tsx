@@ -21,6 +21,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 
 export default function ArticleDetailPage() {
     const params = useParams()
@@ -287,36 +288,54 @@ export default function ArticleDetailPage() {
                                     Aún no hay comentarios. ¡Sé el primero en compartir tu reflexión!
                                 </p>
                             ) : (
-                                comments.map((comment: any) => (
-                                    <div key={comment.id} className="flex gap-4 p-6 bg-card border border-border rounded-2xl">
-                                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                            {comment.profiles?.avatar_url ? (
-                                                <Image
-                                                    src={comment.profiles.avatar_url}
-                                                    alt={comment.profiles.full_name || "Usuario"}
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-full"
-                                                />
-                                            ) : (
-                                                <User className="w-6 h-6 text-primary" />
-                                            )}
-                                        </div>
-                                        <div className="space-y-1">
-                                            <div className="flex items-center gap-2">
-                                                <span className="font-bold text-foreground">
-                                                    {comment.profiles?.full_name || "Lector Anónimo"}
-                                                </span>
-                                                <span className="text-xs text-muted-foreground">
-                                                    {new Date(comment.created_at).toLocaleDateString()} a las {new Date(comment.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                                </span>
+                                {
+                                    comments.map((comment: any) => {
+                                        const isAuthor = comment.user_id === article.author_id;
+                                        return (
+                                            <div
+                                                key={comment.id}
+                                                className={cn(
+                                                    "flex gap-4 p-6 border rounded-2xl transition-all",
+                                                    isAuthor
+                                                        ? "bg-primary/5 border-primary/20 shadow-sm"
+                                                        : "bg-card border-border"
+                                                )}
+                                            >
+                                                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                                    {comment.profiles?.avatar_url ? (
+                                                        <Image
+                                                            src={comment.profiles.avatar_url}
+                                                            alt={comment.profiles.full_name || "Usuario"}
+                                                            width={40}
+                                                            height={40}
+                                                            className="rounded-full"
+                                                        />
+                                                    ) : (
+                                                        <User className="w-6 h-6 text-primary" />
+                                                    )}
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2 flex-wrap">
+                                                        <span className="font-bold text-foreground">
+                                                            {comment.profiles?.full_name || "Lector Anónimo"}
+                                                        </span>
+                                                        {isAuthor && (
+                                                            <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider">
+                                                                Autor
+                                                            </span>
+                                                        )}
+                                                        <span className="text-xs text-muted-foreground whitespace-nowrap">
+                                                            {new Date(comment.created_at).toLocaleDateString()} a las {new Date(comment.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-foreground/80 leading-relaxed text-sm">
+                                                        {comment.content}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <p className="text-foreground/80 leading-relaxed text-sm">
-                                                {comment.content}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))
+                                        );
+                                    })
+                                }
                             )}
                         </div>
 

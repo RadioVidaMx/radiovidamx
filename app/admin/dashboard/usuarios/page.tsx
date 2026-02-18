@@ -13,7 +13,8 @@ import {
     Trash2,
     Loader2,
     CheckCircle2,
-    XCircle
+    XCircle,
+    Pencil
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -60,6 +61,9 @@ export default function AdminUsersPage() {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
 
+    const [isEditing, setIsEditing] = useState(false)
+    const [editingUserId, setEditingUserId] = useState<string | null>(null)
+
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -89,70 +93,105 @@ export default function AdminUsersPage() {
         }
     }
 
-    const handleCreateUser = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setSaving(true)
         setError("")
         setSuccess("")
 
         try {
-            // Nota: Supabase signUp en el cliente generalmente crea sesión.
-            // Para administrar usuarios sin cerrar sesión, lo ideal es una Edge Function 
-            // o que el admin use el Dashboard de Supabase.
-            // Intentaremos registrarlo y si falla por conflicto de sesión, avisaremos.
-
-            // Crear cliente temporal para evitar cerrar sesión del admin
-            const { createClient } = await import('@supabase/supabase-js')
-            const tempSupabase = createClient(
-                process.env.NEXT_PUBLIC_SUPABASE_URL!,
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-                {
-                    auth: {
-                        persistSession: false,
-                        autoRefreshToken: false,
-                        detectSessionInUrl: false,
-                        storageKey: 'supabase.auth.temp_admin_provisioning'
-                    }
-                }
-            )
-
-            const { data, error: signUpError } = await tempSupabase.auth.signUp({
-                email: formData.email,
-                password: formData.password,
-                options: {
-                    data: {
-                        full_name: formData.fullName
-                    }
-                }
-            })
-
-            if (signUpError) throw signUpError
-
-            if (data.user) {
-                // Crear/Actualizar perfil con rol y teléfono
+            if (isEditing && editingUserId) {
+                // Modo Edición: Solo rol y teléfono
                 const { error: profileError } = await supabase
                     .from("profiles")
-                    .upsert({
-                        id: data.user.id,
-                        full_name: formData.fullName,
+                    .update({
                         role: formData.role,
-                        phone: formData.phone,
-                        email: formData.email
+                        phone: formData.phone
                     })
+                    .eq("id", editingUserId)
 
                 if (profileError) throw profileError
 
-                setSuccess("Usuario creado exitosamente. Se ha enviado un correo de confirmación.")
-                setFormData({ fullName: "", email: "", password: "", phone: "", role: "reader" })
-                setTimeout(() => setIsDialogOpen(false), 2000)
+                setSuccess("Usuario actualizado exitosamente.")
+                setTimeout(() => {
+                    setIsDialogOpen(false)
+                    resetForm()
+                }, 1500)
                 fetchUsers()
+            } else {
+                // Modo Creación (Existente)
+                const { createClient } = await import('@supabase/supabase-js')
+                const tempSupabase = createClient(
+                    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+                    {
+                        auth: {
+                            persistSession: false,
+                            autoRefreshToken: false,
+                            detectSessionInUrl: false,
+                            storageKey: 'supabase.auth.temp_admin_provisioning'
+                        }
+                    }
+                )
+
+                const { data, error: signUpError } = await tempSupabase.auth.signUp({
+                    email: formData.email,
+                    password: formData.password,
+                    options: {
+                        data: {
+                            full_name: formData.fullName
+                        }
+                    }
+                })
+
+                if (signUpError) throw signUpError
+
+                if (data.user) {
+                    const { error: profileError } = await supabase
+                        .from("profiles")
+                        .upsert({
+                            id: data.user.id,
+                            full_name: formData.fullName,
+                            role: formData.role,
+                            phone: formData.phone,
+                            email: formData.email
+                        })
+
+                    if (profileError) throw profileError
+
+                    setSuccess("Usuario creado exitosamente.")
+                    setTimeout(() => {
+                        setIsDialogOpen(false)
+                        resetForm()
+                    }, 1500)
+                    fetchUsers()
+                }
             }
         } catch (err: any) {
-            console.error("Create User Error:", err)
-            setError(err.message || "Error al crear el usuario. Es posible que ya exista o necesites usar el Panel de Supabase directamente.")
+            console.error("User Action Error:", err)
+            setError(err.message || "Ocurrió un error al procesar la solicitud.")
         } finally {
             setSaving(false)
         }
+    }
+
+    const resetForm = () => {
+        setFormData({ fullName: "", email: "", password: "", phone: "", role: "reader" })
+        setIsEditing(false)
+        setEditingUserId(null)
+    }
+
+    const openEditDialog = (user: Profile) => {
+        setFormData({
+            fullName: user.full_name || "",
+            email: user.email || "",
+            password: "---", // No se edita por aquí
+            phone: user.phone || "",
+            role: user.role
+        })
+        setEditingUserId(user.id)
+        setIsEditing(true)
+        setIsDialogOpen(true)
     }
 
     const filteredUsers = users.filter(user =>
@@ -167,7 +206,7 @@ export default function AdminUsersPage() {
                     <h1 className="text-2xl font-bold text-foreground">Gestión de Usuarios</h1>
                     <p className="text-muted-foreground">Administra los perfiles y roles de acceso del sistema.</p>
                 </div>
-                <Button onClick={() => setIsDialogOpen(true)} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Button onClick={() => { resetForm(); setIsDialogOpen(true); }} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                     <UserPlus className="w-4 h-4 mr-2" />
                     Nuevo Usuario
                 </Button>
@@ -234,9 +273,19 @@ export default function AdminUsersPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
+                                            <div className="flex items-center gap-2">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="text-primary hover:text-primary hover:bg-primary/10"
+                                                    onClick={() => openEditDialog(user)}
+                                                >
+                                                    <Pencil className="w-4 h-4" />
+                                                </Button>
+                                                <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -258,15 +307,18 @@ export default function AdminUsersPage() {
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
-                            <UserPlus className="w-5 h-5 text-primary" />
-                            Agregar Nuevo Usuario
+                            {isEditing ? <Pencil className="w-5 h-5 text-primary" /> : <UserPlus className="w-5 h-5 text-primary" />}
+                            {isEditing ? "Editar Usuario" : "Agregar Nuevo Usuario"}
                         </DialogTitle>
                         <p className="text-sm text-muted-foreground mt-1">
-                            Completa los datos para crear una nueva cuenta.
+                            {isEditing
+                                ? `Modificando los accesos de ${formData.fullName}.`
+                                : "Completa los datos para crear una nueva cuenta."
+                            }
                         </p>
                     </DialogHeader>
 
-                    <form onSubmit={handleCreateUser} className="grid gap-5 py-4">
+                    <form onSubmit={handleSubmit} className="grid gap-5 py-4">
                         {error && (
                             <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm flex items-center gap-2">
                                 <XCircle className="w-4 h-4" />
@@ -293,34 +345,38 @@ export default function AdminUsersPage() {
                             />
                         </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="userEmail">Correo Electrónico</Label>
-                            <Input
-                                id="userEmail"
-                                name="email"
-                                type="email"
-                                required
-                                value={formData.email}
-                                onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                placeholder="juan@ejemplo.com"
-                                autoComplete="email"
-                            />
-                        </div>
+                        {!isEditing && (
+                            <>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="userEmail">Correo Electrónico</Label>
+                                    <Input
+                                        id="userEmail"
+                                        name="email"
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                        placeholder="juan@ejemplo.com"
+                                        autoComplete="email"
+                                    />
+                                </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="tempPassword">Contraseña Temporal</Label>
-                            <Input
-                                id="tempPassword"
-                                name="password"
-                                type="password"
-                                required
-                                minLength={6}
-                                value={formData.password}
-                                onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                placeholder="******"
-                                autoComplete="new-password"
-                            />
-                        </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="tempPassword">Contraseña Temporal</Label>
+                                    <Input
+                                        id="tempPassword"
+                                        name="password"
+                                        type="password"
+                                        required
+                                        minLength={6}
+                                        value={formData.password}
+                                        onChange={e => setFormData({ ...formData, password: e.target.value })}
+                                        placeholder="******"
+                                        autoComplete="new-password"
+                                    />
+                                </div>
+                            </>
+                        )}
 
                         <div className="grid gap-2">
                             <Label htmlFor="userPhone">Celular</Label>
@@ -361,7 +417,7 @@ export default function AdminUsersPage() {
                                 Cancelar
                             </Button>
                             <Button type="submit" disabled={saving} className="bg-primary text-primary-foreground min-w-[120px]">
-                                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Crear Usuario"}
+                                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : (isEditing ? "Guardar Cambios" : "Crear Usuario")}
                             </Button>
                         </DialogFooter>
                     </form>
