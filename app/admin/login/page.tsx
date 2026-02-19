@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,20 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
+
+    useEffect(() => {
+        // Escuchar cambios en la autenticación (especialmente recuperación de contraseña)
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'PASSWORD_RECOVERY') {
+                console.log("Recuperación de contraseña detectada, redirigiendo...")
+                router.push('/admin/reset-password')
+            }
+        })
+
+        return () => {
+            subscription.unsubscribe()
+        }
+    }, [router])
 
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault()
