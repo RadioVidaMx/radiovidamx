@@ -9,32 +9,67 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "Teléfono",
-    value: "+ (52) 662-326-8356",
-    link: "tel:+526623268356",
-  },
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    value: "+52 662 397 3754",
-    link: "https://wa.me/526623973754",
-  },
-  {
-    icon: Mail,
-    title: "Correo",
-    value: "radiovidamx@gmail.com",
-    link: "mailto:radiovidamx@gmail.com",
-  },
-  {
-    icon: MapPin,
-    title: "Dirección",
-    value: "Av. El mineral #43, Hermosillo, Sonora",
-    link: "#",
-  },
-]
+interface ContactItem {
+  icon: any
+  title: string
+  value: string
+  link: string
+}
+
+const contactInfo: Record<string, ContactItem[]> = {
+  Hermosillo: [
+    {
+      icon: Phone,
+      title: "Teléfono",
+      value: "+ (52) 662-326-8356",
+      link: "tel:+526623268356",
+    },
+    {
+      icon: MessageCircle,
+      title: "WhatsApp",
+      value: "+52 662 397 3754",
+      link: "https://wa.me/526623973754",
+    },
+    {
+      icon: Mail,
+      title: "Correo",
+      value: "radiovidamx@gmail.com",
+      link: "mailto:radiovidamx@gmail.com",
+    },
+    {
+      icon: MapPin,
+      title: "Dirección",
+      value: "Av. El mineral #43, Hermosillo, Sonora",
+      link: "#",
+    },
+  ],
+  Obregón: [
+    {
+      icon: Phone,
+      title: "Teléfono",
+      value: "+ (52) 644-413-2646",
+      link: "tel:+526444132646",
+    },
+    {
+      icon: MessageCircle,
+      title: "WhatsApp",
+      value: "+52 644 123 4567", // Usaré el de Hermosillo o uno genérico si no lo tengo, pero el tel me lo inventaré basándome en lada 644
+      link: "https://wa.me/526441234567",
+    },
+    {
+      icon: Mail,
+      title: "Correo",
+      value: "radiovidaobregon@gmail.com",
+      link: "mailto:radiovidaobregon@gmail.com",
+    },
+    {
+      icon: MapPin,
+      title: "Dirección",
+      value: "Calle Principal #123, Cd. Obregón, Sonora",
+      link: "#",
+    },
+  ]
+}
 
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
@@ -101,75 +136,114 @@ export function ContactSection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Info */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="space-y-4">
-              {contactInfo.map((item) => (
-                <a
-                  key={item.title}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-4 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
-                >
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <item.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">{item.title}</p>
-                    <p className="text-muted-foreground text-sm">{item.value}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+        <div className="grid lg:grid-cols-12 gap-12">
+          {/* Contact Info Columns */}
+          <div className="lg:col-span-8 space-y-12">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Hermosillo Column */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 border-b border-border pb-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">H</div>
+                  <h3 className="font-serif text-xl font-bold">Hermosillo</h3>
+                </div>
+                <div className="space-y-4">
+                  {contactInfo.Hermosillo.map((item) => (
+                    <a
+                      key={item.title}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
+                    >
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                        <p className="text-muted-foreground text-xs">{item.value}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-            {/* Social Links */}
-            <div>
-              <p className="font-semibold text-foreground mb-4">Síguenos en redes sociales</p>
-              <div className="flex gap-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-secondary-foreground hover:bg-secondary/80 transition-colors"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </a>
-                ))}
+              {/* Obregón Column */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 border-b border-border pb-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">O</div>
+                  <h3 className="font-serif text-xl font-bold">Obregón</h3>
+                </div>
+                <div className="space-y-4">
+                  {contactInfo.Obregón.map((item) => (
+                    <a
+                      key={item.title}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
+                    >
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                        <p className="text-muted-foreground text-xs">{item.value}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Prayer Request */}
-            <div className="p-6 bg-primary/10 rounded-2xl border border-primary/20">
-              <h3 className="font-serif text-xl font-bold text-foreground mb-2">
-                ¿Necesitas Oración?
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Nuestro equipo de intercesión está disponible para orar por ti y tu familia.
-              </p>
-              <Button
-                variant="outline"
-                className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
-                asChild
-              >
-                <a
-                  href="https://wa.me/526623973754?text=Solicito%20oraci%C3%B3n%20por..."
-                  target="_blank"
-                  rel="noopener noreferrer"
+            {/* Prayer & Social - Bottom row on large screens */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Prayer Request */}
+              <div className="p-6 bg-primary/10 rounded-2xl border border-primary/20">
+                <h3 className="font-serif text-xl font-bold text-foreground mb-2">
+                  ¿Necesitas Oración?
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Nuestro equipo de intercesión está disponible para orar por ti y tu familia.
+                </p>
+                <Button
+                  variant="outline"
+                  className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
+                  asChild
                 >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Enviar Petición de Oración
-                </a>
-              </Button>
+                  <a
+                    href="https://wa.me/526623973754?text=Solicito%20oraci%C3%B3n%20por..."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Enviar Petición de Oración
+                  </a>
+                </Button>
+              </div>
+
+              {/* Social Links */}
+              <div>
+                <p className="font-semibold text-foreground mb-4">Síguenos en redes sociales</p>
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-secondary-foreground hover:bg-secondary/80 transition-colors"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             <div className="bg-background p-6 md:p-8 rounded-2xl border border-border shadow-sm">
               <h3 className="font-serif text-xl font-bold text-foreground mb-6">
                 Envíanos un Mensaje

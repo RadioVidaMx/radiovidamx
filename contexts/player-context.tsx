@@ -10,6 +10,8 @@ interface PlayerContextType {
     isMuted: boolean
     toggleMute: () => void
     isLoading: boolean
+    city: 'Hermosillo' | 'Obregón'
+    setCity: (city: 'Hermosillo' | 'Obregón') => void
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined)
@@ -19,23 +21,43 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     const [volume, setVolume] = useState(80)
     const [isMuted, setIsMuted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [city, setCity] = useState<'Hermosillo' | 'Obregón'>('Hermosillo')
     const audioRef = useRef<HTMLAudioElement | null>(null)
 
-    // Radio Vida stream URL
-    const streamUrl = "https://stream4.305stream.com:9675/stream"
+    // Radio Vida stream URLs
+    const streams = {
+        'Hermosillo': "https://stream4.305stream.com:9675/stream",
+        'Obregón': "https://stream1.305stream.com/proxy/client362?mp=/stream"
+    }
 
     useEffect(() => {
-        // Create audio element
-        const audio = new Audio(streamUrl)
+        // Init audio
+        const audio = new Audio(streams[city])
         audio.preload = "none"
         audioRef.current = audio
 
-        // Cleanup
         return () => {
             audio.pause()
             audioRef.current = null
         }
     }, [])
+
+    // Handle city/stream change
+    useEffect(() => {
+        if (!audioRef.current) return
+
+        const wasPlaying = isPlaying
+        if (wasPlaying) {
+            audioRef.current.pause()
+        }
+
+        audioRef.current.src = streams[city]
+        audioRef.current.load()
+
+        if (wasPlaying) {
+            audioRef.current.play().catch(err => console.error("Error swapping stream:", err))
+        }
+    }, [city])
 
     useEffect(() => {
         if (audioRef.current) {
@@ -75,6 +97,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
                 isMuted,
                 toggleMute,
                 isLoading,
+                city,
+                setCity
             }}
         >
             {children}

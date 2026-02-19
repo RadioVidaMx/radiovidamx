@@ -14,7 +14,9 @@ export function RadioPlayer() {
     setVolume,
     isMuted,
     toggleMute,
-    isLoading
+    isLoading,
+    city,
+    setCity
   } = usePlayer()
 
   return (
@@ -39,12 +41,34 @@ export function RadioPlayer() {
             </div>
             <div className="min-w-0">
               <p className="text-sm font-semibold text-secondary-foreground truncate">
-                En Vivo
+                Radio Vida {city}
               </p>
               <p className="text-xs text-secondary-foreground/70 truncate">
-                Radio Vida • 24/7
+                Sintonizando 24/7
               </p>
             </div>
+          </div>
+
+          {/* City Selector */}
+          <div className="hidden md:flex bg-secondary-foreground/10 p-1 rounded-xl items-center gap-1">
+            <button
+              onClick={() => setCity("Hermosillo")}
+              className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${city === "Hermosillo"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-secondary-foreground/50 hover:text-secondary-foreground"
+                }`}
+            >
+              Hermosillo
+            </button>
+            <button
+              onClick={() => setCity("Obregón")}
+              className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${city === "Obregón"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-secondary-foreground/50 hover:text-secondary-foreground"
+                }`}
+            >
+              Obregón
+            </button>
           </div>
 
           {/* Play Controls */}
