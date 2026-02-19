@@ -24,7 +24,7 @@ export function RadioPlayer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Now Playing Info */}
-          <div className="flex items-center gap-3 min-w-0 flex-1 order-1">
+          <div className="flex items-center gap-3 min-w-0 flex-1 order-1 md:order-none">
             <div className="relative">
               <div className="w-12 h-12 flex items-center justify-center">
                 <Image
