@@ -24,7 +24,7 @@ export function RadioPlayer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Now Playing Info */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div className="flex items-center gap-3 min-w-0 flex-1 order-1">
             <div className="relative">
               <div className="w-12 h-12 flex items-center justify-center">
                 <Image
@@ -50,29 +50,31 @@ export function RadioPlayer() {
           </div>
 
           {/* City Selector */}
-          <div className="hidden md:flex bg-secondary-foreground/10 p-1 rounded-xl items-center gap-1">
+          <div className="flex bg-secondary-foreground/10 p-0.5 sm:p-1 rounded-lg sm:rounded-xl items-center gap-0.5 sm:gap-1 order-3 md:order-none">
             <button
               onClick={() => setCity("Hermosillo")}
-              className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${city === "Hermosillo"
+              className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider rounded-md sm:rounded-lg transition-all ${city === "Hermosillo"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-secondary-foreground/50 hover:text-secondary-foreground"
                 }`}
             >
-              Hermosillo
+              HMO
+              <span className="hidden xs:inline"> - Hermosillo</span>
             </button>
             <button
               onClick={() => setCity("Obregón")}
-              className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${city === "Obregón"
+              className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider rounded-md sm:rounded-lg transition-all ${city === "Obregón"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-secondary-foreground/50 hover:text-secondary-foreground"
                 }`}
             >
-              Obregón
+              OBR
+              <span className="hidden xs:inline"> - Obregón</span>
             </button>
           </div>
 
           {/* Play Controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 order-2 md:order-none">
             <Button
               onClick={togglePlay}
               disabled={isLoading}
