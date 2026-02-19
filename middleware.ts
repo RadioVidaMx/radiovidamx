@@ -4,8 +4,8 @@ import { createClient } from "@supabase/supabase-js"
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
 
-    // Allow access to login page
-    if (pathname === "/admin/login") {
+    // Allow access to login and reset-password pages
+    if (pathname === "/admin/login" || pathname === "/admin/reset-password") {
         return NextResponse.next()
     }
 
