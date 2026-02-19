@@ -39,7 +39,7 @@ export function AboutSection() {
               Llevando el mensaje de esperanza desde Agosto 2016
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
-              Radio Vida Hermosillo nació con el propósito de llevar la palabra de Dios
+              Radio Vida Mx nació con el propósito de llevar la palabra de Dios
               a cada hogar. Durante más de 9 años, hemos sido compañía en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>

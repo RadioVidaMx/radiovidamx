@@ -22,7 +22,7 @@ export function DonationsSection() {
                         Donaciones
                     </span>
                     <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-                        Apoya a Radio Vida Hermosillo
+                        Apoya a Radio Vida Mx
                     </h2>
                     <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
                         Tu generosidad hace posible que se continúe llevando esperanza y fe a miles de hogares.

@@ -95,7 +95,7 @@ export default function DashboardPage() {
                     Bienvenido al Panel de Administración
                 </h1>
                 <p className="text-muted-foreground">
-                    Gestiona el contenido de Radio Vida Hermosillo desde aquí.
+                    Gestiona el contenido de Radio Vida Mx desde aquí.
                 </p>
             </div>
 

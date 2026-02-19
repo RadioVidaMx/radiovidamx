@@ -152,7 +152,7 @@ export default function LoginPage() {
                         {mode === 'login' ? "Iniciar Sesión" : mode === 'register' ? "Crear Cuenta" : "Recuperar Acceso"}
                     </h1>
                     <p className="text-muted-foreground">
-                        {mode === 'forgot-password' ? "Te enviaremos un enlace para restablecer tu contraseña." : "Radio Vida Hermosillo"}
+                        {mode === 'forgot-password' ? "Te enviaremos un enlace para restablecer tu contraseña." : "Radio Vida Mx"}
                     </p>
                 </div>
 

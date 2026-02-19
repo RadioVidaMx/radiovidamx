@@ -40,7 +40,7 @@ export function Footer() {
               </div>
               <div>
                 <span className="font-serif text-xl font-bold block">
-                  Radio Vida
+                  Radio Vida Mx
                 </span>
                 <span className="text-sm text-secondary-foreground/70">
                   Música y Palabra que transforma
