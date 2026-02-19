@@ -87,12 +87,29 @@ export function Footer() {
           {/* Contact Info */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Contacto</h3>
-            <ul className="space-y-2 text-secondary-foreground/80">
-              <li>+ (52) 662-326-8356</li>
-              <li>radiovidamx@gmail.com</li>
-              <li>Av. El mineral #43</li>
-              <li>Hermosillo, Sonora, México</li>
-            </ul>
+            <div className="space-y-6">
+              {/* Hermosillo */}
+              <div>
+                <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Hermosillo</p>
+                <ul className="space-y-1 text-secondary-foreground/80 text-sm">
+                  <li>+ (52) 662-326-8356</li>
+                  <li>radiovidamx@gmail.com</li>
+                  <li>Av. El mineral #43</li>
+                  <li>Hermosillo, Sonora</li>
+                </ul>
+              </div>
+
+              {/* Obregón */}
+              <div>
+                <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Obregón</p>
+                <ul className="space-y-1 text-secondary-foreground/80 text-sm">
+                  <li>+ (52) 644-413-2646</li>
+                  <li>radiovidaobregon@gmail.com</li>
+                  <li>Calle Principal #123</li>
+                  <li>Cd. Obregón, Sonora</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
