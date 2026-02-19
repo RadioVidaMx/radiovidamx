@@ -12,7 +12,7 @@ import Image from "next/image"
 
 export default function LoginPage() {
     const router = useRouter()
-    const [mode, setMode] = useState<'login' | 'register'>('login')
+    const [mode, setMode] = useState<'login' | 'register' | 'forgot-password'>('login')
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
@@ -61,7 +61,7 @@ export default function LoginPage() {
                     // Admin, writer, asist, galery van al dashboard
                     router.push(next || "/admin/dashboard")
                 }
-            } else {
+            } else if (mode === 'register') {
                 // Register
                 const { data, error: signUpError } = await supabase.auth.signUp({
                     email,
@@ -100,6 +100,15 @@ export default function LoginPage() {
                         setSuccess("¡Registro exitoso! Ya puedes iniciar sesión (asegúrate de haber confirmado tu correo si es necesario).")
                     }
                 }
+            } else {
+                // Forgot Password
+                const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: `${window.location.origin}/admin/reset-password`,
+                })
+
+                if (resetError) throw resetError
+
+                setSuccess("Se ha enviado un enlace de recuperación a tu correo electrónico.")
             }
         } catch (err: any) {
             console.error("Auth Error:", err)
@@ -126,10 +135,10 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
-                        {mode === 'login' ? "Iniciar Sesión" : "Crear Cuenta"}
+                        {mode === 'login' ? "Iniciar Sesión" : mode === 'register' ? "Crear Cuenta" : "Recuperar Acceso"}
                     </h1>
                     <p className="text-muted-foreground">
-                        Radio Vida Hermosillo
+                        {mode === 'forgot-password' ? "Te enviaremos un enlace para restablecer tu contraseña." : "Radio Vida Hermosillo"}
                     </p>
                 </div>
 
@@ -145,9 +154,9 @@ export default function LoginPage() {
 
                     {/* Success Message */}
                     {success && (
-                        <div className="mb-6 p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                            <p className="text-sm text-primary">{success}</p>
+                        <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start gap-3">
+                            <AlertCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-emerald-500">{success}</p>
                         </div>
                     )}
 
@@ -190,23 +199,36 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <Label htmlFor="password" className="text-sm font-medium">
-                                Contraseña
-                            </Label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    className="pl-10"
-                                />
+                        {mode !== 'forgot-password' && (
+                            <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <Label htmlFor="password" className="text-sm font-medium">
+                                        Contraseña
+                                    </Label>
+                                    {mode === 'login' && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setMode('forgot-password')}
+                                            className="text-xs text-primary hover:underline"
+                                        >
+                                            ¿Olvidaste tu contraseña?
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        className="pl-10"
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         <Button
                             type="submit"
@@ -219,25 +241,34 @@ export default function LoginPage() {
                                     Procesando...
                                 </>
                             ) : (
-                                mode === 'login' ? "Iniciar Sesión" : "Registrarse"
+                                mode === 'login' ? "Iniciar Sesión" : mode === 'register' ? "Registrarse" : "Enviar enlace de recuperación"
                             )}
                         </Button>
                     </form>
 
                     {/* Toggle Mode */}
-                    <div className="mt-6 text-center">
-                        <button
-                            onClick={() => {
-                                setMode(mode === 'login' ? 'register' : 'login')
-                                setError("")
-                                setSuccess("")
-                            }}
-                            className="text-sm text-primary hover:underline font-medium"
-                        >
-                            {mode === 'login'
-                                ? "¿No tienes cuenta? Regístrate aquí"
-                                : "¿Ya tienes cuenta? Inicia sesión"}
-                        </button>
+                    <div className="mt-6 text-center space-y-2">
+                        {mode === 'forgot-password' ? (
+                            <button
+                                onClick={() => setMode('login')}
+                                className="text-sm text-primary hover:underline font-medium"
+                            >
+                                ← Volver al inicio de sesión
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    setMode(mode === 'login' ? 'register' : 'login')
+                                    setError("")
+                                    setSuccess("")
+                                }}
+                                className="text-sm text-primary hover:underline font-medium"
+                            >
+                                {mode === 'login'
+                                    ? "¿No tienes cuenta? Regístrate aquí"
+                                    : "¿Ya tienes cuenta? Inicia sesión"}
+                            </button>
+                        )}
                     </div>
                 </div>
 
