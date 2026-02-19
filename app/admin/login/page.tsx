@@ -21,6 +21,14 @@ export default function LoginPage() {
     const [success, setSuccess] = useState("")
 
     useEffect(() => {
+        // Verificar si viene de una confirmación exitosa
+        const urlParams = new URLSearchParams(window.location.search)
+        if (urlParams.get('confirmed') === 'true') {
+            setSuccess("¡Correo confirmado exitosamente! Ya puedes iniciar sesión.")
+            // Limpiar la URL para no mostrar el mensaje repetidamente
+            window.history.replaceState({}, document.title, window.location.pathname)
+        }
+
         // Escuchar cambios en la autenticación (especialmente recuperación de contraseña)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'PASSWORD_RECOVERY') {
@@ -81,6 +89,7 @@ export default function LoginPage() {
                     email,
                     password,
                     options: {
+                        emailRedirectTo: `${window.location.origin}/admin/login?confirmed=true`,
                         data: {
                             full_name: fullName
                         }
@@ -91,7 +100,9 @@ export default function LoginPage() {
 
                 if (data.user) {
                     // Create profile with 'reader' role by default
-                    const { error: profileError } = await supabase.from("profiles").insert([
+                    // Note: In Supabase, often we create the profile via a database trigger on auth.users 
+                    // but here we are doing it manually. We should still attempt it.
+                    const { error: profileError } = await supabase.from("profiles").upsert([
                         {
                             id: data.user.id,
                             full_name: fullName,
@@ -111,7 +122,11 @@ export default function LoginPage() {
                             router.push("/articulos")
                         }, 1500)
                     } else {
-                        setSuccess("¡Registro exitoso! Ya puedes iniciar sesión (asegúrate de haber confirmado tu correo si es necesario).")
+                        setSuccess("¡Registro exitoso! Por favor, revisa tu correo electrónico para confirmar tu cuenta y poder iniciar sesión.")
+                        // Clear fields for safety
+                        setEmail("")
+                        setPassword("")
+                        setFullName("")
                     }
                 }
             } else {
