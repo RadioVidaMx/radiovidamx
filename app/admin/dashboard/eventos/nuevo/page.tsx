@@ -18,6 +18,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import Link from "next/link"
 
 export default function NewEventPage() {
@@ -32,7 +39,8 @@ export default function NewEventPage() {
         featured: false,
         image_url: "",
         link: "",
-        display_order: 0
+        display_order: 0,
+        city: "Hermosillo" as "Hermosillo" | "Obregón"
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -143,6 +151,25 @@ export default function NewEventPage() {
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                             required
                         />
+                    </div>
+
+                    {/* City Selection */}
+                    <div className="space-y-2">
+                        <Label htmlFor="city" className="flex items-center gap-2">
+                            Ciudad del Evento
+                        </Label>
+                        <Select
+                            value={formData.city}
+                            onValueChange={(val: any) => setFormData({ ...formData, city: val })}
+                        >
+                            <SelectTrigger id="city">
+                                <SelectValue placeholder="Selecciona Ciudad" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Hermosillo">Hermosillo</SelectItem>
+                                <SelectItem value="Obregón">Obregón</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
 
                     {/* Image URL (Optional) */}

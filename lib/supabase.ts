@@ -27,6 +27,7 @@ export type Event = {
     image_url?: string
     link?: string
     display_order: number
+    city: 'Hermosillo' | 'Obregón'
     created_at: string
     updated_at: string
 }
@@ -39,6 +40,7 @@ export type Program = {
     host: string
     type: 'worship' | 'teaching' | 'talk' | 'prayer' | 'music'
     icon: string
+    city: 'Hermosillo' | 'Obregón'
     created_at: string
     updated_at: string
 }

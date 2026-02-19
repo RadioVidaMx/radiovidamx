@@ -34,6 +34,7 @@ const typeColors: Record<string, string> = {
 
 export function ScheduleSection() {
   const [selectedDay, setSelectedDay] = useState("lunes")
+  const [selectedCity, setSelectedCity] = useState<"Hermosillo" | "Obregón">("Hermosillo")
   const [programs, setPrograms] = useState<Program[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -57,7 +58,7 @@ export function ScheduleSection() {
     fetchPrograms()
   }, [])
 
-  const programsByDay = programs.filter((p: Program) => p.day === selectedDay)
+  const programsByDay = programs.filter((p: Program) => p.day === selectedDay && (p.city === selectedCity || !p.city))
 
 
   return (
@@ -74,6 +75,34 @@ export function ScheduleSection() {
           <p className="mt-4 text-lg text-muted-foreground">
             Contenido variado las 24 horas del día, los 7 días de la semana.
           </p>
+        </div>
+
+        {/* City Selector */}
+        <div className="flex justify-center mb-8">
+          <div className="flex p-1 bg-muted rounded-xl border border-border shadow-sm">
+            <button
+              onClick={() => setSelectedCity("Hermosillo")}
+              className={cn(
+                "px-8 py-2.5 text-sm font-bold rounded-lg transition-all",
+                selectedCity === "Hermosillo"
+                  ? "bg-background text-primary shadow-sm ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Hermosillo
+            </button>
+            <button
+              onClick={() => setSelectedCity("Obregón")}
+              className={cn(
+                "px-8 py-2.5 text-sm font-bold rounded-lg transition-all",
+                selectedCity === "Obregón"
+                  ? "bg-background text-primary shadow-sm ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Obregón
+            </button>
+          </div>
         </div>
 
         {/* Day Selector */}

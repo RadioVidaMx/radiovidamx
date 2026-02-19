@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react"
 import { Calendar, MapPin, Clock, ArrowRight, Loader2, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { supabase, type Event } from "@/lib/supabase"
 
 export function EventsSection() {
   const [events, setEvents] = useState<Event[]>([])
+  const [selectedCity, setSelectedCity] = useState<"Hermosillo" | "Obregón">("Hermosillo")
   const [loading, setLoading] = useState(true)
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -61,6 +63,8 @@ export function EventsSection() {
     }
   }
 
+  const filteredEvents = events.filter(e => e.city === selectedCity || !e.city)
+
   return (
     <section id="eventos" className="py-20 md:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,6 +81,34 @@ export function EventsSection() {
           </p>
         </div>
 
+        {/* City Selector */}
+        <div className="flex justify-center mb-12">
+          <div className="flex p-1 bg-muted rounded-xl border border-border shadow-sm">
+            <button
+              onClick={() => setSelectedCity("Hermosillo")}
+              className={cn(
+                "px-10 py-3 text-sm font-bold rounded-lg transition-all",
+                selectedCity === "Hermosillo"
+                  ? "bg-background text-primary shadow-sm ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Hermosillo
+            </button>
+            <button
+              onClick={() => setSelectedCity("Obregón")}
+              className={cn(
+                "px-10 py-3 text-sm font-bold rounded-lg transition-all",
+                selectedCity === "Obregón"
+                  ? "bg-background text-primary shadow-sm ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Obregón
+            </button>
+          </div>
+        </div>
+
         {/* Events Grid */}
         <div className="grid md:grid-cols-2 gap-6 min-h-[300px]">
           {loading ? (
@@ -84,8 +116,8 @@ export function EventsSection() {
               <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
               <p className="text-muted-foreground animate-pulse">Cargando eventos...</p>
             </div>
-          ) : events.length > 0 ? (
-            events.map((event) => (
+          ) : filteredEvents.length > 0 ? (
+            filteredEvents.map((event) => (
               <div
                 key={event.id}
                 className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured

@@ -68,7 +68,8 @@ export default function ScheduleAdminPage() {
         title: "",
         host: "",
         type: "music" as Program["type"],
-        icon: "Music"
+        icon: "Music",
+        city: "Hermosillo" as "Hermosillo" | "Obregón"
     })
 
     useEffect(() => {
@@ -99,7 +100,8 @@ export default function ScheduleAdminPage() {
                 title: program.title,
                 host: program.host,
                 type: program.type,
-                icon: program.icon
+                icon: program.icon,
+                city: program.city || "Hermosillo"
             })
         } else {
             setEditingProgram(null)
@@ -109,7 +111,8 @@ export default function ScheduleAdminPage() {
                 title: "",
                 host: "",
                 type: "music",
-                icon: "Music"
+                icon: "Music",
+                city: "Hermosillo"
             })
         }
         setIsDialogOpen(true)
@@ -214,6 +217,9 @@ export default function ScheduleAdminPage() {
                                                         <User className="w-3 h-3" />
                                                         {program.host}
                                                     </div>
+                                                    <span className="text-[10px] font-bold text-secondary uppercase bg-secondary/10 px-1.5 rounded-full w-fit mt-0.5">
+                                                        {program.city}
+                                                    </span>
                                                 </div>
                                                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(program)}>
@@ -312,6 +318,21 @@ export default function ScheduleAdminPage() {
                                     <SelectItem value="talk">Plática</SelectItem>
                                     <SelectItem value="prayer">Oración</SelectItem>
                                     <SelectItem value="music">Música</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="city" className="text-right">Ciudad</Label>
+                            <Select
+                                value={formData.city}
+                                onValueChange={(val: any) => setFormData({ ...formData, city: val })}
+                            >
+                                <SelectTrigger className="col-span-3" id="city">
+                                    <SelectValue placeholder="Selecciona Ciudad" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Hermosillo">Hermosillo</SelectItem>
+                                    <SelectItem value="Obregón">Obregón</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

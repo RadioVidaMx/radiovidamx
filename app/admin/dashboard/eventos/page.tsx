@@ -22,7 +22,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { formatDate } from "@/lib/utils"
+// import { formatDate } from "@/lib/utils"
 
 export default function EventsAdminPage() {
     const [events, setEvents] = useState<Event[]>([])
@@ -117,6 +117,9 @@ export default function EventsAdminPage() {
                                             Destacado
                                         </span>
                                     )}
+                                    <span className="bg-secondary/10 text-secondary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                        {event.city}
+                                    </span>
                                 </div>
 
                                 <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
