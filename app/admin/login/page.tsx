@@ -99,19 +99,6 @@ export default function LoginPage() {
                 if (signUpError) throw signUpError
 
                 if (data.user) {
-                    // Create profile with 'reader' role by default
-                    // Note: In Supabase, often we create the profile via a database trigger on auth.users 
-                    // but here we are doing it manually. We should still attempt it.
-                    const { error: profileError } = await supabase.from("profiles").upsert([
-                        {
-                            id: data.user.id,
-                            full_name: fullName,
-                            email: email,
-                            role: 'reader'
-                        }
-                    ])
-                    if (profileError) console.error("Profile creation error:", profileError)
-
                     // If email confirmation is disabled, we might have a session already
                     if (data.session) {
                         setSuccess("¡Cuenta creada exitosamente! Redirigiendo...")
