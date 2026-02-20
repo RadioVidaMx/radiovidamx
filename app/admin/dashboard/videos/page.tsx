@@ -12,7 +12,8 @@ import {
     Type,
     Link as LinkIcon,
     Save,
-    Loader2
+    Loader2,
+    Hash
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,6 +37,7 @@ export default function VideosAdminPage() {
     const [formData, setFormData] = useState({
         title: "",
         youtube_id: "",
+        display_order: 0,
     })
 
     useEffect(() => {
@@ -47,7 +49,7 @@ export default function VideosAdminPage() {
         const { data, error } = await supabase
             .from("videos")
             .select("*")
-            .order("created_at", { ascending: false })
+            .order("display_order", { ascending: true })
 
         if (error) {
             console.error("Error fetching videos:", error)
@@ -63,12 +65,14 @@ export default function VideosAdminPage() {
             setFormData({
                 title: video.title || "",
                 youtube_id: video.youtube_id,
+                display_order: video.display_order || 0,
             })
         } else {
             setEditingVideo(null)
             setFormData({
                 title: "",
                 youtube_id: "",
+                display_order: videos.length > 0 ? Math.max(...videos.map(v => v.display_order || 0)) + 1 : 1,
             })
         }
         setIsDialogOpen(true)
@@ -179,7 +183,12 @@ export default function VideosAdminPage() {
 
                             <div className="p-4 space-y-4">
                                 <div>
-                                    <h3 className="font-bold text-foreground line-clamp-1">{video.title}</h3>
+                                    <div className="flex items-center justify-between gap-2">
+                                        <h3 className="font-bold text-foreground line-clamp-1 flex-1">{video.title}</h3>
+                                        <span className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                            Orden: {video.display_order || 0}
+                                        </span>
+                                    </div>
                                     <p className="text-xs text-muted-foreground font-mono mt-1">ID: {video.youtube_id}</p>
                                 </div>
 
@@ -244,6 +253,21 @@ export default function VideosAdminPage() {
                             />
                             <p className="text-[10px] text-muted-foreground p-1">
                                 Ingresa solo el ID final del video (lo que aparece después de v= en la URL).
+                            </p>
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="display_order" className="flex items-center gap-2 text-sm">
+                                <Hash className="w-4 h-4 text-primary" /> Orden de Aparición
+                            </Label>
+                            <Input
+                                id="display_order"
+                                type="number"
+                                placeholder="Ej: 1"
+                                value={formData.display_order}
+                                onChange={(e) => setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })}
+                            />
+                            <p className="text-[10px] text-muted-foreground p-1">
+                                Números más bajos aparecen primero en la lista.
                             </p>
                         </div>
 
