@@ -75,7 +75,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
             <Image
               src="/logo-radiovida.png"
               alt="Radio Vida Logo"
@@ -104,9 +104,9 @@ export function Header() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 px-3 hover:bg-muted group">
-                    <User className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
-                    <span className="text-sm font-medium">Hola, {profile?.full_name?.split(' ')[0] || 'Usuario'}</span>
+                  <Button variant="ghost" className="flex items-center gap-2 px-3 hover:bg-muted group max-w-[200px]">
+                    <User className="w-5 h-5 text-primary group-hover:scale-110 transition-transform flex-shrink-0" />
+                    <span className="text-sm font-medium truncate">Hola, {profile?.full_name?.split(' ')[0] || 'Usuario'}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 mt-2">
