@@ -63,6 +63,9 @@ export default function AdminUsersPage() {
 
     const [isEditing, setIsEditing] = useState(false)
     const [editingUserId, setEditingUserId] = useState<string | null>(null)
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const [deletingUserId, setDeletingUserId] = useState<string | null>(null)
+    const [deletingUserName, setDeletingUserName] = useState("")
 
     const [formData, setFormData] = useState({
         fullName: "",
@@ -175,6 +178,32 @@ export default function AdminUsersPage() {
         }
     }
 
+    const handleDeleteUser = async () => {
+        if (!deletingUserId) return
+        setSaving(true)
+        setError("")
+
+        try {
+            const { error: deleteError } = await supabase.rpc('delete_user_by_admin', {
+                target_user_id: deletingUserId
+            })
+
+            if (deleteError) throw deleteError
+
+            setSuccess("Usuario eliminado exitosamente.")
+            setTimeout(() => {
+                setIsDeleteDialogOpen(false)
+                setDeletingUserId(null)
+            }, 1500)
+            fetchUsers()
+        } catch (err: any) {
+            console.error("Delete Error:", err)
+            setError(err.message || "No se pudo eliminar al usuario. Verifica los permisos.")
+        } finally {
+            setSaving(false)
+        }
+    }
+
     const resetForm = () => {
         setFormData({ fullName: "", email: "", password: "", phone: "", role: "reader" })
         setIsEditing(false)
@@ -282,7 +311,18 @@ export default function AdminUsersPage() {
                                                 >
                                                     <Pencil className="w-4 h-4" />
                                                 </Button>
-                                                <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                                    onClick={() => {
+                                                        setDeletingUserId(user.id);
+                                                        setDeletingUserName(user.full_name || user.email || "este usuario");
+                                                        setIsDeleteDialogOpen(true);
+                                                        setError("");
+                                                        setSuccess("");
+                                                    }}
+                                                >
                                                     <Trash2 className="w-4 h-4" />
                                                 </Button>
                                             </div>
@@ -421,6 +461,54 @@ export default function AdminUsersPage() {
                             </Button>
                         </DialogFooter>
                     </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2 text-destructive">
+                            <Trash2 className="w-5 h-5" />
+                            Confirmar Eliminación
+                        </DialogTitle>
+                        <div className="py-4">
+                            <p className="text-sm text-foreground">
+                                ¿Estás seguro de que deseas eliminar permanentemente a <strong>{deletingUserName}</strong>?
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                                Esta acción no se puede deshacer y eliminará tanto el perfil como el acceso al sistema.
+                            </p>
+                        </div>
+                    </DialogHeader>
+
+                    {error && (
+                        <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm flex items-center gap-2">
+                            <XCircle className="w-4 h-4" />
+                            {error}
+                        </div>
+                    )}
+                    {success && (
+                        <div className="p-3 rounded-lg bg-emerald-500/10 text-emerald-500 text-sm flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" />
+                            {success}
+                        </div>
+                    )}
+
+                    <DialogFooter className="pt-4">
+                        <Button type="button" variant="ghost" onClick={() => setIsDeleteDialogOpen(false)} disabled={saving}>
+                            Cancelar
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={handleDeleteUser}
+                            disabled={saving || success !== ""}
+                            className="min-w-[120px]"
+                        >
+                            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Eliminar Usuario"}
+                        </Button>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </div>
