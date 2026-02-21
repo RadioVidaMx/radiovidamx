@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon, FileText, Plus } from "lucide-react"
+import { Calendar, Tv, Video, TrendingUp, Image as ImageIcon, FileText, Plus, Megaphone } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -13,18 +13,20 @@ export default function DashboardPage() {
         videos: 0,
         gallery: 0,
         articles: 0,
+        announcements: 0,
     })
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const [eventsCount, programsCount, videosCount, galleryCount, articlesCount] = await Promise.all([
+                const [eventsCount, programsCount, videosCount, galleryCount, articlesCount, announcementsCount] = await Promise.all([
                     supabase.from("events").select("*", { count: "exact", head: true }),
                     supabase.from("programs").select("*", { count: "exact", head: true }),
                     supabase.from("videos").select("*", { count: "exact", head: true }),
                     supabase.from("gallery").select("*", { count: "exact", head: true }),
                     supabase.from("articles").select("*", { count: "exact", head: true }),
+                    supabase.from("announcements").select("*", { count: "exact", head: true }),
                 ])
 
                 setStats({
@@ -33,6 +35,7 @@ export default function DashboardPage() {
                     videos: videosCount.count || 0,
                     gallery: galleryCount.count || 0,
                     articles: articlesCount.count || 0,
+                    announcements: announcementsCount.count || 0,
                 })
             } catch (error) {
                 console.error("Error fetching stats:", error)
@@ -84,6 +87,14 @@ export default function DashboardPage() {
             href: "/admin/dashboard/galeria",
             color: "text-orange-600",
             bg: "bg-orange-600/10",
+        },
+        {
+            title: "Anuncios",
+            value: stats.announcements,
+            icon: Megaphone,
+            href: "/admin/dashboard/anuncios",
+            color: "text-rose-600",
+            bg: "bg-rose-600/10",
         },
     ]
 
@@ -165,6 +176,12 @@ export default function DashboardPage() {
                         <Button variant="outline" className="w-full justify-start">
                             <ImageIcon className="w-4 h-4 mr-2" />
                             Gestionar Galería
+                        </Button>
+                    </Link>
+                    <Link href="/admin/dashboard/anuncios/nuevo">
+                        <Button variant="outline" className="w-full justify-start">
+                            <Megaphone className="w-4 h-4 mr-2" />
+                            Nuevo Anuncio
                         </Button>
                     </Link>
                 </div>

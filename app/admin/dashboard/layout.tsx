@@ -13,7 +13,8 @@ import {
     Menu,
     X,
     FileText,
-    Users
+    Users,
+    Megaphone
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -27,6 +28,7 @@ const navigation = [
     { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv, roles: ["admin", "asist"] },
     { name: "Videos", href: "/admin/dashboard/videos", icon: Video, roles: ["admin", "galery"] },
     { name: "Galería", href: "/admin/dashboard/galeria", icon: ImageIcon, roles: ["admin", "galery"] },
+    { name: "Anuncios", href: "/admin/dashboard/anuncios", icon: Megaphone, roles: ["admin"] },
     { name: "Usuarios", href: "/admin/dashboard/usuarios", icon: Users, roles: ["admin"] },
 ]
 
