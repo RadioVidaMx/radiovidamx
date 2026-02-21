@@ -26,8 +26,8 @@ export function HeroSection() {
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance">
-              Música y Palabra que{" "}
-              <span className="text-primary">Transforma</span>
+              Radio Vida,{" "}
+              <span className="text-primary">La estación que da Vida.</span>
             </h1>
 
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 text-pretty">
