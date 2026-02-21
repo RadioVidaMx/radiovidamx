@@ -26,13 +26,13 @@ export function HeroSection() {
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance">
-              Radio Vida,{" "}
-              <span className="text-primary">La estación que da Vida.</span>
+              <span className="text-primary">Radio Vida,</span>{" "}
+              La estación que da Vida.
             </h1>
 
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 text-pretty">
-              Conecta con Dios a través de nuestra programación de adoración,
-              prédicas inspiradoras y música que eleva tu espíritu.
+              A través de nuestra programación,
+              escucha música y programas con mensajes positivos para tu vida.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -65,18 +65,18 @@ export function HeroSection() {
 
             {/* Stats */}
             <div className="mt-12 grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
-              <div className="text-center lg:text-left">
+              {/* <div className="text-center lg:text-left">
                 <p className="text-2xl md:text-3xl font-bold text-foreground">10K+</p>
                 <p className="text-sm text-muted-foreground">Oyentes diarios</p>
-              </div>
+              </div>*/}
               <div className="text-center lg:text-left">
                 <p className="text-2xl md:text-3xl font-bold text-foreground">24/7</p>
                 <p className="text-sm text-muted-foreground">Transmisión</p>
               </div>
-              <div className="text-center lg:text-left">
+              {/* <div className="text-center lg:text-left">
                 <p className="text-2xl md:text-3xl font-bold text-foreground">15+</p>
                 <p className="text-sm text-muted-foreground">Años al aire</p>
-              </div>
+              </div>*/}
             </div>
           </div>
 
