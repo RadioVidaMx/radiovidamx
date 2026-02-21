@@ -5,23 +5,23 @@ import Link from "next/link"
 const features = [
   {
     icon: Music,
-    title: "Música de Adoración",
-    description: "Selección cuidadosa de música cristiana contemporánea y tradicional que eleva el espíritu.",
+    title: "VISIÓN",
+    description: "Compartir al mundo un mensaje de esperanza por medio del amplio aspectro de los medios de comunicación.",
   },
   {
     icon: BookOpen,
-    title: "Enseñanza Bíblica",
-    description: "Prédicas y estudios bíblicos de pastores reconocidos que edifican la fe.",
+    title: "MISIÓN",
+    description: "Compartir un mensaje positivo que contribuya favorablemente a nuestra sociedad a través de la renovación de la mente, alma y corazón. Así mismo, ser un puente que logre canalizar los problemas de nuestra sociedad, con las instituciones correspondientes.",
   },
   {
     icon: Users,
-    title: "Comunidad",
-    description: "Miles de oyentes conectados por la fe, compartiendo esperanza y amor.",
+    title: "OBJETIVOS",
+    description: "Comunicar, Educar, Informar y Entretener.",
   },
   {
     icon: Heart,
-    title: "Ministerio de Oración",
-    description: "Intercesión constante por las necesidades de nuestra audiencia.",
+    title: "VALORES",
+    description: "Trabajo en equipo, Honestidad, Responsabilidad, Respeto, Solidaridad, Creatividad, Innovación, Perseverancia.",
   },
 ]
 
@@ -59,13 +59,13 @@ export function AboutSection() {
             </div>
 
             {/* Mission Statement */}
-            <blockquote className="mt-8 pl-6 border-l-4 border-primary">
+            {/*<blockquote className="mt-8 pl-6 border-l-4 border-primary">
               <p className="text-xl font-serif italic text-foreground">
                 &ldquo;MISIÓN: Compartir un mensaje positivo que contribuya favorablemente
                 a nuestra sociedad a través de la renovación de la mente, alma y corazón. Así mismo,
                 ser un puente que logre canalizar los problemas de nuestra sociedad, con las instituciones correspondientes.&rdquo;
               </p>
-            </blockquote>
+            </blockquote>*/}
           </div>
 
           {/* Features Grid */}
