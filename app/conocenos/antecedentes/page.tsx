@@ -31,11 +31,11 @@ export default function AntecedentesPage() {
                         </p>
 
                         <p>
-                            Es un proyecto de comunicación cristiana fundado por Francisco Elmer Santacruz y Elia Moreno, que oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora con visión de Reino, enfocada en compartir un mensaje de fe, esperanza y valores que fortalecen a la familia y a la comunidad.
+                            Es un proyecto de comunicación fundado por Francisco Elmer Santacruz y Elia Moreno, que oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora, enfocada en compartir un mensaje de fe, amor, paz, esperanza un conjunto valores que fortalecen a la familia y a la comunidad.
                         </p>
 
                         <p>
-                            Con el paso del tiempo, la visión se expandió a México, iniciando Radio Vida Hermosillo en Agosto del 2016 y, posteriormente Radio Vida Obregón en Diciembre del 2019, consolidando una red de comunicación cristiana con presencia regional y alcance internacional a través de plataformas digitales.
+                            Con el paso del tiempo, la visión se expandió a México, iniciando Radio Vida Hermosillo en Agosto del 2016 y, posteriormente Radio Vida Obregón en Diciembre del 2019, consolidando una red de comunicación con presencia regional y alcance internacional a través de plataformas digitales.
                         </p>
 
                         <p>
@@ -43,42 +43,29 @@ export default function AntecedentesPage() {
                         </p>
 
                         <p>
-                            A partir de Enero del 2025, Radio Vida comienza una etapa novedosa de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos, promoción y publicidad; transmitiendo un mensaje positivo y edificante y, fortaleciendo su presencia en redes sociales y plataformas digitales.
+                            A partir de Enero del 2025, Radio Vida comienza una etapa  de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos; transmitiendo un mensaje positivo y edificante, fortaleciendo su presencia en redes sociales y plataformas digitales.
                         </p>
 
                         <p>
-                            La administración local está a cargo de la Lic. Claribell Eliana López Robles en Hermosillo, Son. y la Lic. Claudia Manzanares en Cd. Obregón, Son., laborando junto a un equipo comprometido con la excelencia y la expansión del Proyecto.
+                            La administración local está a cargo de la Lic. Claribell Eliana López Robles en Hermosillo, Son. y la Lic. Claudia Esthela Manzanares Villegas en Cd. Obregón, Son., laborando junto a un equipo comprometido con la excelencia y la expansión del Proyecto.
                         </p>
 
                         <p>
-                            Hoy por hoy, Radio Vida continúa avanzando con un propósito claro: comunicar, informar, educar y entretener a través de contenidos cristianos en servicio tanto para el creyente, como al público en general.
+                            Hoy por hoy, Radio Vida continúa avanzando con un propósito claro: comunicar, informar, educar y entretener a través de contenidos que favorezcan al público en general.
                         </p>
 
                         <div className="bg-primary/5 border-l-4 border-primary p-8 rounded-r-2xl my-12">
                             <p className="text-xl font-serif italic text-foreground leading-relaxed">
-                                Radio Vida es única en su género, llegando a impactar ambas ciudades con el mismo formato establecido, siendo pioneras en el Estado de Sonora, consolidándonos como la gran familia Radio Vida, ¡hasta el día de hoy!, misma que seguirá extendiendo con un solo propósito, la salvación de las almas por medio del Evangelio de nuestro Señor y Salvador JESUCRISTO, la única razón que nos motiva a seguir esforzándonos cada día para dar lo mejor.
+                                Radio Vida es única en su género, llegando a impactar ambas ciudades con el mismo formato establecido, siendo pioneras en el Estado de Sonora, consolidándose como la gran familia Radio Vida, ¡hasta el día de hoy!, misma que se seguirá extendiendo con un solo propósito, ser portadora de BUENAS NOTICIAS.
                             </p>
                         </div>
-
-                        <div className="space-y-4 pt-4 border-t border-border">
-                            <p className="text-lg italic font-serif text-foreground">
-                                &ldquo;Id y predicar el evangelio a toda criatura&rdquo; - <span className="text-primary font-bold">Marcos 16:15 (RVR1960)</span>
-                            </p>
-                            <p className="text-lg italic font-serif text-foreground">
-                                &ldquo;Ensancha el sitio de tu tienda, y las cortinas de tus habitaciones sean extendidas; no seas escasa; alarga tus cuerdas, y refuerza tus estacas. Porque te extenderás a la mano derecha y a la mano izquierda; y tu descendencia heredará naciones...&rdquo; - <span className="text-primary font-bold">Isaías 54:2-3 (RVR1960)</span>
-                            </p>
-                        </div>
-
-                        <p className="pt-8">
-                            Radio Vida se prepara con fe y confianza para expandirse y conquistar nuevos corazones, alcanzando nuevas generaciones, repoblando con el Evangelio de Cristo, tierras desoladas, llevando a esos hogares, vida, esperanza y restauración, abrazando el cumplimiento de las promesas de un legado espiritual heredado hace más de dos mil años, en la cruz del calvario.
-                        </p>
 
                         <p className="text-foreground font-semibold">
                             Te invitamos a ser parte de la familia de Radio Vida. ¡Escúchanos y compártenos en las redes sociales y en las diferentes plataformas digitales...!
                         </p>
 
                         <p className="text-primary font-bold bg-primary/10 inline-block px-4 py-2 rounded-lg">
-                            ¡Sé parte de nuestra misión! A través de la música, programas y contenidos edificantes, llevamos la semilla de la palabra de Dios a los confines de la tierra. ¡Somos la estación que da vida, Radio Vida!
+                            ¡Sé parte de nuestra misión! A través de la música, programas y contenidos edificantes, llevando las Buenas Noticias a los confines de la tierra. ¡Somos la estación que da vida, Radio Vida!
                         </p>
 
                     </div>

@@ -36,17 +36,17 @@ export function AboutSection() {
               Sobre Nosotros
             </span>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-              Llevando el mensaje de esperanza desde Agosto 2016
+              Portadora de Buenas Noticias.
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
-              Radio Vida Mx nació con el propósito de llevar la palabra de Dios
-              a cada hogar. Durante más de 9 años, hemos sido compañía en momentos
+              Radio Vida Mx es una estación de radio al servicio de la comunidad,
+              24 horas al dia, 7 días a la semana. Por medio de la frecuencia de radio,
+              internet y las múltiples plataformas de este tiempo, siendo compañia en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>
             <p className="mt-4 text-lg text-muted-foreground text-pretty">
-              Nuestra misión es glorificar a Dios y edificar a la comunidad
-              a través de contenido de calidad que inspire, enseñe y transforme vidas.
-              Llevamos la semilla de la palabra de Dios a los confines de la tierra.
+              Con multiples ritmos musicales, llevando contenido de calidad que inspire, enseñe y transforme vidas
+              a los confines de la tierra.
             </p>
 
             <div className="mt-8">
@@ -61,13 +61,10 @@ export function AboutSection() {
             {/* Mission Statement */}
             <blockquote className="mt-8 pl-6 border-l-4 border-primary">
               <p className="text-xl font-serif italic text-foreground">
-                &ldquo;Porque de tal manera amó Dios al mundo, que ha dado a su Hijo
-                unigénito, para que todo aquel que en él cree, no se pierda,
-                mas tenga vida eterna.&rdquo;
+                &ldquo;MISION: Compartir un mensaje positivo que contribuya favorablemente
+                a nuestra sociedad atravez de la renovación de la mente, alma y corazón. Asimismo,
+                ser un puente que logre canalizar los pobremas de nuesta ciudad, con las instituciones correspondientes.&rdquo;
               </p>
-              <footer className="mt-2 text-sm text-muted-foreground">
-                — Juan 3:16
-              </footer>
             </blockquote>
           </div>
 

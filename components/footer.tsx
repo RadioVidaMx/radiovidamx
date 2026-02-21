@@ -44,13 +44,13 @@ export function Footer() {
                   Radio Vida Mx
                 </span>
                 <span className="text-sm text-secondary-foreground/70">
-                  Música y Palabra que transforma
+                  La Estación que da Vida
                 </span>
               </div>
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
               Llevando el mensaje de esperanza y fe a través de la música y la
-              palabra de Dios desde 2016. Transmitiendo 24/7 para bendecir tu vida.
+              palabra que edifica desde 2016. Transmitiendo 24/7 para bendecir tu vida.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -93,7 +93,7 @@ export function Footer() {
               <div>
                 <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Hermosillo</p>
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
-                  <li>+ (52) 662-326-8356</li>
+                  <li>+ (52) 662-422-2790</li>
                   <li>radiovidamx@gmail.com</li>
                   <li>Av. El mineral #43</li>
                   <li>Hermosillo, Sonora</li>
@@ -104,9 +104,9 @@ export function Footer() {
               <div>
                 <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Obregón</p>
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
-                  <li>+ (52) 644-413-2646</li>
+                  <li>+ (52) 644-214-1756</li>
                   <li>radiovidaobregon@gmail.com</li>
-                  <li>Calle Principal #123</li>
+                  <li>Blvd. Las torres #1138</li>
                   <li>Cd. Obregón, Sonora</li>
                 </ul>
               </div>

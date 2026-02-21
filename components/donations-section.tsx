@@ -38,9 +38,8 @@ export function DonationsSection() {
                             </div>
                             <div>
                                 <p className="font-serif text-lg md:text-xl text-foreground italic leading-relaxed mb-2">
-                                    "Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre."
+                                    "Siembra en tierra fértil. Cada semilla que plantas en Radio Visa, se confierte en esperanza, fe y vidas transformadas."
                                 </p>
-                                <p className="text-primary font-semibold">2 Corintios 9:7</p>
                             </div>
                         </div>
                     </div>
@@ -114,7 +113,7 @@ export function DonationsSection() {
 
                         <div className="space-y-3">
                             <a
-                                href="tel:+526623268356"
+                                href="tel:+526626513497"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
@@ -129,7 +128,7 @@ export function DonationsSection() {
                             </a>
 
                             <a
-                                href="https://wa.me/526623973754"
+                                href="https://wa.me/526624222790"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 p-4 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"

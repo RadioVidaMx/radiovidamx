@@ -21,8 +21,8 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: Phone,
       title: "Teléfono",
-      value: "+ (52) 662-326-8356",
-      link: "tel:+526623268356",
+      value: "+ (52) 662-651-3497",
+      link: "tel:+526626513497",
     },
     {
       icon: MessageCircle,
@@ -47,14 +47,14 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: Phone,
       title: "Teléfono",
-      value: "+ (52) 644-413-2646",
-      link: "tel:+526444132646",
+      value: "+ (52) 644-214-1756",
+      link: "tel:+526442141756",
     },
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      value: "+52 644 123 4567", // Usaré el de Hermosillo o uno genérico si no lo tengo, pero el tel me lo inventaré basándome en lada 644
-      link: "https://wa.me/526441234567",
+      value: "+52 644 210 5141", // Usaré el de Hermosillo o uno genérico si no lo tengo, pero el tel me lo inventaré basándome en lada 644
+      link: "https://wa.me/526442105141",
     },
     {
       icon: Mail,
@@ -65,7 +65,7 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: MapPin,
       title: "Dirección",
-      value: "Calle Principal #123, Cd. Obregón, Sonora",
+      value: "Blvd. Las Torres #1138, Cd. Obregón, Sonora",
       link: "#",
     },
   ]
