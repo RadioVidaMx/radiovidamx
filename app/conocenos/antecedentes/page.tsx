@@ -31,7 +31,7 @@ export default function AntecedentesPage() {
                         </p>
 
                         <p>
-                            Es un proyecto de comunicación fundado por Francisco Elmer Santacruz y Elia Moreno, que oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora, enfocada en compartir un mensaje de fe, amor, paz, esperanza un conjunto valores que fortalecen a la familia y a la comunidad.
+                            Es un proyecto de comunicación fundado por Francisco Elmer Santacruz y Elia Moreno, que oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora, enfocada en compartir un mensaje de fe, amor, paz y esperanza, un conjunto de valores que fortalecen a la familia y a la comunidad.
                         </p>
 
                         <p>
@@ -39,19 +39,19 @@ export default function AntecedentesPage() {
                         </p>
 
                         <p>
-                            Durante la etapa de administración de Radio Vida México, bajo la dirección de sus fundadores, se contó con la valiosa colaboración del Ing. Jorge Mozo y la Lic. Gissel Noriega de Mozo, quienes fueron pieza clave en el fortalecimiento operativo y en el cumplimiento de la misión del Proyecto.
+                            Durante la etapa de administración de Radio Vida México, bajo la dirección de sus fundadores, se contó con la valiosa colaboración del Ing. Jorge Daniel Mozo González y la Lic. Gissel Noriega de Mozo, quienes fueron pieza clave en el fortalecimiento operativo y en el cumplimiento de la misión del proyecto.
                         </p>
 
                         <p>
-                            A partir de Enero del 2025, Radio Vida comienza una etapa  de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos; transmitiendo un mensaje positivo y edificante, fortaleciendo su presencia en redes sociales y plataformas digitales.
+                            A partir de Enero del 2025, Radio Vida comienza una etapa  de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos, programas y más; transmitiendo un mensaje positivo y edificante, fortaleciendo su presencia en redes sociales y plataformas digitales.
                         </p>
 
                         <p>
-                            La administración local está a cargo de la Lic. Claribell Eliana López Robles en Hermosillo, Son. y la Lic. Claudia Esthela Manzanares Villegas en Cd. Obregón, Son., laborando junto a un equipo comprometido con la excelencia y la expansión del Proyecto.
+                            La administración local está a cargo de la Lic. Claribell Eliana López Robles en Hermosillo, Sonora y la Lic. Claudia Esthela Manzanares Villegas en Cd. Obregón, Sonora, laborando junto a un equipo comprometido con la excelencia y la expansión del proyecto.
                         </p>
 
                         <p>
-                            Hoy por hoy, Radio Vida continúa avanzando con un propósito claro: comunicar, informar, educar y entretener a través de contenidos que favorezcan al público en general.
+                            Hoy por hoy, Radio Vida continúa avanzando con un propósito claro: comunicar, informar, educar y entretener a través de contenidos de calidad que inspiren, enseñen y transformen vidas.
                         </p>
 
                         <div className="bg-primary/5 border-l-4 border-primary p-8 rounded-r-2xl my-12">

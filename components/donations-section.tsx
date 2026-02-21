@@ -38,7 +38,7 @@ export function DonationsSection() {
                             </div>
                             <div>
                                 <p className="font-serif text-lg md:text-xl text-foreground italic leading-relaxed mb-2">
-                                    "Siembra en tierra fértil. Cada semilla que plantas en Radio Visa, se confierte en esperanza, fe y vidas transformadas."
+                                    "Siembra en tierra fértil. Cada semilla que plantas en Radio Vida, se convierte en esperanza, fe y vidas transformadas."
                                 </p>
                             </div>
                         </div>
@@ -123,7 +123,7 @@ export function DonationsSection() {
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">Teléfono</p>
-                                    <p className="font-semibold text-foreground">+ (52) 662-326-8356</p>
+                                    <p className="font-semibold text-foreground">+ (52) 662-651-3497</p>
                                 </div>
                             </a>
 
@@ -138,7 +138,7 @@ export function DonationsSection() {
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">WhatsApp</p>
-                                    <p className="font-semibold text-foreground">+52 662 397 3754</p>
+                                    <p className="font-semibold text-foreground">+52 662 422 2790</p>
                                 </div>
                             </a>
                         </div>

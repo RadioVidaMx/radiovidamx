@@ -40,13 +40,13 @@ export function AboutSection() {
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
               Radio Vida Mx es una estación de radio al servicio de la comunidad,
-              24 horas al dia, 7 días a la semana. Por medio de la frecuencia de radio,
-              internet y las múltiples plataformas de este tiempo, siendo compañia en momentos
+              24 horas al día, 7 días a la semana. Por medio de la frecuencia de radio,
+              internet y las múltiples plataformas de este tiempo, siendo compañía en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>
             <p className="mt-4 text-lg text-muted-foreground text-pretty">
-              Con multiples ritmos musicales, llevando contenido de calidad que inspire, enseñe y transforme vidas
-              a los confines de la tierra.
+              Con múltiples ritmos musicales, llevando contenido de calidad que inspire, enseñe y transforme vidas
+              en los confines de la tierra.
             </p>
 
             <div className="mt-8">
@@ -61,9 +61,9 @@ export function AboutSection() {
             {/* Mission Statement */}
             <blockquote className="mt-8 pl-6 border-l-4 border-primary">
               <p className="text-xl font-serif italic text-foreground">
-                &ldquo;MISION: Compartir un mensaje positivo que contribuya favorablemente
-                a nuestra sociedad atravez de la renovación de la mente, alma y corazón. Asimismo,
-                ser un puente que logre canalizar los pobremas de nuesta ciudad, con las instituciones correspondientes.&rdquo;
+                &ldquo;MISIÓN: Compartir un mensaje positivo que contribuya favorablemente
+                a nuestra sociedad a través de la renovación de la mente, alma y corazón. Así mismo,
+                ser un puente que logre canalizar los problemas de nuestra sociedad, con las instituciones correspondientes.&rdquo;
               </p>
             </blockquote>
           </div>

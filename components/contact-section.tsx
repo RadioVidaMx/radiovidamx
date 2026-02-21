@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useState } from "react"
-import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube, Twitter } from "lucide-react"
+import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube, Twitter, Music } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -74,6 +74,7 @@ const contactInfo: Record<string, ContactItem[]> = {
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
+  { icon: Music, href: "https://www.tiktok.com/@radio.vida.hmo?_r=1&_t=ZS-9465nKuLj55", label: "TikTok" },
   { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
   { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
   { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },

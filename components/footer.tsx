@@ -1,4 +1,4 @@
-import { Radio, Heart, Facebook, Instagram, Youtube, Mail, Twitter } from "lucide-react"
+import { Radio, Heart, Facebook, Instagram, Youtube, Mail, Twitter, Music } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -17,6 +17,7 @@ const quickLinks = [
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
+  { icon: Music, href: "https://www.tiktok.com/@radio.vida.hmo?_r=1&_t=ZS-9465nKuLj55", label: "TikTok" },
   { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
   { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
   { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },
