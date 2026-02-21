@@ -62,6 +62,18 @@ export type GalleryImage = {
     created_at: string
 }
 
+export type Announcement = {
+    id: string
+    title?: string
+    description?: string
+    image_url: string
+    link_url?: string
+    display_order: number
+    active: boolean
+    created_at: string
+    updated_at: string
+}
+
 export type Profile = {
     id: string
     full_name: string

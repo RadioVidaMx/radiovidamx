@@ -1,5 +1,6 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
+import { AnnouncementBanner } from "@/components/announcement-banner"
 import { AboutSection } from "@/components/about-section"
 import { ScheduleSection } from "@/components/schedule-section"
 import { GallerySection } from "@/components/gallery-section"
@@ -14,6 +15,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Header />
       <HeroSection />
+      <AnnouncementBanner />
       <AboutSection />
       <ScheduleSection />
       <GallerySection />
