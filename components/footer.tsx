@@ -51,7 +51,7 @@ export function Footer() {
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
               Llevando el mensaje de esperanza y fe a través de la música y la
-              palabra que edifica desde 2016. Transmitiendo 24/7 para bendecir tu vida.
+              palabra que edifica. Transmitiendo 24/7 para bendecir tu vida.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (

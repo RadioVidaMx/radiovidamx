@@ -15,11 +15,25 @@ export default function DashboardPage() {
         articles: 0,
         announcements: 0,
     })
+    const [profile, setProfile] = useState<any>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchData = async () => {
+            setLoading(true)
             try {
+                // Fetch User Profile first
+                const { data: { user: authUser } } = await supabase.auth.getUser()
+                if (authUser) {
+                    const { data: userProfile } = await supabase
+                        .from("profiles")
+                        .select("*")
+                        .eq("id", authUser.id)
+                        .single()
+                    setProfile(userProfile)
+                }
+
+                // Fetch Stats
                 const [eventsCount, programsCount, videosCount, galleryCount, articlesCount, announcementsCount] = await Promise.all([
                     supabase.from("events").select("*", { count: "exact", head: true }),
                     supabase.from("programs").select("*", { count: "exact", head: true }),
@@ -38,16 +52,16 @@ export default function DashboardPage() {
                     announcements: announcementsCount.count || 0,
                 })
             } catch (error) {
-                console.error("Error fetching stats:", error)
+                console.error("Error fetching dashboard data:", error)
             } finally {
                 setLoading(false)
             }
         }
 
-        fetchStats()
+        fetchData()
     }, [])
 
-    const statCards = [
+    const allStatCards = [
         {
             title: "Artículos",
             value: stats.articles,
@@ -55,6 +69,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/articulos",
             color: "text-blue-600",
             bg: "bg-blue-600/10",
+            roles: ["admin", "writer"]
         },
         {
             title: "Eventos",
@@ -63,6 +78,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/eventos",
             color: "text-primary",
             bg: "bg-primary/10",
+            roles: ["admin", "asist", "operator"]
         },
         {
             title: "Programas",
@@ -71,6 +87,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/programacion",
             color: "text-secondary",
             bg: "bg-secondary/10",
+            roles: ["admin", "asist", "operator"]
         },
         {
             title: "Videos",
@@ -79,6 +96,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/videos",
             color: "text-emerald-600",
             bg: "bg-emerald-600/10",
+            roles: ["admin", "galery"]
         },
         {
             title: "Galería",
@@ -87,6 +105,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/galeria",
             color: "text-orange-600",
             bg: "bg-orange-600/10",
+            roles: ["admin", "galery"]
         },
         {
             title: "Anuncios",
@@ -95,15 +114,20 @@ export default function DashboardPage() {
             href: "/admin/dashboard/anuncios",
             color: "text-rose-600",
             bg: "bg-rose-600/10",
+            roles: ["admin"]
         },
     ]
+
+    const filteredStatCards = profile
+        ? allStatCards.filter(card => card.roles.includes(profile.role))
+        : []
 
     return (
         <div className="space-y-8">
             {/* Welcome Header */}
             <div>
                 <h1 className="text-3xl font-serif font-bold text-foreground mb-2">
-                    Bienvenido al Panel de Administración
+                    Bienvenido, {profile?.full_name || "Administrador"}
                 </h1>
                 <p className="text-muted-foreground">
                     Gestiona el contenido de Radio Vida Mx desde aquí.
@@ -112,27 +136,31 @@ export default function DashboardPage() {
 
             {/* Stats Cards */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {statCards.map((stat) => (
-                    <Link
-                        key={stat.title}
-                        href={stat.href}
-                        className="group"
-                    >
-                        <div className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:border-primary/30 transition-all">
-                            <div className="flex items-start justify-between mb-4">
-                                <div className={`p-3 rounded-xl ${stat.bg}`}>
-                                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                {(loading ? Array(4).fill(0) : filteredStatCards).map((stat, i) => (
+                    stat === 0 ? (
+                        <div key={i} className="h-32 bg-card border border-border rounded-2xl animate-pulse" />
+                    ) : (
+                        <Link
+                            key={stat.title}
+                            href={stat.href}
+                            className="group"
+                        >
+                            <div className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:border-primary/30 transition-all">
+                                <div className="flex items-start justify-between mb-4">
+                                    <div className={`p-3 rounded-xl ${stat.bg}`}>
+                                        <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                                    </div>
+                                    <TrendingUp className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
-                                <TrendingUp className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground mb-1">{stat.title}</p>
+                                    <p className="text-3xl font-bold text-foreground">
+                                        {stat.value}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-sm text-muted-foreground mb-1">{stat.title}</p>
-                                <p className="text-3xl font-bold text-foreground">
-                                    {loading ? "-" : stat.value}
-                                </p>
-                            </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    )
                 ))}
             </div>
 
@@ -142,48 +170,65 @@ export default function DashboardPage() {
                     Acciones Rápidas
                 </h2>
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <Link href="/admin/dashboard/articulos/nuevo">
-                        <Button className="w-full justify-start bg-primary hover:bg-primary/90">
-                            <Plus className="w-4 h-4 mr-2" />
-                            Nuevo Artículo
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/articulos">
-                        <Button variant="outline" className="w-full justify-start">
-                            <FileText className="w-4 h-4 mr-2" />
-                            Gestionar Artículos
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/eventos/nuevo">
-                        <Button variant="outline" className="w-full justify-start">
-                            <Calendar className="w-4 h-4 mr-2" />
-                            Nuevo Evento
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/programacion">
-                        <Button variant="outline" className="w-full justify-start">
-                            <Tv className="w-4 h-4 mr-2" />
-                            Editar Programación
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/videos">
-                        <Button variant="outline" className="w-full justify-start">
-                            <Video className="w-4 h-4 mr-2" />
-                            Agregar Video
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/galeria">
-                        <Button variant="outline" className="w-full justify-start">
-                            <ImageIcon className="w-4 h-4 mr-2" />
-                            Gestionar Galería
-                        </Button>
-                    </Link>
-                    <Link href="/admin/dashboard/anuncios/nuevo">
-                        <Button variant="outline" className="w-full justify-start">
-                            <Megaphone className="w-4 h-4 mr-2" />
-                            Nuevo Anuncio
-                        </Button>
-                    </Link>
+                    {profile?.role && ["admin", "writer"].includes(profile.role) && (
+                        <>
+                            <Link href="/admin/dashboard/articulos/nuevo">
+                                <Button className="w-full justify-start bg-primary hover:bg-primary/90">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Nuevo Artículo
+                                </Button>
+                            </Link>
+                            <Link href="/admin/dashboard/articulos">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <FileText className="w-4 h-4 mr-2" />
+                                    Gestionar Artículos
+                                </Button>
+                            </Link>
+                        </>
+                    )}
+
+                    {profile?.role && ["admin", "asist", "operator"].includes(profile.role) && (
+                        <>
+                            <Link href="/admin/dashboard/eventos/nuevo">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <Calendar className="w-4 h-4 mr-2" />
+                                    Nuevo Evento
+                                </Button>
+                            </Link>
+                            <Link href="/admin/dashboard/programacion">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <Tv className="w-4 h-4 mr-2" />
+                                    Editar Programación
+                                </Button>
+                            </Link>
+                        </>
+                    )}
+
+                    {profile?.role && ["admin", "galery"].includes(profile.role) && (
+                        <>
+                            <Link href="/admin/dashboard/videos">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <Video className="w-4 h-4 mr-2" />
+                                    Agregar Video
+                                </Button>
+                            </Link>
+                            <Link href="/admin/dashboard/galeria">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <ImageIcon className="w-4 h-4 mr-2" />
+                                    Gestionar Galería
+                                </Button>
+                            </Link>
+                        </>
+                    )}
+
+                    {profile?.role === "admin" && (
+                        <Link href="/admin/dashboard/anuncios/nuevo">
+                            <Button variant="outline" className="w-full justify-start">
+                                <Megaphone className="w-4 h-4 mr-2" />
+                                Nuevo Anuncio
+                            </Button>
+                        </Link>
+                    )}
                 </div>
             </div>
 

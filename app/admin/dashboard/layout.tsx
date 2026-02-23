@@ -22,10 +22,10 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, roles: ["admin", "writer", "asist", "galery"] },
+    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, roles: ["admin", "writer", "asist", "galery", "operator"] },
     { name: "Artículos", href: "/admin/dashboard/articulos", icon: FileText, roles: ["admin", "writer"] },
-    { name: "Eventos", href: "/admin/dashboard/eventos", icon: Calendar, roles: ["admin", "asist"] },
-    { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv, roles: ["admin", "asist"] },
+    { name: "Eventos", href: "/admin/dashboard/eventos", icon: Calendar, roles: ["admin", "asist", "operator"] },
+    { name: "Programación", href: "/admin/dashboard/programacion", icon: Tv, roles: ["admin", "asist", "operator"] },
     { name: "Videos", href: "/admin/dashboard/videos", icon: Video, roles: ["admin", "galery"] },
     { name: "Galería", href: "/admin/dashboard/galeria", icon: ImageIcon, roles: ["admin", "galery"] },
     { name: "Anuncios", href: "/admin/dashboard/anuncios", icon: Megaphone, roles: ["admin"] },
@@ -68,7 +68,7 @@ export default function AdminLayout({
 
             console.log("DashboardLayout: User role is:", userProfile?.role)
 
-            const allowedRoles = ["admin", "writer", "asist", "galery"]
+            const allowedRoles = ["admin", "writer", "asist", "galery", "operator"]
             const userRole = userProfile?.role
 
             if (!userProfile || !allowedRoles.includes(userRole)) {
