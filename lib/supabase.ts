@@ -77,7 +77,9 @@ export type Announcement = {
 export type Profile = {
     id: string
     full_name: string
+    email?: string
     avatar_url?: string
+    phone?: string
     role: 'reader' | 'admin' | 'writer' | 'galery' | 'operator'
     updated_at: string
 }

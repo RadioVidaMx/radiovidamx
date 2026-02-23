@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Radio, Lock, Mail, AlertCircle, User, Loader2 } from "lucide-react"
+import { Radio, Lock, Mail, AlertCircle, User, Loader2, Phone } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -16,6 +16,7 @@ export default function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
+    const [phone, setPhone] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
@@ -91,7 +92,8 @@ export default function LoginPage() {
                     options: {
                         emailRedirectTo: `${window.location.origin}/admin/login?confirmed=true`,
                         data: {
-                            full_name: fullName
+                            full_name: fullName,
+                            phone: phone
                         }
                     }
                 })
@@ -114,6 +116,7 @@ export default function LoginPage() {
                         setEmail("")
                         setPassword("")
                         setFullName("")
+                        setPhone("")
                     }
                 }
             } else {
@@ -191,6 +194,25 @@ export default function LoginPage() {
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
                                         required
+                                        className="pl-10"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        {mode === 'register' && (
+                            <div className="space-y-2">
+                                <Label htmlFor="phone" className="text-sm font-medium">
+                                    Número Celular <span className="text-muted-foreground font-normal">(Opcional)</span>
+                                </Label>
+                                <div className="relative">
+                                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                                    <Input
+                                        id="phone"
+                                        type="tel"
+                                        placeholder="Tu número"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
                                         className="pl-10"
                                     />
                                 </div>
