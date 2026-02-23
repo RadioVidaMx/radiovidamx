@@ -47,7 +47,6 @@ type Profile = {
 const roles = [
     { id: "admin", label: "Administrador", desc: "Acceso total" },
     { id: "writer", label: "Escritor", desc: "Gestiona sus artículos" },
-    { id: "asist", label: "Asistente", desc: "Eventos y Programación" },
     { id: "operator", label: "Operador", desc: "Eventos y Programación" },
     { id: "galery", label: "Galería/Video", desc: "Multimedia" },
     { id: "reader", label: "Lector", desc: "Comentarios y Likes" },

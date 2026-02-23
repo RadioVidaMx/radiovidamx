@@ -78,7 +78,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/eventos",
             color: "text-primary",
             bg: "bg-primary/10",
-            roles: ["admin", "asist", "operator"]
+            roles: ["admin", "operator"]
         },
         {
             title: "Programas",
@@ -87,7 +87,7 @@ export default function DashboardPage() {
             href: "/admin/dashboard/programacion",
             color: "text-secondary",
             bg: "bg-secondary/10",
-            roles: ["admin", "asist", "operator"]
+            roles: ["admin", "operator"]
         },
         {
             title: "Videos",
@@ -187,7 +187,7 @@ export default function DashboardPage() {
                         </>
                     )}
 
-                    {profile?.role && ["admin", "asist", "operator"].includes(profile.role) && (
+                    {profile?.role && ["admin", "operator"].includes(profile.role) && (
                         <>
                             <Link href="/admin/dashboard/eventos/nuevo">
                                 <Button variant="outline" className="w-full justify-start">

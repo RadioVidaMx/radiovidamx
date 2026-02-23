@@ -78,7 +78,7 @@ export type Profile = {
     id: string
     full_name: string
     avatar_url?: string
-    role: 'reader' | 'admin' | 'writer' | 'asist' | 'galery' | 'operator'
+    role: 'reader' | 'admin' | 'writer' | 'galery' | 'operator'
     updated_at: string
 }
 
