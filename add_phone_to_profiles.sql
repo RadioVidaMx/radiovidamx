@@ -1,7 +1,7 @@
 -- 1. AGREGAR COLUMNA DE TELÉFONO A PROFILES (si no existe)
 DO $$ 
 BEGIN 
-    IF NOT EXISTS (SELECT 1 FROM pf_columns WHERE tablename = 'profiles' AND columnname = 'phone') THEN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'phone') THEN
         ALTER TABLE public.profiles ADD COLUMN phone text;
     END IF;
 END $$;
