@@ -337,7 +337,7 @@ export default function ScheduleAdminPage() {
                                 <SelectContent>
                                     <SelectItem value="worship">Adoración</SelectItem>
                                     <SelectItem value="teaching">Enseñanza</SelectItem>
-                                    <SelectItem value="talk">Plática</SelectItem>
+                                    <SelectItem value="talk">Programa</SelectItem>
                                     <SelectItem value="prayer">Oración</SelectItem>
                                     <SelectItem value="music">Música</SelectItem>
                                     <SelectItem value="kids">Infantil</SelectItem>
