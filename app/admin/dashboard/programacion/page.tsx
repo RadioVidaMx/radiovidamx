@@ -313,7 +313,23 @@ export default function ScheduleAdminPage() {
                             <Label htmlFor="type" className="text-right">Tipo</Label>
                             <Select
                                 value={formData.type}
-                                onValueChange={(val: any) => setFormData({ ...formData, type: val as Program["type"] })}
+                                onValueChange={(val: string) => {
+                                    const typeToIcon: Record<string, string> = {
+                                        worship: "Heart",
+                                        teaching: "BookOpen",
+                                        talk: "Users",
+                                        prayer: "Mic",
+                                        music: "Music",
+                                        kids: "Smile",
+                                        news: "Newspaper",
+                                        voice: "Mic2"
+                                    }
+                                    setFormData({
+                                        ...formData,
+                                        type: val as Program["type"],
+                                        icon: typeToIcon[val] || "Clock"
+                                    })
+                                }}
                             >
                                 <SelectTrigger className="col-span-3">
                                     <SelectValue placeholder="Selecciona tipo" />
