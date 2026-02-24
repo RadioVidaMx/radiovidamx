@@ -39,7 +39,7 @@ export function EventsSection() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("https://formspree.io/f/xvzbglke", {
+      const response = await fetch("https://formspree.io/f/mqedgrkv", {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {

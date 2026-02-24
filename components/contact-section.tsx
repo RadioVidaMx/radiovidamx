@@ -97,7 +97,7 @@ export function ContactSection() {
     try {
       // Reemplaza 'TU_CODIGO_FORMSPREE' con tu ID real de Formspree (ej: f/xdkaqopj)
       // Puedes obtenerlo gratis en https://formspree.io
-      const response = await fetch("https://formspree.io/f/xvzbglke", {
+      const response = await fetch("https://formspree.io/f/mqedgrkv", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
