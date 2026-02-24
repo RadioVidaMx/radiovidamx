@@ -15,7 +15,10 @@ import {
     Heart,
     Users,
     ChevronRight,
-    Calendar
+    Calendar,
+    Smile,
+    Newspaper,
+    Mic2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -53,6 +56,9 @@ const programIcons = {
     talk: Users,
     prayer: Mic,
     music: Music,
+    kids: Smile,
+    news: Newspaper,
+    voice: Mic2,
 }
 
 export default function ScheduleAdminPage() {
@@ -318,6 +324,9 @@ export default function ScheduleAdminPage() {
                                     <SelectItem value="talk">Plática</SelectItem>
                                     <SelectItem value="prayer">Oración</SelectItem>
                                     <SelectItem value="music">Música</SelectItem>
+                                    <SelectItem value="kids">Infantil</SelectItem>
+                                    <SelectItem value="news">Noticias</SelectItem>
+                                    <SelectItem value="voice">Locución</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

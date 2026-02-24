@@ -38,7 +38,7 @@ export type Program = {
     time: string
     title: string
     host: string
-    type: 'worship' | 'teaching' | 'talk' | 'prayer' | 'music'
+    type: 'worship' | 'teaching' | 'talk' | 'prayer' | 'music' | 'kids' | 'news' | 'voice'
     icon: string
     city: 'Hermosillo' | 'Obregón'
     created_at: string
