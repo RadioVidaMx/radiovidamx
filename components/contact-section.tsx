@@ -32,6 +32,12 @@ const contactInfo: Record<string, ContactItem[]> = {
     },
     {
       icon: Mail,
+      title: "Correo",
+      value: "radiovidahermosillo@gmail.com",
+      link: "mailto:radiovidahermosillo@gmail.com",
+    },
+    {
+      icon: Mail,
       title: "Correo de Gerencia",
       value: "radiovidamx@gmail.com",
       link: "mailto:radiovidamx@gmail.com",
