@@ -9,9 +9,9 @@ const quickLinks = [
   { href: "/#galeria", label: "Galería" },
   { href: "/#eventos", label: "Eventos" },
   { href: "/#donaciones", label: "Donaciones" },
+  { href: "/#contacto", label: "Contacto" },
   { href: "/#videos", label: "Videos" },
   { href: "/articulos", label: "Artículos" },
-  { href: "/#contacto", label: "Contacto" },
 ]
 
 const socialLinks = [
@@ -121,7 +121,7 @@ export function Footer() {
         <div className="border-t border-secondary-foreground/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-secondary-foreground/60">
-              © {new Date().getFullYear()} Radio Vida. Todos los derechos reservados.
+              © {new Date().getFullYear()} Radio Vida Mx. Todos los derechos reservados.
             </p>
             <p className="text-sm text-secondary-foreground/60 flex items-center gap-1">
               Hecho con <Heart className="w-4 h-4 text-primary inline" /> para la gloria de Dios

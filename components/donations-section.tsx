@@ -89,9 +89,12 @@ export function DonationsSection() {
                             </div>
                         </div>
 
-                        <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
+                        <div className="bg-primary/5 rounded-xl p-4 border border-primary/10 space-y-2">
                             <p className="text-sm text-muted-foreground">
                                 <strong className="text-foreground">Banco:</strong> Banamex
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                <strong className="text-foreground">Nombre:</strong> LA FUENTE RV EN COMUNICACIÓN CON LA COMUNIDAD HERMOSILLO SONORA
                             </p>
                         </div>
                     </div>
