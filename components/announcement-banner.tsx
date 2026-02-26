@@ -62,15 +62,15 @@ export function AnnouncementBanner() {
                     {/* Carousel */}
                     <div className="overflow-hidden rounded-2xl shadow-xl shadow-primary/5" ref={emblaRef}>
                         <div className="flex">
-                            {announcements.map((announcement) => (
-                                <div key={announcement.id} className="flex-[0_0_100%] min-w-0 relative h-[300px] md:h-[450px]">
+                            {announcements.map((announcement, index) => (
+                                <div key={announcement.id} className="flex-[0_0_100%] min-w-0 relative h-[300px] md:h-[450px] bg-muted/30">
                                     {announcement.link_url ? (
                                         <a href={announcement.link_url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative">
-                                            <AnnouncementSlide announcement={announcement} />
+                                            <AnnouncementSlide announcement={announcement} priority={index === 0} />
                                         </a>
                                     ) : (
                                         <div className="w-full h-full relative">
-                                            <AnnouncementSlide announcement={announcement} />
+                                            <AnnouncementSlide announcement={announcement} priority={index === 0} />
                                         </div>
                                     )}
                                 </div>
@@ -115,13 +115,19 @@ export function AnnouncementBanner() {
     )
 }
 
-function AnnouncementSlide({ announcement }: { announcement: Announcement }) {
+function AnnouncementSlide({ announcement, priority }: { announcement: Announcement, priority?: boolean }) {
     return (
         <>
             <img
                 src={announcement.image_url}
                 alt={announcement.title || "Anuncio"}
                 className="w-full h-full object-cover"
+                loading={priority ? "eager" : "lazy"}
+                onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/logo-radiovida.png";
+                    target.classList.add("object-contain", "p-20", "bg-muted");
+                }}
             />
             {/* Overlay Gradient */}
             {(announcement.title || announcement.description) && (
