@@ -8,7 +8,7 @@ const _playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif
 const _inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Radio Vida - La estación que da Vida',
+  title: 'Radio Vida Mx - La estación que da Vida',
   description: 'Estación de radio cristiana 24/7 con música de adoración, prédicas inspiradoras y programas que edifican tu fe.',
   keywords: 'radio cristiana, música cristiana, adoración, palabra de Dios, fe',
   icons: {
