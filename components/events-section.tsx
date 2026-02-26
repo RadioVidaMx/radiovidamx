@@ -77,7 +77,7 @@ export function EventsSection() {
             Calendario de Eventos
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Únete a nuestros eventos especiales y sé parte de nuestra comunidad.
+            Únete a nuestros eventos especiales y se parte de nuestra comunidad.
           </p>
         </div>
 
@@ -110,93 +110,95 @@ export function EventsSection() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 gap-6 min-h-[300px]">
-          {loading ? (
-            <div className="col-span-full flex flex-col items-center justify-center py-20">
-              <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
-              <p className="text-muted-foreground animate-pulse">Cargando eventos...</p>
-            </div>
-          ) : filteredEvents.length > 0 ? (
-            filteredEvents.map((event) => (
-              <div
-                key={event.id}
-                className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured
-                  ? "border-primary/30 shadow-lg"
-                  : "border-border hover:border-primary/20"
-                  }`}
-              >
-                {event.featured && (
-                  <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full flex items-center gap-1 shadow-md">
-                    <Star className="w-3 h-3 fill-current" />
-                    Destacado
-                  </div>
-                )}
-
-                {/* Event Image */}
-                {event.image_url && (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden">
-                    <img
-                      src={event.image_url}
-                      alt={event.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-
-                <div className="p-6 md:p-8">
-                  {/* Date Badge */}
-                  <div className="flex items-center gap-2 text-primary mb-4">
-                    <Calendar className="w-5 h-5" />
-                    <span className="font-semibold">{event.date}</span>
-                  </div>
-
-                  <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                    {event.title}
-                  </h3>
-
-                  <p className="text-muted-foreground mb-4">
-                    {event.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-secondary" />
-                      {event.time}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-secondary" />
-                      {event.location}
-                    </div>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    className="group/btn border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
-                    asChild={!!event.link}
-                  >
-                    {event.link ? (
-                      <a href={event.link} target="_blank" rel="noopener noreferrer">
-                        Más Información
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                      </a>
-                    ) : (
-                      <>
-                        Más Información
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </Button>
-                </div>
+        <div className="min-h-[600px] relative">
+          <div className="grid md:grid-cols-2 gap-6">
+            {loading ? (
+              <div className="col-span-full flex flex-col items-center justify-center py-20">
+                <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+                <p className="text-muted-foreground animate-pulse">Cargando eventos...</p>
               </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-20 bg-muted/20 border-2 border-dashed border-border rounded-2xl">
-              <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
-              <h3 className="text-xl font-medium text-foreground">No hay eventos próximos</h3>
-              <p className="text-muted-foreground">Vuelve pronto para ver nuestras próximas actividades.</p>
-            </div>
-          )}
+            ) : filteredEvents.length > 0 ? (
+              filteredEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className={`relative bg-card rounded-2xl border overflow-hidden hover:shadow-xl transition-all group ${event.featured
+                    ? "border-primary/30 shadow-lg"
+                    : "border-border hover:border-primary/20"
+                    }`}
+                >
+                  {event.featured && (
+                    <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full flex items-center gap-1 shadow-md">
+                      <Star className="w-3 h-3 fill-current" />
+                      Destacado
+                    </div>
+                  )}
+
+                  {/* Event Image */}
+                  {event.image_url && (
+                    <div className="relative aspect-[16/9] w-full overflow-hidden">
+                      <img
+                        src={event.image_url}
+                        alt={event.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
+                  <div className="p-6 md:p-8">
+                    {/* Date Badge */}
+                    <div className="flex items-center gap-2 text-primary mb-4">
+                      <Calendar className="w-5 h-5" />
+                      <span className="font-semibold">{event.date}</span>
+                    </div>
+
+                    <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {event.title}
+                    </h3>
+
+                    <p className="text-muted-foreground mb-4">
+                      {event.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4 text-secondary" />
+                        {event.time}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4 text-secondary" />
+                        {event.location}
+                      </div>
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      className="group/btn border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+                      asChild={!!event.link}
+                    >
+                      {event.link ? (
+                        <a href={event.link} target="_blank" rel="noopener noreferrer">
+                          Más Información
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                        </a>
+                      ) : (
+                        <>
+                          Más Información
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20 bg-muted/20 border-2 border-dashed border-border rounded-2xl">
+                <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+                <h3 className="text-xl font-medium text-foreground">No hay eventos próximos</h3>
+                <p className="text-muted-foreground">Vuelve pronto para ver nuestras próximas actividades.</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Calendar Subscribe */}

@@ -27,45 +27,45 @@ export default function AntecedentesPage() {
                     <div className="prose prose-lg dark:prose-invert max-w-none space-y-8 text-muted-foreground leading-relaxed">
 
                         <p className="text-xl font-medium text-foreground leading-relaxed">
-                            Radio Vida MX es una estación de radio al servicio de la comunidad, 24/7. Por medio de la frecuencia de Radio, internet y las múltiples plataformas de este tiempo.
+                            Radio Vida MX es una estación de radio al servicio de la comunidad, 24/7, por medio de la frecuencia de Radio, internet y las múltiples plataformas de este tiempo.
                         </p>
 
                         <p>
-                            Es un proyecto de comunicación fundado por Francisco Elmer Santacruz y Elia Moreno, que oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora, enfocada en compartir un mensaje de fe, amor, paz y esperanza, un conjunto de valores que fortalecen a la familia y a la comunidad.
+                            Es un proyecto de comunicación fundado por el matrimonio Francisco Elmer Santacruz y Elia Moreno. Oficialmente inició sus transmisiones en Octubre de 2010 en Tucson, Arizona, E.U. Nació como una emisora, enfocada en compartir un mensaje de fe, amor, paz y esperanza, un conjunto de valores que fortalecen a la familia y a la comunidad.
                         </p>
 
                         <p>
-                            Con el paso del tiempo, la visión se expandió a México, iniciando Radio Vida Hermosillo en Agosto del 2016 y, posteriormente Radio Vida Obregón en Diciembre del 2019, consolidando una red de comunicación con presencia regional y alcance internacional a través de plataformas digitales.
+                            Con el paso del tiempo, la visión se expandió a México, iniciando con Radio Vida Hermosillo en Agosto de 2016 y posteriormente Radio Vida Obregón en Diciembre de 2019, consolidando una red de comunicación con presencia regional y alcance internacional a través de plataformas digitales.
                         </p>
 
                         <p>
-                            Durante la etapa de administración de Radio Vida México, bajo la dirección de sus fundadores, se contó con la valiosa colaboración del Ing. Jorge Daniel Mozo González y la Lic. Gissel Noriega de Mozo, quienes fueron pieza clave en el fortalecimiento operativo y en el cumplimiento de la misión del proyecto.
+                            Durante la etapa de administración de Radio Vida Mx, bajo la dirección de sus fundadores, se contó con la valiosa colaboración del Ing. Jorge Daniel Mozo González y la Lic. Gissel Noriega de Mozo, quienes fueron pieza clave en el fortalecimiento operativo y en el cumplimiento de la misión del proyecto.
                         </p>
 
                         <p>
-                            A partir de Enero del 2025, Radio Vida comienza una etapa  de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos, programas y más; transmitiendo un mensaje positivo y edificante, fortaleciendo su presencia en redes sociales y plataformas digitales.
+                            A partir de Enero del 2025, Radio Vida Mx comienza una etapa  de crecimiento y proyección, bajo la dirección general del Lic. Daniel Esteban Moreno González y la Lic. Mariana Germán López, consolidándose como un medio de comunicación al servicio de la comunidad. Esta nueva etapa continúa con una programación que integra música, entrevistas, cobertura de eventos, programas y más; transmitiendo un mensaje positivo y edificante, fortaleciendo su presencia en redes sociales y plataformas digitales.
                         </p>
 
                         <p>
-                            La administración local está a cargo de la Lic. Claribell Eliana López Robles en Hermosillo, Sonora y la Lic. Claudia Esthela Manzanares Villegas en Cd. Obregón, Sonora, laborando junto a un equipo comprometido con la excelencia y la expansión del proyecto.
+                            La administración en Hermosillo, Sonora está a cargo de la Lic. Claribell Eliana López Robles y en Cd. Obregon, Sonora por la Lic. Claudia Esthela Manzanares Villegas, laborando junto a un equipo de voluntarios comprometido con la excelencia y la expansión del proyecto.
                         </p>
 
                         <p>
-                            Hoy por hoy, Radio Vida continúa avanzando con un propósito claro: comunicar, informar, educar y entretener a través de contenidos de calidad que inspiren, enseñen y transformen vidas.
+                            Hoy por hoy, Radio Vida Mx continúa con un propósito claro: comunicar, informar, educar y entretener a través de contenidos de calidad que inspiren, enseñen y transformen vidas.
                         </p>
 
                         <div className="bg-primary/5 border-l-4 border-primary p-8 rounded-r-2xl my-12">
                             <p className="text-xl font-serif italic text-foreground leading-relaxed">
-                                Radio Vida es única en su género, llegando a impactar ambas ciudades con el mismo formato establecido, siendo pioneras en el Estado de Sonora, consolidándose como la gran familia Radio Vida, ¡hasta el día de hoy!, misma que se seguirá extendiendo con un solo propósito, ser portadora de BUENAS NOTICIAS.
+                                Radio Vida Mx es única en su género, impacta ambas ciudades, siendo pioneras en el Estado de Sonora, consolidándose como la gran familia Radio Vida Mx, misma que se seguirá extendiendose con un sólo propósito, ser portadora de BUENAS NOTICIAS, ser la estación que da vida.
                             </p>
                         </div>
 
                         <p className="text-foreground font-semibold">
-                            Te invitamos a ser parte de la familia de Radio Vida. ¡Escúchanos y compártenos en las redes sociales y en las diferentes plataformas digitales...!
+                            Te invitamos a ser parte de la familia de Radio Vida Mx. ¡Escúchanos y compártenos en las redes sociales y en las diferentes plataformas digitales!
                         </p>
 
                         <p className="text-primary font-bold bg-primary/10 inline-block px-4 py-2 rounded-lg">
-                            ¡Sé parte de nuestra misión! A través de la música, programas y contenidos edificantes, llevando las Buenas Noticias a los confines de la tierra. ¡Somos la estación que da vida, Radio Vida!
+                            ¡Se parte de nuestra misión! llevando las Buenas Noticias a los confines de la tierra, a través de la música, programas y contenidos edificantes. ¡Somos la estación que da vida, Radio Vida!
                         </p>
 
                     </div>

@@ -1,4 +1,4 @@
-import { Radio, Heart, Facebook, Instagram, Youtube, Mail, Twitter, Music } from "lucide-react"
+import { Radio, Heart, Facebook, Instagram, Youtube, Mail, X, Music } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -18,7 +18,7 @@ const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
   { icon: Music, href: "https://www.tiktok.com/@radio.vida.hmo?_r=1&_t=ZS-9465nKuLj55", label: "TikTok" },
-  { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
+  { icon: X, href: "https://twitter.com/radiovida_mx", label: "X" },
   { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
   { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },
 ]
@@ -45,13 +45,13 @@ export function Footer() {
                   Radio Vida Mx
                 </span>
                 <span className="text-sm text-secondary-foreground/70">
-                  La Estación que da Vida
+                  La estación que da vida
                 </span>
               </div>
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-md">
-              Llevando el mensaje de esperanza y fe a través de la música y la
-              palabra que edifica. Transmitiendo 24/7 para bendecir tu vida.
+              Compartimos un mensaje de esperanza y fe a través de la música y la
+              palabra que edifica, transmitiendo 24/7 para bendecir tu vida.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -96,8 +96,8 @@ export function Footer() {
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
                   <li>+ (52) 662-422-2790</li>
                   <li>radiovidamx@gmail.com</li>
-                  <li>Av. El mineral #43</li>
-                  <li>Hermosillo, Sonora</li>
+                  <li>Av. El Mineral #43</li>
+                  <li>Hermosillo, Sonora.</li>
                 </ul>
               </div>
 
@@ -107,8 +107,8 @@ export function Footer() {
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
                   <li>+ (52) 644-214-1756</li>
                   <li>radiovidaobregon@gmail.com</li>
-                  <li>Blvd. Las torres #1138</li>
-                  <li>Cd. Obregón, Sonora</li>
+                  <li>Blvd. Las Torres #1138</li>
+                  <li>Cd. Obregón, Sonora.</li>
                 </ul>
               </div>
             </div>

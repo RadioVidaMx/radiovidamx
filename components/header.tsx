@@ -7,6 +7,7 @@ import Link from "next/link"
 import { usePlayer } from "@/contexts/player-context"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
+import { useAnchorScroll } from "@/hooks/use-anchor-scroll"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,9 +22,9 @@ const navLinks = [
   { href: "/#galeria", label: "Galería" },
   { href: "/#eventos", label: "Eventos" },
   { href: "/#donaciones", label: "Donaciones" },
+  { href: "/#contacto", label: "Contacto" },
   { href: "/#videos", label: "Videos" },
   { href: "/articulos", label: "Artículos" },
-  { href: "/#contacto", label: "Contacto" },
 ]
 
 export function Header() {
@@ -32,6 +33,7 @@ export function Header() {
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
   const router = useRouter()
+  useAnchorScroll()
 
   useEffect(() => {
     const getUser = async () => {

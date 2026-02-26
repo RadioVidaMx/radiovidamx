@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useState } from "react"
-import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube, Twitter, Music } from "lucide-react"
+import { Phone, Mail, MapPin, Send, MessageCircle, Facebook, Instagram, Youtube, X, Music } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -21,7 +21,7 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: Phone,
       title: "Teléfono",
-      value: "+ (52) 662-651-3497",
+      value: "+ (52) 662 651 3497",
       link: "tel:+526626513497",
     },
     {
@@ -39,7 +39,7 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: MapPin,
       title: "Dirección",
-      value: "Av. El mineral #43, Hermosillo, Sonora",
+      value: "Av. El Mineral #43, Hermosillo, Sonora, México.",
       link: "#",
     },
   ],
@@ -47,7 +47,7 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: Phone,
       title: "Teléfono",
-      value: "+ (52) 644-214-1756",
+      value: "+ (52) 644 214 1756",
       link: "tel:+526442141756",
     },
     {
@@ -65,7 +65,7 @@ const contactInfo: Record<string, ContactItem[]> = {
     {
       icon: MapPin,
       title: "Dirección",
-      value: "Blvd. Las Torres #1138, Cd. Obregón, Sonora",
+      value: "Blvd. Las Torres #1138, Cd. Obregón, Sonora, México.",
       link: "#",
     },
   ]
@@ -75,7 +75,7 @@ const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/RadioVidaHermosillo", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/radiovidahermosillo", label: "Instagram" },
   { icon: Music, href: "https://www.tiktok.com/@radio.vida.hmo?_r=1&_t=ZS-9465nKuLj55", label: "TikTok" },
-  { icon: Twitter, href: "https://twitter.com/radiovida_mx", label: "Twitter" },
+  { icon: X, href: "https://twitter.com/radiovida_mx", label: "X" },
   { icon: Youtube, href: "https://www.youtube.com/@radiovidamx4544", label: "YouTube" },
   { icon: Mail, href: "mailto:radiovidamx@gmail.com", label: "Email" },
 ]
@@ -130,7 +130,7 @@ export function ContactSection() {
             Contacto
           </span>
           <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-            Estamos para Servirte
+            Estamos para servirte
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Contáctanos para peticiones de oración, sugerencias o cualquier consulta.

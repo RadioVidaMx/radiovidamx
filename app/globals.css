@@ -123,4 +123,9 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Fix for fixed header on anchor links */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
 }

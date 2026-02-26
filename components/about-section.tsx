@@ -33,19 +33,19 @@ export function AboutSection() {
           {/* Content */}
           <div>
             <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-              Sobre Nosotros
+              Nosotros
             </span>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-              Portadora de Buenas Noticias.
+              Portadora de buenas noticias.
             </h2>
             <p className="mt-6 text-lg text-muted-foreground text-pretty">
-              Radio Vida Mx es una estación de radio al servicio de la comunidad,
-              24 horas al día, 7 días a la semana. Por medio de la frecuencia de radio,
-              internet y las múltiples plataformas de este tiempo, siendo compañía en momentos
+              Radio Vida Mx es una estación de radio al servicio de la comunidad.
+              24 horas al día, los 7 días de la semana, usando frecuencia de radio,
+              internet y las múltiples plataformas de este tiempo, logrando ser de compañía en momentos
               de alegría y consuelo en tiempos difíciles.
             </p>
             <p className="mt-4 text-lg text-muted-foreground text-pretty">
-              Con múltiples ritmos musicales, llevando contenido de calidad que inspire, enseñe y transforme vidas
+              Además, nuestra plataforma cuenta con ritmos musicales, llevando contenido de calidad que inspire, enseñe y transforme vidas
               en los confines de la tierra.
             </p>
 

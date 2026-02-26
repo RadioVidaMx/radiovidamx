@@ -26,8 +26,8 @@ export function HeroSection() {
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance">
-              <span className="text-primary">Radio Vida,</span>{" "}
-              La estación que da Vida.
+              <span className="text-primary">Radio vida.</span>{" "}
+              La estación que da vida.
             </h1>
 
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 text-pretty">
@@ -49,7 +49,7 @@ export function HeroSection() {
                 ) : (
                   <>
                     <Play className="w-5 h-5 mr-2" />
-                    Escuchar Ahora
+                    Escuchar ahora
                   </>
                 )}
               </Button>
@@ -59,7 +59,7 @@ export function HeroSection() {
                 className="text-lg px-8 py-6 rounded-full border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground transition-all bg-transparent"
                 asChild
               >
-                <a href="#programacion">Ver Programación</a>
+                <a href="#programacion">Ver programación</a>
               </Button>
             </div>
 

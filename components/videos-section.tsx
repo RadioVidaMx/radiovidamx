@@ -60,13 +60,13 @@ export function VideosSection() {
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-12">
                     <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                        Multimedia
+                        Videos
                     </span>
                     <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
-                        Videos en Youtube
+                        Youtube
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">
-                        Mira nuestros contenidos más recientes y comparte la palabra de Dios.
+                        Mira nuestros contenidos más recientes y comparte.
                     </p>
                 </div>
 
@@ -197,9 +197,14 @@ export function VideosSection() {
                 <div className="mt-12 text-center">
                     <div className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 rounded-full border border-primary/20">
                         <Youtube className="w-5 h-5 text-primary" />
-                        <span className="text-foreground font-medium">
-                            Suscríbete a nuestro canal para más contenido
-                        </span>
+                        <a
+                            href="https://www.youtube.com/@radiovidamx4544?sub_confirmation=1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-foreground font-medium hover:text-primary transition-colors cursor-pointer"
+                        >
+                            Suscríbete a nuestro canal para más contenido.
+                        </a>
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@ export function DonationsSection() {
                         Apoya a Radio Vida Mx
                     </h2>
                     <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                        Tu generosidad hace posible que se continúe llevando esperanza y fe a miles de hogares.
+                        Tu generosidad hace posible que continuemos llevando esperanza y fe a miles de hogares.
                     </p>
                 </div>
 
@@ -38,7 +38,7 @@ export function DonationsSection() {
                             </div>
                             <div>
                                 <p className="font-serif text-lg md:text-xl text-foreground italic leading-relaxed mb-2">
-                                    "Siembra en tierra fértil. Cada semilla que plantas en Radio Vida, se convierte en esperanza, fe y vidas transformadas."
+                                    "Siembra en tierra fértil. Cada semilla que plantas en Radio Vida Mx, se convierte en esperanza, fe y vidas transformadas".
                                 </p>
                             </div>
                         </div>
@@ -108,7 +108,7 @@ export function DonationsSection() {
                         </div>
 
                         <p className="text-muted-foreground mb-6">
-                            Si lo prefieres, puedes contactarnos por teléfono, redes sociales o acudir a nuestras oficinas.
+                            Si lo prefieres, puedes hacer contacto con nosotros por teléfono, redes sociales o acudir a nuestras oficinas.
                         </p>
 
                         <div className="space-y-3">
@@ -150,7 +150,7 @@ export function DonationsSection() {
                     <div className="text-center bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl border border-primary/20 p-6 md:p-8">
                         <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
                         <p className="text-foreground text-lg font-semibold">
-                            Cada donación, sin importar el monto, nos ayuda a continuar con mantener la transmisión 24/7.
+                            Cada donación, sin importar el monto, contribuye para mantener nuestra transmisión 24/7.
                         </p>
                     </div>
                 </div>
