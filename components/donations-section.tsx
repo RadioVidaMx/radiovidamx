@@ -123,7 +123,7 @@ export function DonationsSection() {
                                 </div>
                                 <div>
                                     <p className="text-sm text-muted-foreground">Teléfono</p>
-                                    <p className="font-semibold text-foreground">+ (52) 662-651-3497</p>
+                                    <p className="font-semibold text-foreground">+ (52) 662 651 3497</p>
                                 </div>
                             </a>
 

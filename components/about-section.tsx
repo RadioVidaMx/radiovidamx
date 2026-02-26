@@ -16,12 +16,12 @@ const features = [
   {
     icon: Users,
     title: "OBJETIVOS",
-    description: "Comunicar, Educar, Informar y Entretener.",
+    description: "Comunicar, educar, informar y entretener.",
   },
   {
     icon: Heart,
     title: "VALORES",
-    description: "Trabajo en equipo, Honestidad, Responsabilidad, Respeto, Solidaridad, Creatividad, Innovación, Perseverancia.",
+    description: "Trabajo en equipo, honestidad, responsabilidad, respeto, solidaridad, creatividad, innovación y perseverancia.",
   },
 ]
 

@@ -57,10 +57,10 @@ export default function ArticlesPage() {
                 <section className="bg-muted/30 py-16 md:py-24 border-b border-border">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
-                            Articulos
+                            Artículos
                         </span>
                         <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-6">
-                            Artículos de Radio Vida
+                            Artículos de Radio Vida Mx
                         </h1>
                         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
                             Encuentra inspiración, enseñanzas y noticias de nuestra comunidad.

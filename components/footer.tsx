@@ -94,10 +94,10 @@ export function Footer() {
               <div>
                 <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Hermosillo</p>
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
-                  <li>+ (52) 662-422-2790</li>
+                  <li>+ (52) 662 422 2790</li>
                   <li>radiovidamx@gmail.com</li>
                   <li>Av. El Mineral #43</li>
-                  <li>Hermosillo, Sonora.</li>
+                  <li>Hermosillo, Sonora, México.</li>
                 </ul>
               </div>
 
@@ -105,10 +105,10 @@ export function Footer() {
               <div>
                 <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Obregón</p>
                 <ul className="space-y-1 text-secondary-foreground/80 text-sm">
-                  <li>+ (52) 644-214-1756</li>
+                  <li>+ (52) 644 214 1756</li>
                   <li>radiovidaobregon@gmail.com</li>
                   <li>Blvd. Las Torres #1138</li>
-                  <li>Cd. Obregón, Sonora.</li>
+                  <li>Cd. Obregón, Sonora, México.</li>
                 </ul>
               </div>
             </div>
