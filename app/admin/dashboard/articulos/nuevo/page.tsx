@@ -173,7 +173,7 @@ export default function NewArticlePage() {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-4 pb-20">
+                <div className="flex items-center justify-end gap-4 pb-12">
                     <Link href="/admin/dashboard/articulos">
                         <Button variant="outline" type="button" disabled={loading}>
                             Cancelar
@@ -197,6 +197,8 @@ export default function NewArticlePage() {
                         )}
                     </Button>
                 </div>
+                {/* Espaciador para que los botones no queden ocultos detrás del radio player fijo */}
+                <div className="h-32" />
             </form>
         </div>
     )

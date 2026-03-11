@@ -232,7 +232,7 @@ export default function EditArticlePage() {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-4 pb-20">
+                <div className="flex items-center justify-end gap-4 pb-12">
                     <Link href="/admin/dashboard/articulos">
                         <Button variant="outline" type="button" disabled={saving}>
                             Cancelar
@@ -256,6 +256,8 @@ export default function EditArticlePage() {
                         )}
                     </Button>
                 </div>
+                {/* Espaciador para que los botones no queden ocultos detrás del radio player fijo */}
+                <div className="h-32" />
             </form>
         </div>
     )

@@ -265,7 +265,7 @@ export default function NewEventPage() {
                     </Button>
                 </div>
                 {/* Espaciador para que los botones no queden ocultos detrás del radio player fijo */}
-                <div className="h-24" />
+                <div className="h-32" />
             </form>
         </div>
     )
