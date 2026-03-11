@@ -113,6 +113,14 @@ export type ArticleLike = {
     user_id: string
 }
 
+export type LiveSettings = {
+    id: string
+    is_live: boolean
+    youtube_url?: string
+    facebook_url?: string
+    updated_at: string
+}
+
 // Note: The instruction mentioned updating a supabase query in 'EventsSection'.
 // As this file only contains type definitions and client initialization,
 // and does not have an 'EventsSection' or any query fetching events,

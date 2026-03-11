@@ -14,7 +14,8 @@ import {
     X,
     FileText,
     Users,
-    Megaphone
+    Megaphone,
+    Radio
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -30,6 +31,7 @@ const navigation = [
     { name: "Galería", href: "/admin/dashboard/galeria", icon: ImageIcon, roles: ["admin", "galery"] },
     { name: "Anuncios", href: "/admin/dashboard/anuncios", icon: Megaphone, roles: ["admin"] },
     { name: "Usuarios", href: "/admin/dashboard/usuarios", icon: Users, roles: ["admin"] },
+    { name: "EN VIVO", href: "/admin/dashboard/en-vivo", icon: Radio, roles: ["admin", "operator"] },
 ]
 
 export default function AdminLayout({
