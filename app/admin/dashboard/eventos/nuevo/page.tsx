@@ -230,7 +230,7 @@ export default function NewEventPage() {
                     </div>
                 </div>
 
-                <div className="flex justify-end gap-3">
+                <div className="flex justify-end gap-3 mb-4">
                     <Link href="/admin/dashboard/eventos">
                         <Button variant="ghost" type="button">Cancelar</Button>
                     </Link>
@@ -252,6 +252,8 @@ export default function NewEventPage() {
                         )}
                     </Button>
                 </div>
+                {/* Espaciador para que los botones no queden ocultos detrás del radio player fijo */}
+                <div className="h-24" />
             </form>
         </div>
     )
