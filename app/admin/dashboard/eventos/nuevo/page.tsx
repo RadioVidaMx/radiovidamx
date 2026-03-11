@@ -11,7 +11,8 @@ import {
     Clock,
     Type,
     AlignLeft,
-    Star
+    Star,
+    Image as ImageIcon
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

@@ -12,7 +12,8 @@ import {
     Type,
     AlignLeft,
     Star,
-    Loader2
+    Loader2,
+    Image as ImageIcon
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -28,7 +29,6 @@ import {
 } from "@/components/ui/select"
 import Link from "next/link"
 import { ImageUpload } from "@/components/image-upload"
-import { ImageIcon } from "lucide-react"
 
 export default function EditEventPage() {
     const router = useRouter()
