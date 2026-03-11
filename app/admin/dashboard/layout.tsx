@@ -211,7 +211,7 @@ export default function AdminLayout({
                 </header>
 
                 {/* Page content */}
-                <main className="p-4 lg:p-8 pb-32 lg:pb-8">
+                <main className="p-4 lg:p-8 pb-32">
                     {children}
                 </main>
             </div>
