@@ -26,6 +26,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import Link from "next/link"
+import { ImageUpload } from "@/components/image-upload"
 
 export default function NewEventPage() {
     const router = useRouter()
@@ -172,21 +173,26 @@ export default function NewEventPage() {
                         </Select>
                     </div>
 
-                    {/* Image URL (Optional) */}
-                    <div className="space-y-2">
-                        <Label htmlFor="image_url" className="flex items-center gap-2">
-                            Foto del Evento (Link opcional)
+                    {/* Foto del Evento */}
+                    <div className="space-y-4">
+                        <Label className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" /> Foto del Evento
                         </Label>
-                        <Input
-                            id="image_url"
-                            placeholder="https://ejemplo.com/imagen.jpg"
-                            value={formData.image_url}
-                            onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                        <ImageUpload 
+                            onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
+                            currentImageUrl={formData.image_url}
                         />
-                        <div className="text-xs text-muted-foreground space-y-1">
-                            <p>✅ <strong>Funciona:</strong> Links directos a imágenes (.jpg, .png, .webp) — ej. de Imgur, tu sitio web, etc.</p>
-                            <p>❌ <strong>No funciona:</strong> Links de Google Drive, Facebook, Instagram o YouTube.</p>
-                            <p>💡 <strong>Tip:</strong> Sube tu imagen a <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-primary underline">imgur.com</a> y pega el link directo.</p>
+                        <div className="space-y-2">
+                            <Label htmlFor="image_url" className="text-xs text-muted-foreground">
+                                O pega un link manual si ya tienes uno:
+                            </Label>
+                            <Input
+                                id="image_url"
+                                placeholder="https://ejemplo.com/imagen.jpg"
+                                value={formData.image_url}
+                                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                                className="h-8 text-xs"
+                            />
                         </div>
                     </div>
 

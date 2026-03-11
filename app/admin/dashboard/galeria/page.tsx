@@ -25,6 +25,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog"
+import { ImageUpload } from "@/components/image-upload"
 
 export default function GalleryAdminPage() {
     const [images, setImages] = useState<GalleryImage[]>([])
@@ -241,16 +242,26 @@ export default function GalleryAdminPage() {
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             />
                         </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="src" className="flex items-center gap-2 text-sm">
-                                <LinkIcon className="w-4 h-4 text-primary" /> URL de la Imagen
+                        <div className="space-y-4">
+                            <Label className="flex items-center gap-2 text-sm">
+                                <ImageIcon className="w-4 h-4 text-primary" /> Foto de Galería
                             </Label>
-                            <Input
-                                id="src"
-                                placeholder="https://ejemplo.com/imagen.jpg"
-                                value={formData.src}
-                                onChange={(e) => setFormData({ ...formData, src: e.target.value })}
+                            <ImageUpload 
+                                onUploadComplete={(url) => setFormData({ ...formData, src: url })}
+                                currentImageUrl={formData.src}
                             />
+                            <div className="space-y-2">
+                                <Label htmlFor="src" className="text-xs text-muted-foreground">
+                                    O pega un link manual:
+                                </Label>
+                                <Input
+                                    id="src"
+                                    placeholder="https://ejemplo.com/imagen.jpg"
+                                    value={formData.src}
+                                    onChange={(e) => setFormData({ ...formData, src: e.target.value })}
+                                    className="h-8 text-xs"
+                                />
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="alt" className="flex items-center gap-2 text-sm">
@@ -275,16 +286,6 @@ export default function GalleryAdminPage() {
                             />
                         </div>
 
-                        {formData.src && (
-                            <div className="rounded-lg overflow-hidden border border-border bg-muted/30 p-2">
-                                <p className="text-[10px] uppercase font-bold text-muted-foreground mb-2 px-1">Vista Previa:</p>
-                                <img
-                                    src={formData.src}
-                                    className="w-full aspect-video object-cover rounded shadow-sm"
-                                    onError={(e) => (e.currentTarget.src = "https://placehold.co/640x480?text=URL+Inválida")}
-                                />
-                            </div>
-                        )}
                     </div>
                     <DialogFooter>
                         <Button variant="ghost" onClick={() => setIsDialogOpen(false)} disabled={saving}>

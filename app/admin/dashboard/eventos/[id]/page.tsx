@@ -27,6 +27,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import Link from "next/link"
+import { ImageUpload } from "@/components/image-upload"
+import { ImageIcon } from "lucide-react"
 
 export default function EditEventPage() {
     const router = useRouter()
@@ -221,17 +223,27 @@ export default function EditEventPage() {
                         </Select>
                     </div>
 
-                    {/* Image URL (Optional) */}
-                    <div className="space-y-2">
-                        <Label htmlFor="image_url" className="flex items-center gap-2">
-                            Foto del Evento (Link opcional)
+                    {/* Foto del Evento */}
+                    <div className="space-y-4">
+                        <Label className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" /> Foto del Evento
                         </Label>
-                        <Input
-                            id="image_url"
-                            placeholder="https://ejemplo.com/imagen.jpg"
-                            value={formData.image_url}
-                            onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                        <ImageUpload 
+                            onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
+                            currentImageUrl={formData.image_url}
                         />
+                        <div className="space-y-2">
+                            <Label htmlFor="image_url" className="text-xs text-muted-foreground">
+                                O pega un link manual si ya tienes uno:
+                            </Label>
+                            <Input
+                                id="image_url"
+                                placeholder="https://ejemplo.com/imagen.jpg"
+                                value={formData.image_url}
+                                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                                className="h-8 text-xs"
+                            />
+                        </div>
                     </div>
 
                     {/* Link (Optional) */}

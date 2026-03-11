@@ -19,6 +19,7 @@ import {
 import Link from "next/link"
 
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { ImageUpload } from "@/components/image-upload"
 
 export default function NewArticlePage() {
     const router = useRouter()
@@ -135,19 +136,27 @@ export default function NewArticlePage() {
                         />
                     </div>
 
-                    {/* Image URL */}
-                    <div className="space-y-2">
-                        <Label htmlFor="image_url" className="flex items-center gap-2">
-                            <ImageIcon className="w-4 h-4 text-primary" />
-                            URL de la Imagen (Opcional)
+                    {/* Foto del Artículo */}
+                    <div className="space-y-4">
+                        <Label className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4 text-primary" /> Foto del Artículo
                         </Label>
-                        <Input
-                            id="image_url"
-                            placeholder="https://ejemplo.com/imagen.jpg"
-                            value={formData.image_url}
-                            onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                        <ImageUpload 
+                            onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
+                            currentImageUrl={formData.image_url}
                         />
-                        <p className="text-xs text-muted-foreground">Esta imagen se mostrará en el encabezado del artículo.</p>
+                        <div className="space-y-2">
+                            <Label htmlFor="image_url" className="text-xs text-muted-foreground">
+                                O pega un link manual si ya tienes uno:
+                            </Label>
+                            <Input
+                                id="image_url"
+                                placeholder="https://ejemplo.com/imagen.jpg"
+                                value={formData.image_url}
+                                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                                className="h-8 text-xs"
+                            />
+                        </div>
                     </div>
 
                     {/* Content */}

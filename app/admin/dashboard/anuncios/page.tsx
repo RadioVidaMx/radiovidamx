@@ -29,6 +29,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog"
+import { ImageUpload } from "@/components/image-upload"
 
 export default function AnnouncementsAdminPage() {
     const [announcements, setAnnouncements] = useState<Announcement[]>([])
@@ -284,16 +285,26 @@ export default function AnnouncementsAdminPage() {
                             />
                         </div>
 
-                        <div className="space-y-2">
-                            <Label htmlFor="image_url" className="flex items-center gap-2 text-sm">
-                                <LinkIcon className="w-4 h-4 text-primary" /> URL de la Imagen
+                        <div className="space-y-4">
+                            <Label className="flex items-center gap-2 text-sm">
+                                <ImageIcon className="w-4 h-4 text-primary" /> Imagen del Anuncio
                             </Label>
-                            <Input
-                                id="image_url"
-                                placeholder="https://ejemplo.com/flyer-evento.jpg"
-                                value={formData.image_url}
-                                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                            <ImageUpload 
+                                onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
+                                currentImageUrl={formData.image_url}
                             />
+                            <div className="space-y-2">
+                                <Label htmlFor="image_url" className="text-xs text-muted-foreground">
+                                    O pega un link manual:
+                                </Label>
+                                <Input
+                                    id="image_url"
+                                    placeholder="https://ejemplo.com/flyer-evento.jpg"
+                                    value={formData.image_url}
+                                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                                    className="h-8 text-xs"
+                                />
+                            </div>
                         </div>
 
                         <div className="space-y-2">
@@ -330,16 +341,6 @@ export default function AnnouncementsAdminPage() {
                             </div>
                         </div>
 
-                        {formData.image_url && (
-                            <div className="rounded-lg overflow-hidden border border-border bg-muted/30 p-2">
-                                <p className="text-[10px] uppercase font-bold text-muted-foreground mb-2 px-1">Vista Previa:</p>
-                                <img
-                                    src={formData.image_url}
-                                    className="w-full aspect-video object-cover rounded shadow-sm"
-                                    onError={(e) => (e.currentTarget.src = "https://placehold.co/640x360?text=URL+de+Imagen+Invalida")}
-                                />
-                            </div>
-                        )}
                     </div>
                     <DialogFooter>
                         <Button variant="ghost" onClick={() => setIsDialogOpen(false)} disabled={saving}>
