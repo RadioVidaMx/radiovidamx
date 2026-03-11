@@ -183,7 +183,13 @@ export default function NewEventPage() {
                             value={formData.image_url}
                             onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
                         />
+                        <div className="text-xs text-muted-foreground space-y-1">
+                            <p>✅ <strong>Funciona:</strong> Links directos a imágenes (.jpg, .png, .webp) — ej. de Imgur, tu sitio web, etc.</p>
+                            <p>❌ <strong>No funciona:</strong> Links de Google Drive, Facebook, Instagram o YouTube.</p>
+                            <p>💡 <strong>Tip:</strong> Sube tu imagen a <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-primary underline">imgur.com</a> y pega el link directo.</p>
+                        </div>
                     </div>
+
 
                     {/* Link (Optional) */}
                     <div className="space-y-2">

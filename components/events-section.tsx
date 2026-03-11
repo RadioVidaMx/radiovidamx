@@ -135,13 +135,26 @@ export function EventsSection() {
 
                   {/* Event Image */}
                   {event.image_url && (
-                    <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
                       <img
                         src={event.image_url}
                         alt={event.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget
+                          target.style.display = 'none'
+                          const fallback = target.nextElementSibling as HTMLElement
+                          if (fallback) fallback.style.display = 'flex'
+                        }}
                       />
+                      {/* Fallback si la imagen no carga */}
+                      <div
+                        className="absolute inset-0 hidden items-center justify-center flex-col gap-2 bg-muted text-muted-foreground"
+                      >
+                        <Calendar className="w-10 h-10 opacity-20" />
+                        <span className="text-sm opacity-50">Imagen no disponible</span>
+                      </div>
                     </div>
                   )}
 
