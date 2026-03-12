@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
+import { Pingram } from 'pingram'
 
 export async function POST(request: Request) {
-    const PINGRAM_CLIENT_ID = process.env.PINGRAM_CLIENT_ID
-    const PINGRAM_CLIENT_SECRET = process.env.PINGRAM_CLIENT_SECRET
-
-    console.log("Notificaciones: Iniciando proceso de envío...")
+    const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY || process.env.PINGRAM_CLIENT_SECRET
+    
+    console.log("Notificaciones: Iniciando proceso con SDK...")
 
     try {
         const body = await request.json()
@@ -17,62 +17,58 @@ export async function POST(request: Request) {
             )
         }
 
-        if (!PINGRAM_CLIENT_ID || !PINGRAM_CLIENT_SECRET) {
+        if (!PINGRAM_API_KEY) {
             console.error("Notificaciones: Faltan credenciales en el servidor")
             return NextResponse.json(
-                { message: "Las credenciales (ID o Secret) no están configuradas en el servidor" },
+                { message: "La API Key (PINGRAM_API_KEY) no está configurada en el servidor" },
                 { status: 500 }
             )
         }
 
-        // Generamos el Header de Basic Auth
-        const authHeader = Buffer.from(`${PINGRAM_CLIENT_ID}:${PINGRAM_CLIENT_SECRET}`).toString('base64')
-
-        // Endpoint oficial de NotificationAPI (motor de Pingram)
-        const apiUrl = `https://api.notificationapi.com/v1/${PINGRAM_CLIENT_ID}/sender`
-
-        console.log("Notificaciones: Enviando a API...")
-
-        const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
-                "Authorization": `Basic ${authHeader}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                notificationId: "broadcast_notification",
-                user: {
-                    id: "all_users",
-                },
-                mergeVariables: {
-                    title: title,
-                    message: message,
-                    url: url || "https://radiovidamx.com"
-                }
-            }),
+        // Inicializamos el SDK oficial
+        // Nota: El SDK maneja internamente las firmas AWS y los endpoints correctos
+        const pingram = new Pingram({
+            apiKey: PINGRAM_API_KEY.trim()
         })
 
-        const data = await response.json()
+        console.log("Notificaciones: Enviando vía SDK...")
 
-        if (!response.ok) {
-            console.error("Pingram API Response Error:", data)
-            return NextResponse.json(
-                { message: data.message || "Error al comunicarse con el servidor de notificaciones" },
-                { status: response.status }
-            )
-        }
+        const result = await pingram.send({
+            type: 'broadcast', // O el ID específico si se ha configurado en el panel
+            to: {
+                id: 'all_users'
+            },
+            mobile_push: {
+                title: title,
+                message: message
+            },
+            web_push: {
+                title: title,
+                message: message,
+                url: url || 'https://radiovidamx.com'
+            },
+            inapp: {
+                title: title,
+                url: url || 'https://radiovidamx.com'
+            }
+        })
 
-        console.log("Notificaciones: ¡Éxito!")
+        console.log("Notificaciones: Éxito con el SDK")
+        
         return NextResponse.json({
             success: true,
             message: "Notificación enviada correctamente",
-            data
+            result
         })
 
     } catch (error: any) {
-        console.error("Internal Server Error (Notifications):", error)
+        console.error("Pingram SDK Error:", error)
+        
+        // Manejo específico de errores del SDK
+        const errorMessage = error.message || "Error al procesar la notificación con el SDK"
+        
         return NextResponse.json(
-            { message: "Error interno en el servidor" },
+            { message: errorMessage },
             { status: 500 }
         )
     }
