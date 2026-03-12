@@ -21,23 +21,24 @@ export async function POST(request: Request) {
             )
         }
 
-        // El ID de cuenta extraído del token del usuario
-        const PINGRAM_ACCOUNT_ID = "0l1eqh9ut8ke6htt9bn296b028"
-        const authHeader = Buffer.from(`${PINGRAM_ACCOUNT_ID}:${PINGRAM_API_KEY}`).toString('base64')
-
-        // Usamos el endpoint de NotificationAPI (empresa matriz de Pingram) que es más estable para fetch directo
-        const response = await fetch(`https://api.notificationapi.com/v1/${PINGRAM_ACCOUNT_ID}/sender`, {
+        // Usamos el endpoint y formato de la nueva API de Pingram.io
+        // Autenticación por Bearer Token con la Secret Key
+        const response = await fetch("https://api.pingram.io/v1/send", {
             method: "POST",
             headers: {
-                "Authorization": `Basic ${authHeader}`,
+                "Authorization": `Bearer ${PINGRAM_API_KEY.trim()}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                notificationId: "broadcast_notification", // ID genérico o configurado en el panel
-                user: {
-                    id: "all_users",
+                type: "broadcast", // O el ID de notificación que tengas en el panel
+                to: {
+                    id: "all_users", 
                 },
-                mergeVariables: {
+                mobile_push: {
+                    title: title,
+                    message: message
+                },
+                web_push: {
                     title: title,
                     message: message,
                     url: url || "https://radiovidamx.com"
