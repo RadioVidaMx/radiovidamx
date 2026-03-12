@@ -26,46 +26,39 @@ export function PushNotificationManager() {
 
     setIsLoading(true)
     try {
-      let userId = localStorage.getItem("radiovida_notification_userid")
-      if (!userId) {
-        userId = "user_" + Math.random().toString(36).substring(2, 15)
-        localStorage.setItem("radiovida_notification_userid", userId)
-      }
+      // Para Radio Vida, usamos un ID global para que todos los oyentes
+      // reciban las mismas notificaciones de "Broadcast" (Aviso General)
+      const userId = "oyente_global"
 
-      console.log("Notificaciones: Inicializando para usuario:", userId)
+      console.log("Notificaciones: Inicializando para:", userId)
 
-      // Inicializar el cliente usando el constructor de la clase
+      // Inicializar el cliente
       const notificationClient = new NotificationAPIClient({
         clientId: CLIENT_ID,
         userId: userId,
+      })
+
+      // IMPORTANTE: Identificar al usuario para preparar el enlace de tokens
+      await notificationClient.identify({
+        id: userId
       })
 
       // Pedir permiso y suscribir
       console.log("Notificaciones: Solicitando permisos...")
       notificationClient.askForWebPushPermission()
       
-      // El estado de permiso puede cambiar asíncronamente
-      // Esperamos un poco o dejamos que el usuario vea el cambio nativo
+      // Verificamos el estado después de un breve delay
       setTimeout(() => {
         const currentPermission = Notification.permission as any
         setStatus(currentPermission)
         if (currentPermission === "granted") {
-          toast.success("¡Notificaciones activadas!")
+          toast.success("¡Ya estás suscrito a las notificaciones!")
         }
-      }, 1000)
+      }, 2000)
 
     } catch (error: any) {
       console.error("Error detallado al activar notificaciones:", error)
-      
-      // Mensaje más descriptivo
-      let msg = "Hubo un problema al activar las notificaciones"
-      if (error.message && error.message.includes("Service Worker")) {
-        msg = "No se pudo registrar el Service Worker"
-      } else if (location.protocol !== 'https:') {
-        msg = "Las notificaciones requieren una conexión segura (HTTPS)"
-      }
-      
-      toast.error(msg)
+      toast.error("Hubo un problema al activar las notificaciones")
     } finally {
       setIsLoading(false)
     }

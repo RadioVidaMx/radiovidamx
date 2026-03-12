@@ -34,9 +34,9 @@ export async function POST(request: Request) {
         console.log("Notificaciones: Enviando vía SDK...")
 
         const result = await pingram.send({
-            type: 'broadcast', // O el ID específico si se ha configurado en el panel
+            type: 'broadcast_notification', // Asegúrate de tener este ID en tu panel o usa 'broadcast'
             to: {
-                id: 'all_users'
+                id: 'oyente_global'
             },
             mobile_push: {
                 title: title,
@@ -45,11 +45,11 @@ export async function POST(request: Request) {
             web_push: {
                 title: title,
                 message: message,
-                url: url || 'https://radiovidamx.com'
+                url: url || 'https://www.radiovidamx.com/'
             },
             inapp: {
                 title: title,
-                url: url || 'https://radiovidamx.com'
+                url: url || 'https://www.radiovidamx.com/'
             }
         })
 
