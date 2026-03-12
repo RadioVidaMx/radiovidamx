@@ -26,25 +26,45 @@ export function PushNotificationManager() {
 
     setIsLoading(true)
     try {
+      // Obtenemos o generamos un ID de usuario único para este navegador
+      let userId = localStorage.getItem("radiovida_notification_userid")
+      if (!userId) {
+        userId = "user_" + Math.random().toString(36).substring(2, 15)
+        localStorage.setItem("radiovida_notification_userid", userId)
+      }
+
+      console.log("Notificaciones: Inicializando para usuario:", userId)
+
       // Inicializar el cliente de NotificationAPI
       notificationapi.init({
         clientId: CLIENT_ID,
-        userId: "all_users", // Usamos un ID genérico para visitantes anónimos
+        userId: userId,
       })
 
       // Pedir permiso y suscribir
+      console.log("Notificaciones: Solicitando permisos...")
       await notificationapi.askForWebPushPermission()
       
-      setStatus(Notification.permission as any)
+      const currentPermission = Notification.permission as any
+      setStatus(currentPermission)
       
-      if (Notification.permission === "granted") {
+      if (currentPermission === "granted") {
         toast.success("¡Notificaciones activadas correctamente!")
-      } else {
-        toast.error("No se concedieron permisos para notificaciones")
+      } else if (currentPermission === "denied") {
+        toast.error("Permisos de notificación bloqueados en este navegador")
       }
-    } catch (error) {
-      console.error("Error al activar notificaciones:", error)
-      toast.error("Hubo un problema al activar las notificaciones")
+    } catch (error: any) {
+      console.error("Error detallado al activar notificaciones:", error)
+      
+      // Mensaje más descriptivo
+      let msg = "Hubo un problema al activar las notificaciones"
+      if (error.message && error.message.includes("Service Worker")) {
+        msg = "No se pudo registrar el Service Worker"
+      } else if (location.protocol !== 'https:') {
+        msg = "Las notificaciones requieren una conexión segura (HTTPS)"
+      }
+      
+      toast.error(msg)
     } finally {
       setIsLoading(false)
     }
