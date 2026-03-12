@@ -1,7 +1,7 @@
 "use client"
 
 import { NotificationLauncher, NotificationPopup } from "@notificationapi/react"
-import "@notificationapi/react/dist/styles.css"
+import "@notificationapi/react/dist/assets/style.css"
 
 export function PushNotificationManager() {
   return (
