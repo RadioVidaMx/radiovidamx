@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
     const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY
+    console.log("Notificaciones: Verificando PINGRAM_API_KEY...", PINGRAM_API_KEY ? "Detectada ✅" : "No detectada ❌")
     try {
         const body = await request.json()
         const { title, message, url } = body
