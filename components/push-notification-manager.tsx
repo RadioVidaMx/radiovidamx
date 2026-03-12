@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Bell, BellOff, Loader2 } from "lucide-react"
-import notificationapi from "notificationapi-js-client-sdk"
+import NotificationAPIClient from "notificationapi-js-client-sdk"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 
@@ -26,7 +26,6 @@ export function PushNotificationManager() {
 
     setIsLoading(true)
     try {
-      // Obtenemos o generamos un ID de usuario único para este navegador
       let userId = localStorage.getItem("radiovida_notification_userid")
       if (!userId) {
         userId = "user_" + Math.random().toString(36).substring(2, 15)
@@ -35,24 +34,26 @@ export function PushNotificationManager() {
 
       console.log("Notificaciones: Inicializando para usuario:", userId)
 
-      // Inicializar el cliente de NotificationAPI
-      notificationapi.init({
+      // Inicializar el cliente usando el constructor de la clase
+      const notificationClient = new NotificationAPIClient({
         clientId: CLIENT_ID,
         userId: userId,
       })
 
       // Pedir permiso y suscribir
       console.log("Notificaciones: Solicitando permisos...")
-      await notificationapi.askForWebPushPermission()
+      notificationClient.askForWebPushPermission()
       
-      const currentPermission = Notification.permission as any
-      setStatus(currentPermission)
-      
-      if (currentPermission === "granted") {
-        toast.success("¡Notificaciones activadas correctamente!")
-      } else if (currentPermission === "denied") {
-        toast.error("Permisos de notificación bloqueados en este navegador")
-      }
+      // El estado de permiso puede cambiar asíncronamente
+      // Esperamos un poco o dejamos que el usuario vea el cambio nativo
+      setTimeout(() => {
+        const currentPermission = Notification.permission as any
+        setStatus(currentPermission)
+        if (currentPermission === "granted") {
+          toast.success("¡Notificaciones activadas!")
+        }
+      }, 1000)
+
     } catch (error: any) {
       console.error("Error detallado al activar notificaciones:", error)
       
