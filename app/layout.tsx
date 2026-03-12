@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 import { PlayerProvider } from "@/contexts/player-context"
 import { RadioPlayer } from "@/components/radio-player"
-import { PushNotificationManager } from "@/components/push-notification-manager"
+import { NotificationAPIProvider } from "@notificationapi/react"
 import { Toaster } from "sonner"
 
 export default function RootLayout({
@@ -35,12 +35,18 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${_playfair.variable} ${_inter.variable} font-sans antialiased`}>
-        <PlayerProvider>
-          {children}
-          <RadioPlayer />
-          <PushNotificationManager />
-          <Toaster position="top-center" />
-        </PlayerProvider>
+        <NotificationAPIProvider
+          clientId="0l1eqh9ut8ke6htt9bn296b028"
+          userId="oyente_global"
+          customServiceWorkerPath="/notificationapi-service-worker.js"
+          webPushOptInMessage="AUTOMATIC"
+        >
+          <PlayerProvider>
+            {children}
+            <RadioPlayer />
+            <Toaster position="top-center" />
+          </PlayerProvider>
+        </NotificationAPIProvider>
         <Analytics />
       </body>
     </html>
