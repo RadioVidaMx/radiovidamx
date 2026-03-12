@@ -21,31 +21,25 @@ export async function POST(request: Request) {
             )
         }
 
-        // El endpoint de NotificationAPI/Pingram para enviar notificaciones
-        // Usamos Bearer Token con la Secret Key
-        const response = await fetch("https://api.pingram.io/v1/send", {
+        // El ID de cuenta extraído del token del usuario
+        const PINGRAM_ACCOUNT_ID = "0l1eqh9ut8ke6htt9bn296b028"
+        const authHeader = Buffer.from(`${PINGRAM_ACCOUNT_ID}:${PINGRAM_API_KEY}`).toString('base64')
+
+        // Usamos el endpoint de NotificationAPI (empresa matriz de Pingram) que es más estable para fetch directo
+        const response = await fetch(`https://api.notificationapi.com/v1/${PINGRAM_ACCOUNT_ID}/sender`, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${PINGRAM_API_KEY}`,
+                "Authorization": `Basic ${authHeader}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                type: "broadcast", // O un ID de notificación configurado en el panel
-                to: {
-                    id: "all_users", // Identificador para enviar a todos los suscritos
+                notificationId: "broadcast_notification", // ID genérico o configurado en el panel
+                user: {
+                    id: "all_users",
                 },
-                mobile_push: {
-                    title: title,
-                    message: message
-                },
-                web_push: {
+                mergeVariables: {
                     title: title,
                     message: message,
-                    url: url || "https://radiovidamx.com",
-                    icon: "https://radiovidamx.com/logo-radiovida.png"
-                },
-                inapp: {
-                    title: title,
                     url: url || "https://radiovidamx.com"
                 }
             }),
