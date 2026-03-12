@@ -48,7 +48,7 @@ export async function POST(request: Request) {
                 url: url || 'https://www.radiovidamx.com/'
             },
             inapp: {
-                title: title,
+                title: `${title}: ${message}`,
                 url: url || 'https://www.radiovidamx.com/'
             }
         })
