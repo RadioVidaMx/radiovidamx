@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server"
 
-const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY
-
 export async function POST(request: Request) {
+    const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY
     try {
         const body = await request.json()
         const { title, message, url } = body
@@ -16,7 +15,7 @@ export async function POST(request: Request) {
 
         if (!PINGRAM_API_KEY) {
             return NextResponse.json(
-                { message: "La API Key de Pingram no está configurada en el servidor" },
+                { message: "La API Key de Pingram no está configurada en el servidor (asegúrate de reiniciar el servidor dev)" },
                 { status: 500 }
             )
         }
