@@ -26,35 +26,38 @@ export function PushNotificationManager() {
 
     setIsLoading(true)
     try {
-      // Para Radio Vida, usamos un ID global para que todos los oyentes
-      // reciban las mismas notificaciones de "Broadcast" (Aviso General)
       const userId = "oyente_global"
 
       console.log("Notificaciones: Inicializando para:", userId)
 
-      // Inicializar el cliente
+      // Inicializar el cliente con la ruta explícita del service worker
       const notificationClient = new NotificationAPIClient({
         clientId: CLIENT_ID,
         userId: userId,
+        customServiceWorkerPath: "/notificationapi-service-worker.js"
       })
 
-      // IMPORTANTE: Identificar al usuario para preparar el enlace de tokens
+      // IMPORTANTE: Identificar al usuario
       await notificationClient.identify({
         id: userId
       })
 
+      console.log("Notificaciones: Usuario identificado. Solicitando permisos...")
+
       // Pedir permiso y suscribir
-      console.log("Notificaciones: Solicitando permisos...")
       notificationClient.askForWebPushPermission()
       
-      // Verificamos el estado después de un breve delay
+      // Verificamos el estado después de un delay
       setTimeout(() => {
         const currentPermission = Notification.permission as any
         setStatus(currentPermission)
         if (currentPermission === "granted") {
-          toast.success("¡Ya estás suscrito a las notificaciones!")
+          console.log("Notificaciones: ¡Permiso concedido y token registrado!")
+          toast.success("¡Ya estás suscrito! Ahora recibirás nuestras alertas.")
+        } else if (currentPermission === "denied") {
+          toast.error("Has bloqueado las notificaciones. Por favor, actívalas en la configuración de tu navegador.")
         }
-      }, 2000)
+      }, 2500)
 
     } catch (error: any) {
       console.error("Error detallado al activar notificaciones:", error)
