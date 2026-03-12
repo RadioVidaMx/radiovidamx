@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 
 import { PlayerProvider } from "@/contexts/player-context"
 import { RadioPlayer } from "@/components/radio-player"
+import { PushNotificationManager } from "@/components/push-notification-manager"
 import { NotificationWrapper } from "@/components/notification-wrapper"
 import { Toaster } from "sonner"
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           <PlayerProvider>
             {children}
             <RadioPlayer />
+            <PushNotificationManager />
             <Toaster position="top-center" />
           </PlayerProvider>
         </NotificationWrapper>
