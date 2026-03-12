@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
 
-// NOTA: Para que esto funcione, debes añadir estas variables a tu archivo .env.local
-const PINGRAM_CLIENT_ID = process.env.PINGRAM_CLIENT_ID
-const PINGRAM_CLIENT_SECRET = process.env.PINGRAM_CLIENT_SECRET
+const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY
 
 export async function POST(request: Request) {
     try {
@@ -16,34 +14,38 @@ export async function POST(request: Request) {
             )
         }
 
-        if (!PINGRAM_CLIENT_ID || !PINGRAM_CLIENT_SECRET) {
+        if (!PINGRAM_API_KEY) {
             return NextResponse.json(
-                { message: "Las credenciales de Pingram (Client ID/Secret) no están configuradas en el servidor" },
+                { message: "La API Key de Pingram no está configurada en el servidor" },
                 { status: 500 }
             )
         }
 
-        // Configuración de la petición a Pingram.io (NotificationAPI)
-        // Usamos Basic Auth con Client ID y Secret
-        const authHeader = Buffer.from(`${PINGRAM_CLIENT_ID}:${PINGRAM_CLIENT_SECRET}`).toString('base64')
-
-        // El endpoint estándar de NotificationAPI para enviar notificaciones
-        // Si tienes un ID de notificación específico en Pingram, puedes usarlo. 
-        // Aquí usamos una configuración genérica para enviar a todos los suscritos.
-        const response = await fetch(`https://api.notificationapi.com/v1/${PINGRAM_CLIENT_ID}/sender`, {
+        // El endpoint de NotificationAPI/Pingram para enviar notificaciones
+        // Usamos Bearer Token con la Secret Key
+        const response = await fetch("https://api.pingram.io/v1/send", {
             method: "POST",
             headers: {
-                "Authorization": `Basic ${authHeader}`,
+                "Authorization": `Bearer ${PINGRAM_API_KEY}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                notificationId: "notificacion_general", // Este ID debe existir o configurarse en Pingram
-                user: {
-                    id: "all_users", // O la lógica que Pingram use para broadcast
+                type: "broadcast", // O un ID de notificación configurado en el panel
+                to: {
+                    id: "all_users", // Identificador para enviar a todos los suscritos
                 },
-                mergeVariables: {
+                mobile_push: {
+                    title: title,
+                    message: message
+                },
+                web_push: {
                     title: title,
                     message: message,
+                    url: url || "https://radiovidamx.com",
+                    icon: "https://radiovidamx.com/logo-radiovida.png"
+                },
+                inapp: {
+                    title: title,
                     url: url || "https://radiovidamx.com"
                 }
             }),
