@@ -35,8 +35,10 @@ export async function POST(request: Request) {
                 ...(email ? { email } : {})
             },
             call: {
-                message: message
-            },
+                message: message,
+                language: 'es',
+                voiceId: 'lucia-mexican-accent'
+            } as any,
             // Forzamos el canal CALL (Llamada)
             forceChannels: ['CALL' as any]
         })
