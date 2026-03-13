@@ -27,8 +27,9 @@ export async function POST(request: Request) {
             baseUrl: 'https://api.pingram.io'
         })
 
-        // Usamos el email como ID si existe, si no el teléfono
-        const recipientId = email ? email : phone
+        // Para SMS y Llamadas, lo más seguro es usar el número como ID principal
+        // Esto evita conflictos con preferencias de usuario basadas en email
+        const recipientId = phone
 
         console.log("Enviando SMS a:", phone, "con ID:", recipientId)
 
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
             sms: {
                 message: message
             },
-            // Forzamos el canal SMS para evitar que reglas de Pingram lo omitan
+            // Forzamos el canal SMS para asegurar la entrega
             forceChannels: ['SMS' as any]
         })
 

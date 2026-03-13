@@ -6,7 +6,7 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json()
-        const { phone, message } = body
+        const { phone, message, email } = body
 
         if (!phone || !message) {
             return NextResponse.json(
@@ -30,12 +30,18 @@ export async function POST(request: Request) {
         const result = await pingram.send({
             type: 'broadcast_notification',
             to: {
-                number: phone
+                id: phone,
+                number: phone,
+                ...(email ? { email } : {})
             },
             call: {
                 message: message
-            }
+            },
+            // Forzamos el canal CALL (Llamada)
+            forceChannels: ['CALL' as any]
         })
+
+        console.log("Pingram Call Result:", JSON.stringify(result, null, 2))
 
         return NextResponse.json({
             success: true,

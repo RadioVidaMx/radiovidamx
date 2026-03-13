@@ -10,14 +10,23 @@ import { toast } from "sonner"
 
 export default function AutomatedCallsPage() {
     const [loading, setLoading] = useState(false)
-    const [result, setResult] = useState<{ success: boolean; message: string } | null>(null)
+    const [result, setResult] = useState<{ success: boolean; message: string; raw?: any } | null>(null)
+    const [showDebug, setShowDebug] = useState(false)
     const [formData, setFormData] = useState({
         phone: "",
+        email: "",
         message: ""
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        // Validación básica de formato E.164
+        if (!formData.phone.startsWith('+')) {
+            toast.error("El número debe incluir el código de país y empezar con +")
+            return
+        }
+
         setLoading(true)
         setResult(null)
 
@@ -33,16 +42,21 @@ export default function AutomatedCallsPage() {
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.message || "Error al iniciar la llamada")
+                const errorMsg = data.result?.message || data.message || "Error al iniciar la llamada"
+                setResult({ success: false, message: errorMsg, raw: data })
+                throw new Error(errorMsg)
             }
 
-            setResult({ success: true, message: "Llamada iniciada con éxito." })
-            setFormData({ phone: "", message: "" })
+            setResult({
+                success: true,
+                message: "Solicitud enviada a Pingram correctamente.",
+                raw: data
+            })
+            setFormData({ ...formData, message: "" })
             toast.success("¡Llamada iniciada!")
         } catch (error: any) {
             console.error("Error starting call:", error)
-            setResult({ success: false, message: error.message })
-            toast.error("Error al iniciar la llamada")
+            toast.error(error.message || "Error al iniciar la llamada")
         } finally {
             setLoading(false)
         }
@@ -76,6 +90,21 @@ export default function AutomatedCallsPage() {
                                 required
                             />
                             <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Formato: +[código país][número]</p>
+                        </div>
+
+                        {/* Email (Optional) */}
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="flex items-center gap-2">
+                                <AlignLeft className="w-4 h-4 text-primary" /> Email del Oyente (Opcional)
+                            </Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                placeholder="Ej: oyente@correo.com"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            />
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Identificador sugerido por Pingram/Supabase</p>
                         </div>
 
                         {/* Message */}
@@ -121,19 +150,41 @@ export default function AutomatedCallsPage() {
 
                 {/* Status Messages */}
                 {result && (
-                    <div className={`p-4 rounded-xl border flex gap-3 ${result.success
+                    <div className="space-y-4">
+                        <div className={`p-4 rounded-xl border flex gap-3 ${result.success
                             ? "bg-green-500/10 border-green-500/50 text-green-700"
                             : "bg-red-500/10 border-red-500/50 text-red-700"
-                        }`}>
-                        {result.success ? (
-                            <CheckCircle2 className="w-5 h-5 shrink-0" />
-                        ) : (
-                            <AlertCircle className="w-5 h-5 shrink-0" />
-                        )}
-                        <div>
-                            <p className="font-bold text-sm">{result.success ? "¡Éxito!" : "Error en la llamada"}</p>
-                            <p className="text-sm opacity-90">{result.message}</p>
+                            }`}>
+                            {result.success ? (
+                                <CheckCircle2 className="w-5 h-5 shrink-0" />
+                            ) : (
+                                <AlertCircle className="w-5 h-5 shrink-0" />
+                            )}
+                            <div className="flex-1">
+                                <p className="font-bold text-sm">{result.success ? "¡Solicitud aceptada!" : "Error en la llamada"}</p>
+                                <p className="text-sm opacity-90">{result.message}</p>
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setShowDebug(!showDebug)}
+                                className="text-xs h-7 px-2"
+                            >
+                                {showDebug ? "Ocultar detalles" : "Ver detalles"}
+                            </Button>
                         </div>
+
+                        {showDebug && result.raw && (
+                            <div className="p-4 bg-slate-900 rounded-xl overflow-hidden shadow-inner">
+                                <div className="flex justify-between items-center mb-2">
+                                    <p className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Respuesta de la API</p>
+                                    <span className="text-[10px] text-slate-500 font-mono">JSON Format</span>
+                                </div>
+                                <pre className="text-[11px] font-mono text-green-400 overflow-auto max-h-[250px] custom-scrollbar">
+                                    {JSON.stringify(result.raw, null, 2)}
+                                </pre>
+                            </div>
+                        )}
                     </div>
                 )}
 
