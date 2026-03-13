@@ -3,7 +3,7 @@ import { Pingram } from 'pingram'
 
 export async function POST(request: Request) {
     const PINGRAM_API_KEY = process.env.PINGRAM_API_KEY || process.env.PINGRAM_CLIENT_SECRET
-    
+
     console.log("Notificaciones: Iniciando proceso con SDK...")
 
     try {
@@ -28,7 +28,8 @@ export async function POST(request: Request) {
         // Inicializamos el SDK oficial
         // Nota: El SDK maneja internamente las firmas AWS y los endpoints correctos
         const pingram = new Pingram({
-            apiKey: PINGRAM_API_KEY.trim()
+            apiKey: PINGRAM_API_KEY.trim(),
+            baseUrl: 'https://api.pingram.io'
         })
 
         console.log("Notificaciones: Enviando vía SDK...")
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
             web_push: {
                 title: title,
                 message: message,
+                icon: 'https://www.radiovidamx.com/logo-radiovida.png',
                 url: url || 'https://www.radiovidamx.com/'
             },
             inapp: {
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
         })
 
         console.log("Notificaciones: Éxito con el SDK")
-        
+
         return NextResponse.json({
             success: true,
             message: "Notificación enviada correctamente",
@@ -63,10 +65,10 @@ export async function POST(request: Request) {
 
     } catch (error: any) {
         console.error("Pingram SDK Error:", error)
-        
+
         // Manejo específico de errores del SDK
         const errorMessage = error.message || "Error al procesar la notificación con el SDK"
-        
+
         return NextResponse.json(
             { message: errorMessage },
             { status: 500 }

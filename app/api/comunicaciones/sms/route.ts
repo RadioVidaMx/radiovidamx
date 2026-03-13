@@ -23,12 +23,14 @@ export async function POST(request: Request) {
         }
 
         const pingram = new Pingram({
-            apiKey: PINGRAM_API_KEY.trim()
+            apiKey: PINGRAM_API_KEY.trim(),
+            baseUrl: 'https://api.pingram.io'
         })
 
         const result = await pingram.send({
             type: 'broadcast_notification',
             to: {
+                id: phone,
                 number: phone
             },
             sms: {
