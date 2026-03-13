@@ -19,7 +19,12 @@ export function PushNotificationManager() {
     <div className="fixed bottom-36 right-6 z-40">
       <NotificationLauncher />
       <NotificationPopup
-        popupPosition="topLeft"
+        popoverPosition={{
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+        }}
       />
     </div>
   )
