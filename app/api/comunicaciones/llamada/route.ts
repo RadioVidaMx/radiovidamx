@@ -36,8 +36,8 @@ export async function POST(request: Request) {
             },
             call: {
                 message: message,
-                language: 'es',
-                voiceId: 'lucia-mexican-accent'
+                language: 'es-MX', // Fuerza el reconocimiento a español mexicano
+                voiceId: 'eleven_multilingual_v2_mexican_female_1' // ID de voz de México
             } as any,
             // Forzamos el canal CALL (Llamada)
             forceChannels: ['CALL' as any]
