@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         const result = await pingram.send({
             type: 'broadcast_notification',
             to: {
+                id: phone,
                 number: phone
             },
             sms: {
