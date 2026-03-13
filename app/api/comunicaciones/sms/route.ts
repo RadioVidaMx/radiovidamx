@@ -30,13 +30,14 @@ export async function POST(request: Request) {
         const result = await pingram.send({
             type: 'broadcast_notification',
             to: {
-                id: phone,
                 number: phone
             },
             sms: {
                 message: message
             }
         })
+
+        console.log("Pingram SMS Result:", JSON.stringify(result, null, 2))
 
         return NextResponse.json({
             success: true,

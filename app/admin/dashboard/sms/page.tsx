@@ -18,6 +18,13 @@ export default function SMSPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        // Validación básica de formato E.164
+        if (!formData.phone.startsWith('+')) {
+            toast.error("El número debe incluir el código de país y empezar con +")
+            return
+        }
+
         setLoading(true)
         setResult(null)
 
@@ -33,16 +40,18 @@ export default function SMSPage() {
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.message || "Error al enviar el SMS")
+                // Si hay un error detallado de la API (como el de Pingram), lo mostramos
+                const errorMsg = data.result?.message || data.message || "Error al enviar el SMS"
+                throw new Error(errorMsg)
             }
 
-            setResult({ success: true, message: "SMS enviado con éxito." })
-            setFormData({ phone: "", message: "" })
-            toast.success("¡SMS enviado!")
+            setResult({ success: true, message: "SMS enviado con éxito. Revisa el registro de Pingram para confirmar la entrega." })
+            setFormData({ ...formData, message: "" }) // Limpiamos solo el mensaje por si quiere enviar otro al mismo número
+            toast.success("¡Solicitud de SMS enviada!")
         } catch (error: any) {
             console.error("Error sending SMS:", error)
             setResult({ success: false, message: error.message })
-            toast.error("Error al enviar el SMS")
+            toast.error(error.message || "Error al enviar el SMS")
         } finally {
             setLoading(false)
         }
@@ -122,8 +131,8 @@ export default function SMSPage() {
                 {/* Status Messages */}
                 {result && (
                     <div className={`p-4 rounded-xl border flex gap-3 ${result.success
-                            ? "bg-green-500/10 border-green-500/50 text-green-700"
-                            : "bg-red-500/10 border-red-500/50 text-red-700"
+                        ? "bg-green-500/10 border-green-500/50 text-green-700"
+                        : "bg-red-500/10 border-red-500/50 text-red-700"
                         }`}>
                         {result.success ? (
                             <CheckCircle2 className="w-5 h-5 shrink-0" />
