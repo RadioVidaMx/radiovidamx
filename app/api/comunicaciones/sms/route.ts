@@ -6,7 +6,7 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json()
-        const { phone, message } = body
+        const { phone, message, email } = body
 
         if (!phone || !message) {
             return NextResponse.json(
@@ -27,15 +27,23 @@ export async function POST(request: Request) {
             baseUrl: 'https://api.pingram.io'
         })
 
+        // Usamos el email como ID si existe, si no el teléfono
+        const recipientId = email ? email : phone
+
+        console.log("Enviando SMS a:", phone, "con ID:", recipientId)
+
         const result = await pingram.send({
             type: 'broadcast_notification',
             to: {
-                id: phone,
-                number: phone
+                id: recipientId,
+                number: phone,
+                ...(email ? { email } : {})
             },
             sms: {
                 message: message
-            }
+            },
+            // Forzamos el canal SMS para evitar que reglas de Pingram lo omitan
+            forceChannels: ['SMS' as any]
         })
 
         console.log("Pingram SMS Result:", JSON.stringify(result, null, 2))

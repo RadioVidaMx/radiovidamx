@@ -14,6 +14,7 @@ export default function SMSPage() {
     const [showDebug, setShowDebug] = useState(false)
     const [formData, setFormData] = useState({
         phone: "",
+        email: "",
         message: ""
     })
 
@@ -90,6 +91,21 @@ export default function SMSPage() {
                                 required
                             />
                             <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Formato: +[código país][número]</p>
+                        </div>
+
+                        {/* Email (Optional) */}
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="flex items-center gap-2">
+                                <AlignLeft className="w-4 h-4 text-primary" /> Email del Oyente (Opcional)
+                            </Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                placeholder="Ej: oyente@correo.com"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            />
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Identificador sugerido por Pingram/Supabase</p>
                         </div>
 
                         {/* Message */}
