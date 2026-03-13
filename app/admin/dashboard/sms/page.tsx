@@ -10,7 +10,8 @@ import { toast } from "sonner"
 
 export default function SMSPage() {
     const [loading, setLoading] = useState(false)
-    const [result, setResult] = useState<{ success: boolean; message: string } | null>(null)
+    const [result, setResult] = useState<{ success: boolean; message: string; raw?: any } | null>(null)
+    const [showDebug, setShowDebug] = useState(false)
     const [formData, setFormData] = useState({
         phone: "",
         message: ""
@@ -42,15 +43,19 @@ export default function SMSPage() {
             if (!response.ok) {
                 // Si hay un error detallado de la API (como el de Pingram), lo mostramos
                 const errorMsg = data.result?.message || data.message || "Error al enviar el SMS"
+                setResult({ success: false, message: errorMsg, raw: data })
                 throw new Error(errorMsg)
             }
 
-            setResult({ success: true, message: "SMS enviado con éxito. Revisa el registro de Pingram para confirmar la entrega." })
+            setResult({
+                success: true,
+                message: "Solicitud enviada a Pingram correctamente.",
+                raw: data
+            })
             setFormData({ ...formData, message: "" }) // Limpiamos solo el mensaje por si quiere enviar otro al mismo número
             toast.success("¡Solicitud de SMS enviada!")
         } catch (error: any) {
             console.error("Error sending SMS:", error)
-            setResult({ success: false, message: error.message })
             toast.error(error.message || "Error al enviar el SMS")
         } finally {
             setLoading(false)
@@ -130,19 +135,41 @@ export default function SMSPage() {
 
                 {/* Status Messages */}
                 {result && (
-                    <div className={`p-4 rounded-xl border flex gap-3 ${result.success
-                        ? "bg-green-500/10 border-green-500/50 text-green-700"
-                        : "bg-red-500/10 border-red-500/50 text-red-700"
-                        }`}>
-                        {result.success ? (
-                            <CheckCircle2 className="w-5 h-5 shrink-0" />
-                        ) : (
-                            <AlertCircle className="w-5 h-5 shrink-0" />
-                        )}
-                        <div>
-                            <p className="font-bold text-sm">{result.success ? "¡Éxito!" : "Error en el envío"}</p>
-                            <p className="text-sm opacity-90">{result.message}</p>
+                    <div className="space-y-4">
+                        <div className={`p-4 rounded-xl border flex gap-3 ${result.success
+                            ? "bg-green-500/10 border-green-500/50 text-green-700"
+                            : "bg-red-500/10 border-red-500/50 text-red-700"
+                            }`}>
+                            {result.success ? (
+                                <CheckCircle2 className="w-5 h-5 shrink-0" />
+                            ) : (
+                                <AlertCircle className="w-5 h-5 shrink-0" />
+                            )}
+                            <div className="flex-1">
+                                <p className="font-bold text-sm">{result.success ? "¡Solicitud aceptada!" : "Error en el envío"}</p>
+                                <p className="text-sm opacity-90">{result.message}</p>
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setShowDebug(!showDebug)}
+                                className="text-xs h-7 px-2"
+                            >
+                                {showDebug ? "Ocultar detalles" : "Ver detalles"}
+                            </Button>
                         </div>
+
+                        {showDebug && result.raw && (
+                            <div className="p-4 bg-slate-900 rounded-xl overflow-hidden shadow-inner">
+                                <div className="flex justify-between items-center mb-2">
+                                    <p className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Respuesta de la API</p>
+                                    <span className="text-[10px] text-slate-500 font-mono">JSON Format</span>
+                                </div>
+                                <pre className="text-[11px] font-mono text-green-400 overflow-auto max-h-[250px] custom-scrollbar">
+                                    {JSON.stringify(result.raw, null, 2)}
+                                </pre>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
