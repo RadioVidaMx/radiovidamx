@@ -16,7 +16,10 @@ import {
     Users,
     Megaphone,
     Radio,
-    Bell
+    Bell,
+    MessageSquare,
+    Mail,
+    PhoneCall
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -34,6 +37,9 @@ const navigation = [
     { name: "Usuarios", href: "/admin/dashboard/usuarios", icon: Users, roles: ["admin"] },
     { name: "EN VIVO", href: "/admin/dashboard/en-vivo", icon: Radio, roles: ["admin", "operator"] },
     { name: "Notificaciones", href: "/admin/dashboard/notificaciones", icon: Bell, roles: ["admin", "operator"] },
+    { name: "Enviar SMS", href: "/admin/dashboard/sms", icon: MessageSquare, roles: ["admin"] },
+    { name: "Enviar Email", href: "/admin/dashboard/email", icon: Mail, roles: ["admin"] },
+    { name: "Llamada Voces", href: "/admin/dashboard/llamadas", icon: PhoneCall, roles: ["admin"] },
 ]
 
 export default function AdminLayout({
