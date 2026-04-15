@@ -27,7 +27,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     // Radio Vida stream URLs
     const streams = {
         'Hermosillo': "https://stream4.305stream.com:9675/stream",
-        'Obregón': "https://stream1.305stream.com/proxy/client362?mp=/stream"
+        'Obregón': "https://stream1.305stream.com:8322/stream"
     }
 
     useEffect(() => {
