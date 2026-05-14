@@ -12,6 +12,7 @@ const quickLinks = [
   { href: "/#contacto", label: "Contacto" },
   { href: "/#videos", label: "Videos" },
   { href: "/articulos", label: "Artículos" },
+  { href: "/politica_privacidad", label: "Política de Privacidad" },
 ]
 
 const socialLinks = [
