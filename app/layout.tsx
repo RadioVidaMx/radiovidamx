@@ -1,5 +1,5 @@
 import React from "react"
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -7,10 +7,20 @@ import './globals.css'
 const _playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif' });
 const _inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
+export const viewport: Viewport = {
+  themeColor: '#E63946',
+}
+
 export const metadata: Metadata = {
   title: 'Radio Vida Mx - La estación que da Vida',
   description: 'Estación de radio cristiana 24/7 con música de adoración, prédicas inspiradoras y programas que edifican tu fe.',
   keywords: 'radio cristiana, música cristiana, adoración, palabra de Dios, fe',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Radio Vida Mx",
+  },
   icons: {
     icon: [
       {

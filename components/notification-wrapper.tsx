@@ -24,7 +24,7 @@ export function NotificationWrapper({ children }: Props) {
     <NotificationAPIProvider
       clientId="0l1eqh9ut8ke6htt9bn296b028"
       userId="oyente_global"
-      customServiceWorkerPath="/notificationapi-service-worker.js"
+      customServiceWorkerPath="/sw.js"
     >
       {children}
     </NotificationAPIProvider>
